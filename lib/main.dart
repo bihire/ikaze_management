@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:inventory_controller/servives/TransactionService.dart';
 import './pages/home.dart';
+import 'package:get_it/get_it.dart';
+
+void setupLocator() {
+  GetIt.I.registerLazySingleton(() => TransactionService());
+}
 
 void main() {
+  setupLocator();
   runApp(MyApp());
 }
 

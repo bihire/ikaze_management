@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import './chart.dart';
-import './line_chart_page.dart';
+import './transactionTable.dart';
 
 final data = [55.0, 90.0, 50.0, 40.0, 35.0, 55.0, 70.0, 100.0];
 
@@ -24,19 +24,9 @@ class DashBoardState extends State {
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
-                // Container(
-                //   margin: const EdgeInsets.only(top: 20.0),
-                //   decoration: BoxDecoration(
-                //     // color: Colors.white,
-                //     // border: Border.all(color: Colors.red, width: 1, style: BorderStyle.solid)
-                //   ),
-                //   width: MediaQuery.of(context).size.width * 1,
-                //   child: Text("Home", style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.w500)),
-                // ),
                 Container(
                     margin: const EdgeInsets.only(top: 40.0),
-                    padding:
-                        EdgeInsets.symmetric(vertical: 0.0, horizontal: 10.0),
+                    padding:EdgeInsets.symmetric(vertical: 0.0, horizontal: 10.0),
                     decoration: BoxDecoration(
                         // color: Colors.white,
                         // border: Border.all(color: Colors.red, width: 1, style: BorderStyle.solid)
@@ -164,8 +154,7 @@ class DashBoardState extends State {
           padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 10.0),
           margin: const EdgeInsets.only(top: 10.0),
           color: Colors.white,
-          height: 250,
-          child: Text('History', style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w500),),
+          child: TransactionTable(),
         ),
       ],
     );
