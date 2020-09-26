@@ -1,65 +1,103 @@
-import 'dart:developer';
+// import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
-import 'package:inventory_controller/models/moneyTransaction.dart';
-import './TransactioListTile.dart';
-import 'package:inventory_controller/servives/TransactionService.dart';
-import './ExpendableListTile.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+// import 'package:get_it/get_it.dart';
+import 'package:inventory_controller/containers/homePage/home_container.dart';
+// import 'package:inventory_controller/models/moneyTransaction.dart';
+// import 'package:inventory_controller/models/money_transactions.dart';
+// import 'package:inventory_controller/redux/AllTransactions/all_transactions_actions.dart';
+// import 'package:inventory_controller/redux/store.dart';
+// import './TransactioListTile.dart';
+// import 'package:inventory_controller/servives/TransactionService.dart';
+// import './ExpendableListTile.dart';
 
 class TransactionTable extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return TransactionTableState();
+    return _TransactionTableState();
   }
 }
 
-class TransactionTableState extends State {
-  TransactionService get service => GetIt.I<TransactionService>();
+class _TransactionTableState extends State {
+  // List<Widget> _buildPosts(List<MoneyTransactionModel> transactions) {
+  //   return transactions
+  //       .map(
+  //         (transaction) => ListTile(
+  //           title: Text(transaction.productId),
+  //           subtitle: Text(transaction.paidBy),
+  //           key: Key(transaction.id.toString()),
+  //         ),
+  //       )
+  //       .toList();
+  // }
 
-  List<MoneyTransactionModel> transactions = [];
-  final List moneyTransactions = [
-    new MoneyTransactionModel(
-        id: "1",
-        productId: "lime",
-        entryType: "sold",
-        quantity: "60kg",
-        unitPrice: "240rwf/kg",
-        paidBy: "mtn",
-        createdAt: "2020-04-20T00:15:08.932Z"),
-    new MoneyTransactionModel(
-        id: "2",
-        productId: "lime",
-        entryType: "sold",
-        quantity: "60kg",
-        unitPrice: "240rwf/kg",
-        paidBy: "mtn",
-        createdAt: "2020-04-20T00:15:08.932Z"),
-    new MoneyTransactionModel(
-        id: "3",
-        productId: "lime",
-        entryType: "sold",
-        quantity: "60kg",
-        unitPrice: "240rwf/kg",
-        paidBy: "mtn",
-        createdAt: "2020-04-20T00:15:08.932Z"),
-    new MoneyTransactionModel(
-        id: "4",
-        productId: "lime",
-        entryType: "sold",
-        quantity: "60kg",
-        unitPrice: "240rwf/kg",
-        paidBy: "mtn",
-        createdAt: "2020-04-20T00:15:08.932Z"),
-  ];
+  // void _onFetchPostsPressed() {
+  //   Redux.store.dispatch(fetchAllTransactionsAction);
+  //   print(StoreConnector);
+  // }
 
   @override
   void initState() {
-    transactions = service.getMoneyTransactions();
+    // Redux.store.dispatch(fetchAllTransactionsAction);
     super.initState();
   }
 
   Widget build(BuildContext context) {
-    return Expansionpanel(transactions: transactions);
+    print(StoreConnector);
+
+    return Container(
+      height: 300.0,
+      child: HomeContainer(),
+    );
+
+    // ;
+    // Container(
+    //   height: 400.0,
+    //   child: Column(
+    //   children: [
+    //     RaisedButton(
+    //       child: Text("Fetch Posts"),
+    //       onPressed: _onFetchPostsPressed,
+    //     ),
+    //     StoreConnector<AppState, bool>(
+    //       distinct: true,
+    //       converter: (store) => store.state.transactionState.isLoading,
+    //       builder: (context, isLoading) {
+    //         if (isLoading) {
+    //           return CircularProgressIndicator();
+    //         } else {
+    //           return SizedBox.shrink();
+    //         }
+    //       },
+    //     ),
+    //     StoreConnector<AppState, bool>(
+    //       distinct: true,
+    //       converter: (store) => store.state.transactionState.isError,
+    //       builder: (context, isError) {
+    //         if (isError) {
+    //           return Text("Failed to get posts");
+    //         } else {
+    //           return SizedBox.shrink();
+    //         }
+    //       },
+    //     ),
+    //     Expanded(
+    //       child: StoreConnector<AppState, List<MoneyTransactionModel>>(
+    //         distinct: true,
+    //         converter: (store) => store.state.transactionState.transactions,
+    //         builder: (context, posts) {
+    //           return ListView(
+    //             shrinkWrap: true,
+    //             children: _buildPosts(posts),
+    //           );
+    //         },
+    //       ),
+    //     ),
+    //   ],
+    // ),
+    // );
+
+    // Expansionpanel(transactions: transactions);
   }
 }

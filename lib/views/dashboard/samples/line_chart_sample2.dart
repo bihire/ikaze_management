@@ -1,4 +1,3 @@
-
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
@@ -9,8 +8,8 @@ class LineChartSample2 extends StatefulWidget {
 
 class _LineChartSample2State extends State<LineChartSample2> {
   List<Color> gradientColors = [
-    const Color(0xFFBEB501),
-    const Color(0xFFBEB501),
+    const Color(0xff23b6e6),
+    const Color(0xff02d39a),
   ];
 
   bool showAvg = false;
@@ -24,7 +23,7 @@ class _LineChartSample2State extends State<LineChartSample2> {
           child: Container(
             decoration: const BoxDecoration(
                 borderRadius: BorderRadius.all(
-                  Radius.circular(5),
+                  Radius.circular(18),
                 ),
                 color: Color(0xff232d37)),
             child: Padding(
@@ -57,12 +56,9 @@ class _LineChartSample2State extends State<LineChartSample2> {
 
   LineChartData mainData() {
     return LineChartData(
-      // lineTouchData: LineTouchData(enabled: false),
-      
       gridData: FlGridData(
-        // show: false,
-        drawVerticalLine: false,
-        drawHorizontalLine: true,
+        show: true,
+        drawVerticalLine: true,
         getDrawingHorizontalLine: (value) {
           return FlLine(
             color: const Color(0xff37434d),
@@ -80,43 +76,24 @@ class _LineChartSample2State extends State<LineChartSample2> {
         show: true,
         bottomTitles: SideTitles(
           showTitles: true,
-          // reservedSize: 22,
+          reservedSize: 22,
           textStyle:
-              const TextStyle(color: Color(0xff68737d), fontWeight: FontWeight.bold, fontSize: 10),
+              const TextStyle(color: Color(0xff68737d), fontWeight: FontWeight.bold, fontSize: 16),
           getTitles: (value) {
-                  switch (value.toInt()) {
-                    case 0:
-                      return 'Jan';
-                    case 1:
-                      return 'Feb';
-                    case 2:
-                      return 'Mar';
-                    case 3:
-                      return 'Apr';
-                    case 4:
-                      return 'May';
-                    case 5:
-                      return 'Jun';
-                    case 6:
-                      return 'Jul';
-                    case 7:
-                      return 'Aug';
-                    case 8:
-                      return 'Sep';
-                    case 9:
-                      return 'Oct';
-                    case 10:
-                      return 'Nov';
-                    case 11:
-                      return 'Dec';
-                    default:
-                      return '';
-                  }
-                },
-          // margin: 8,
+            switch (value.toInt()) {
+              case 2:
+                return 'MAR';
+              case 5:
+                return 'JUN';
+              case 8:
+                return 'SEP';
+            }
+            return '';
+          },
+          margin: 8,
         ),
         leftTitles: SideTitles(
-          showTitles: false,
+          showTitles: true,
           textStyle: const TextStyle(
             color: Color(0xff67727d),
             fontWeight: FontWeight.bold,
@@ -133,46 +110,40 @@ class _LineChartSample2State extends State<LineChartSample2> {
             }
             return '';
           },
-          // reservedSize: 28,
+          reservedSize: 28,
           margin: 12,
         ),
       ),
-      borderData: FlBorderData(show: false, border: Border.all(color: const Color(0xff37434d), width: 1)),
+      borderData:
+          FlBorderData(show: true, border: Border.all(color: const Color(0xff37434d), width: 1)),
       minX: 0,
-      // maxX: 11,
+      maxX: 11,
       minY: 0,
-      // maxY: 6,
+      maxY: 6,
       lineBarsData: [
         LineChartBarData(
-              spots: [
-                FlSpot(0, 4),
-                FlSpot(1, 3.5),
-                FlSpot(2, 4.5),
-                FlSpot(3, 1),
-                FlSpot(4, 4),
-                FlSpot(5, 6),
-                FlSpot(6, 6.5),
-                FlSpot(7, 6),
-                FlSpot(8, 4),
-                FlSpot(9, 6),
-                FlSpot(10, 6),
-                FlSpot(11, 17),
-              ],
-              isCurved: true,
-              colors: gradientColors,
-              barWidth: 5,
-              isStrokeCapRound: true,
-              dotData: FlDotData(
-                show: false,
-              ),
-              belowBarData: BarAreaData(
-                show: true,
-                colors: gradientColors.map((color) => color.withOpacity(0.3)).toList(),
-              ),
-            ),
-            
+          spots: [
+            FlSpot(0, 3),
+            FlSpot(2.6, 2),
+            FlSpot(4.9, 5),
+            FlSpot(6.8, 3.1),
+            FlSpot(8, 4),
+            FlSpot(9.5, 3),
+            FlSpot(11, 4),
+          ],
+          isCurved: true,
+          colors: gradientColors,
+          barWidth: 5,
+          isStrokeCapRound: true,
+          dotData: FlDotData(
+            show: false,
+          ),
+          belowBarData: BarAreaData(
+            show: true,
+            colors: gradientColors.map((color) => color.withOpacity(0.3)).toList(),
+          ),
+        ),
       ],
-      
     );
   }
 
@@ -201,36 +172,17 @@ class _LineChartSample2State extends State<LineChartSample2> {
           showTitles: true,
           reservedSize: 22,
           textStyle:
-              const TextStyle(color: Color(0xff68737d), fontWeight: FontWeight.bold, fontSize: 10),
+              const TextStyle(color: Color(0xff68737d), fontWeight: FontWeight.bold, fontSize: 16),
           getTitles: (value) {
             switch (value.toInt()) {
-              case 0:
-                      return 'Jan';
-                    case 1:
-                      return 'Feb';
-                    case 2:
-                      return 'Mar';
-                    case 3:
-                      return 'Apr';
-                    case 4:
-                      return 'May';
-                    case 5:
-                      return 'Jun';
-                    case 6:
-                      return 'Jul';
-                    case 7:
-                      return 'Aug';
-                    case 8:
-                      return 'Sep';
-                    case 9:
-                      return 'Oct';
-                    case 10:
-                      return 'Nov';
-                    case 11:
-                      return 'Dec';
-                    default:
-                      return '';
+              case 2:
+                return 'MAR';
+              case 5:
+                return 'JUN';
+              case 8:
+                return 'SEP';
             }
+            return '';
           },
           margin: 8,
         ),
@@ -266,16 +218,11 @@ class _LineChartSample2State extends State<LineChartSample2> {
         LineChartBarData(
           spots: [
             FlSpot(0, 3.44),
-            FlSpot(1, 3.44),
-            FlSpot(2, 3.44),
-            FlSpot(3, 3.44),
-            FlSpot(4, 3.44),
-            FlSpot(5, 3.44),
-            FlSpot(6, 3.44),
-            FlSpot(7, 3.44),
+            FlSpot(2.6, 3.44),
+            FlSpot(4.9, 3.44),
+            FlSpot(6.8, 3.44),
             FlSpot(8, 3.44),
-            FlSpot(9, 3.44),
-            FlSpot(10, 3.44),
+            FlSpot(9.5, 3.44),
             FlSpot(11, 3.44),
           ],
           isCurved: true,

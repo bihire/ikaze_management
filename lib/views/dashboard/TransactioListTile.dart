@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
 
 class MyListTile extends StatelessWidget {
+  final String header;
+  final String date;
+  final String paidBy;
+  final String totalPay;
   const MyListTile({
     Key key,
+    this.header,
+    this.date,
+    this.paidBy,
+    this.totalPay,
   }) : super(key: key);
 
   @override
@@ -48,7 +56,7 @@ class MyListTile extends StatelessWidget {
                 new Row(
                   children: <Widget>[
                     Text(
-                      "Travetine",
+                      header,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                         fontWeight: FontWeight.w400,
@@ -59,7 +67,8 @@ class MyListTile extends StatelessWidget {
                 new Row(
                   children: <Widget>[
                     new Text(
-                      'mar 07:00',
+                      date,
+                      overflow: TextOverflow.ellipsis,
                       style: new TextStyle(
                         fontSize: 12.0,
                         fontFamily: 'Roboto',

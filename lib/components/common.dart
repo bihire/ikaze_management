@@ -92,9 +92,59 @@ class Header extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: 11.0, vertical: 7.0),
           alignment: Alignment.centerLeft,
           child: Text(
-            title ?? 'Header #$index',
+            title ?? 'today',
             style: const TextStyle(color: Color(0xFFBEB501)),
           ),
+        )
+      ],
+    );
+  }
+}
+
+class HeaderDatePicker extends StatelessWidget {
+  // const HeaderDatePicker({
+  //   Key key,
+  //   this.title,
+  //   this.color = Colors.white,
+  // }) : super(key: key);
+
+  // final String title;
+  // final int index;
+  // final Color color;
+
+  @override
+  Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width - 30;
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Container(
+          margin: EdgeInsets.only(top: 7.0),
+          // decoration: BoxDecoration(
+          //   borderRadius: BorderRadius.circular(20),
+          //   color: color,
+          //   boxShadow: [
+          //     BoxShadow(
+          //       color: Colors.grey.withOpacity(0.5),
+          //       spreadRadius: 1,
+          //       blurRadius: 7,
+          //       offset: Offset(2, 3), // changes position of shadow
+          //     ),
+          //   ],
+          // ),
+          
+          padding: EdgeInsets.symmetric(horizontal: 11.0, vertical: 7.0),
+          alignment: Alignment.centerLeft,
+          child: Container(
+            width: width,
+            color: Colors.white,
+            child: Center(child: Text(
+            'bruh',
+            style: const TextStyle(color: Color(0xFFBEB501)),
+          ),),
+          )
+          
         )
       ],
     );

@@ -12,12 +12,12 @@ class SoldEntryPage extends StatelessWidget {
       children: <Widget>[
         LastTransactionCard(),
         SectionTitle(title: 'Supply History',),
-        Container(
-          padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 10.0),
-          margin: const EdgeInsets.only(top: 10.0),
-          color: Colors.white,
-          child: TransactionTable(),
-        ),
+        // Container(
+        //   padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 10.0),
+        //   margin: const EdgeInsets.only(top: 10.0),
+        //   color: Colors.white,
+        //   child: TransactionTable(),
+        // ),
         
       ],
     );

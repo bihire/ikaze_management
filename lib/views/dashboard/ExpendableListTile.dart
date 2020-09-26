@@ -3,73 +3,73 @@ import 'package:inventory_controller/models/moneyTransaction.dart';
 import './TransactioListTile.dart';
 
 class Expansionpanel extends StatefulWidget {
-  final List<MoneyTransactionModel> transactions;
-  Expansionpanel({
-    Key key,
-    @required this.transactions
-  }) : super(key: key);
+      final List<MoneyTransactionModel> transactions;
+      Expansionpanel({
+        Key key,
+        @required this.transactions,
+      }) : super(key: key);
 
-  Expansionpaneltate createState() => Expansionpaneltate();
-}
+      ExpansionListExampleState createState() => ExpansionListExampleState();
+    }
 
-class NewItem {
-  bool isExpanded;
-  final String header;
-  final Widget body;
-  final Icon iconpic;
-  NewItem(this.isExpanded, this.header, this.body, this.iconpic);
-}
+    class ExpansionListExampleState extends State<Expansionpanel> {
+      List<bool> openList;
 
-class Expansionpaneltate extends State<Expansionpanel> {
-  List<NewItem> items = <NewItem>[
-    NewItem(
-        false,
-        'Header',
-        Padding(
-            padding: EdgeInsets.all(20.0),
-            child: Column(children: <Widget>[
-              Text('data'),
-              Text('data'),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: <Widget>[
-                  Text('data'),
-                  Text('data'),
-                  Text('data'),
-                ],
-              ),
-              Radio(value: null, groupValue: null, onChanged: null),
-              //put the children here
-            ])),
-        Icon(Icons.image)),
-  ];
+      @override
+      void initState() {
+        openList = List.filled(widget.transactions.length, false);
+        super.initState();
+      }
 
-  Widget List_Criteria;
-
-  Widget build(BuildContext context) {
-    List_Criteria = Padding(
-      padding: EdgeInsets.all(10.0),
-      child: ExpansionPanelList(
-        expansionCallback: (int index, bool isExpanded) {
-          setState(() {
-            items[index].isExpanded = !items[index].isExpanded;
-          });
-        },
-        children: items.map((NewItem item) {
-          return ExpansionPanel(
-            headerBuilder: (BuildContext context, bool isExpanded) {
-              return MyListTile();
+      Widget build(BuildContext context) {
+        return Container(
+          child: Padding(
+          padding: EdgeInsets.all(10.0),
+          child: ExpansionPanelList(
+            expansionCallback: (index, isExpanded) {
+              setState(() {
+                openList[index] = !openList[index];
+              });
             },
-            canTapOnHeader: true,
-            isExpanded: item.isExpanded,
-            body: item.body,
-          );
-        }).toList(),
-      ),
-    );
+            children: getItemList(),
+          ),
+        ));
+      }
 
-    return Container(
-      child: List_Criteria,
-    );
-  }
-}
+      List<ExpansionPanel> getItemList() {
+        return widget.transactions
+            .asMap()
+            .map((index, item) {
+              return MapEntry(
+                  index,
+                  ExpansionPanel(
+                    headerBuilder: (context, isExpanded) {
+                      return MyListTile(header: item.productId,date: item.createdAt);
+                    },
+                    canTapOnHeader: true,
+                    isExpanded: openList[index],
+                    body: Padding(
+                      padding: EdgeInsets.all(20.0),
+                      child: Column(
+                        children: <Widget>[
+                          Text('data'),
+                          Text('data'),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: <Widget>[
+                              Text('data'),
+                              Text('data'),
+                              Text('data'),
+                            ],
+                          ),
+                          Radio(value: null, groupValue: null, onChanged: null),
+                          //put the children here
+                        ],
+                      ),
+                    ),
+                  ));
+            })
+            .values
+            .toList();
+      }
+    }

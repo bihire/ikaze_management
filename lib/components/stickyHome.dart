@@ -10,37 +10,8 @@ class ListSticky extends StatelessWidget {
   Widget build(BuildContext context) {
     return _Item(
       text: 'List Example',
-      builder: (_) => const ListExample(),
+      builder: (_) => const SoldEntryScreen(),
     );
-    // ListView(
-    //   children: <Widget>[
-
-    // _Item(
-    //   text: 'Grid Example',
-    //   builder: (_) => const GridExample(),
-    // ),
-    // _Item(
-    //   text: 'Not Sticky Example',
-    //   builder: (_) => const NotStickyExample(),
-    // ),
-    // _Item(
-    //   text: 'Side Header Example',
-    //   builder: (_) => const SideHeaderExample(),
-    // ),
-    // _Item(
-    //   text: 'Animated Header Example',
-    //   builder: (_) => const AnimatedHeaderExample(),
-    // ),
-    // _Item(
-    //   text: 'Reverse List Example',
-    //   builder: (_) => const ReverseExample(),
-    // ),
-    // _Item(
-    //   text: 'Mixing other slivers',
-    //   builder: (_) => const MixSliversExample(),
-    // ),
-    //   ],
-    // );
   }
 }
 

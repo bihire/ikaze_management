@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:inventory_controller/components/bottom_bar_navigation_pattern/animated_bottom_bar.dart';
-import 'package:inventory_controller/components/bottom_bar_navigation_pattern/bottom_bar_navigation_pattern_example.dart';
-import 'package:inventory_controller/components/sticky_header_list.dart';
+import 'package:inventory_controller/containers/homePage/sold_entry_container.dart';
 
 import 'package:inventory_controller/views/ProductDetail/NewEntryPage/NewEntryPage.dart';
-import 'package:inventory_controller/views/ProductDetail/SoldEntryPage/SoldEntryPage.dart';
 
 class ProductDetail extends StatefulWidget {
   @override
@@ -12,7 +10,7 @@ class ProductDetail extends StatefulWidget {
 }
 
 class ProductDetailState extends State {
-    int selectedBarIndex = 0;
+  int selectedBarIndex = 0;
   PageController _pageController;
 
   @override
@@ -55,7 +53,7 @@ class ProductDetailState extends State {
                   child: NewEntryPage()),
             ],),
             Expanded(
-              child: ListExample()
+              child: SoldEntryContainer()
             ),
           ],
         ),

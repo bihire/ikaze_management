@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:inventory_controller/containers/homePage/daily_total.dart';
+import 'package:inventory_controller/views/dashboard/samples/line_chart_sample1.dart';
 import './chart.dart';
 import './transactionTable.dart';
 
@@ -27,47 +29,10 @@ class DashBoardState extends State {
                 Container(
                     margin: const EdgeInsets.only(top: 40.0),
                     padding:EdgeInsets.symmetric(vertical: 0.0, horizontal: 10.0),
-                    decoration: BoxDecoration(
-                        // color: Colors.white,
-                        // border: Border.all(color: Colors.red, width: 1, style: BorderStyle.solid)
-                        ),
+                    
                     width: MediaQuery.of(context).size.width * 1,
-                    child: Column(
-                      children: <Widget>[
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: <Widget>[
-                            Padding(
-                              padding: EdgeInsets.only(right: 7.0),
-                              child: Text(
-                                "14,000 ",
-                                style: TextStyle(
-                                    fontSize: 34.0,
-                                    fontWeight: FontWeight.w600),
-                                textAlign: TextAlign.right,
-                              ),
-                            ),
-                            Text(
-                              "rwf",
-                              style: TextStyle(
-                                  fontSize: 18.0, fontWeight: FontWeight.w600),
-                              textAlign: TextAlign.right,
-                            ),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: <Widget>[
-                            Text(
-                              "Today's revenue",
-                              style: TextStyle(
-                                  fontSize: 14.0, fontWeight: FontWeight.w400),
-                              textAlign: TextAlign.right,
-                            ),
-                          ],
-                        ),
-                      ],
-                    )),
+                    child: DailyTotal()
+                    ),
                 Container(
                   margin: const EdgeInsets.only(top: 30.0),
                   child: SingleChildScrollView(
@@ -141,9 +106,10 @@ class DashBoardState extends State {
           color: Colors.white,
           height: 250,
           margin: const EdgeInsets.only(top: 10.0),
-          child: Chart(
-            data: data,
-          ),
+          child: LineChartSample2()
+          // Chart(
+          //   data: data,
+          // ),
         ),
         Container(
           padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 10.0),
