@@ -12,7 +12,7 @@ import 'package:redux_logging/redux_logging.dart';
 List<Middleware<AppState>> dashboardDailyTotalMiddleware() {
   return [
     TypedMiddleware<AppState, LoadDashboardDailyTotalAction>(_loadDailyTotal()),
-    LoggingMiddleware.printer(),
+    // LoggingMiddleware.printer(),
   ];
 }
 
@@ -33,7 +33,7 @@ _loadDailyTotal() {
 
 Future<String> _loadDailyTotalAmount() async {
   var response = await http
-      .get('http://192.168.43.56:5000/api/auth/transactions/daily_total');
+      .get('http://192.168.137.133:5000/api/auth/transactions/daily_total');
   if (response.statusCode == 200) {
     // List<MoneyTransactionModel> listFromJson(List<dynamic> json) {
     //   return json == null ? List<MoneyTransactionModel>() : json.map((value) => MoneyTransactionModel.fromJson(value)).toList();

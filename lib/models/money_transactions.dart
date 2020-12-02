@@ -6,6 +6,7 @@ class MoneyTransactionModel {
   String entryType;
   String quantity;
   String unitPrice;
+  String transactionTotal;
   String paidBy;
   DateTime createdAt;
   DateTime updatedAt;
@@ -20,6 +21,7 @@ class MoneyTransactionModel {
       quantity = json['quantity'],
       unitPrice = json['unitPrice'],
       paidBy = json['paidBy'],
+      transactionTotal = json['transactionTotal'],
       createdAt = DateTime.parse(json['createdAt']),
       updatedAt = DateTime.parse(json['updatedAt']);
     

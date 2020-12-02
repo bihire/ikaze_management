@@ -131,13 +131,13 @@ class BarChartSample1State extends State<BarChartSample1> {
       });
 
   BarChartData mainBarData() {
-    print(double.parse(widget.day_0));
-    print(double.parse(widget.day_1));
-    print(double.parse(widget.day_2));
-    print(double.parse(widget.day_3));
-    print(double.parse(widget.day_4));
-    print(double.parse(widget.day_5));
-    print(double.parse(widget.day_6));
+    // print(double.parse(widget.day_0));
+    // print(double.parse(widget.day_1));
+    // print(double.parse(widget.day_2));
+    // print(double.parse(widget.day_3));
+    // print(double.parse(widget.day_4));
+    // print(double.parse(widget.day_5));
+    // print(double.parse(widget.day_6));
 
     return BarChartData(
       barTouchData: BarTouchData(

@@ -47,6 +47,7 @@ bool _isDataLoadingFinishedReducer(bool _, dynamic action) {
 }
 
 bool _isNextPageAvailableReducer(bool isNextPageAvailable, dynamic action) {
+
   return (action is TransactionsPageLoadedAction)
       ? action.transactionsPage.length == TransactionState.transactionsPerPage
       : isNextPageAvailable;

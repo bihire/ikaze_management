@@ -12,7 +12,6 @@ class HomeContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return StoreConnector<AppState, _ViewModel>(
       builder: (context, vm) {
-        print(vm.transactions);
         return HomeScreen(
           isDataLoading: vm.isDataLoading,
           isNextPageAvailable: vm.isNextPageAvailable,
@@ -23,6 +22,7 @@ class HomeContainer extends StatelessWidget {
         );
       },
       converter: _ViewModel.fromStore,
+      distinct: true,
       onInit: (store) {
         store.dispatch(
           LoadTransactionsPageAction(

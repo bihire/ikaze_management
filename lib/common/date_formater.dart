@@ -52,7 +52,8 @@ class Utils {
         sentDay == currentDay)
       return {
         'dateClass': 'today',
-        'dateTime': '${makeDoubleDigit(sentHour)}:${makeDoubleDigit(sentMinutes)}'
+        'dateTime':
+            '${makeDoubleDigit(sentHour)}:${makeDoubleDigit(sentMinutes)}'
       };
     if (sentYear == currentYear &&
         sentMonth == currentMonth &&
@@ -79,5 +80,29 @@ class Utils {
       'dateTime':
           '$sentYear/${makeDoubleDigit(sentMonth)}/${makeDoubleDigit(sentDay)}'
     };
+  }
+
+  static dateToString(DateTime date) {
+    final dateObj = DateTime.now();
+    final currentMonth = dateObj.month;
+    final currentDay = dateObj.day;
+    final currentYear = dateObj.year;
+
+    final sentMonth = date.month;
+    final sentYear = date.year;
+    final sentDay = date.day;
+
+    if (sentYear == currentYear &&
+        sentMonth == currentMonth &&
+        sentDay == currentDay) return 'today';
+
+    return '$sentYear-${makeDoubleDigit(sentMonth)}-${makeDoubleDigit(sentDay)}';
+  }
+
+  static formatToDate(DateTime date) {
+    final sentMonth = date.month;
+    final sentYear = date.year;
+    final sentDay = date.day;
+    return '$sentYear-${makeDoubleDigit(sentMonth)}-${makeDoubleDigit(sentDay)}';
   }
 }

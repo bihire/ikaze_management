@@ -44,7 +44,6 @@ class _TransactionTableState extends State {
   }
 
   Widget build(BuildContext context) {
-    print(StoreConnector);
 
     return Container(
       height: 300.0,

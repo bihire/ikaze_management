@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:inventory_controller/components/bottom_bar_navigation_pattern/animated_bottom_bar.dart';
+import 'package:inventory_controller/components/sticky_list_try.dart';
 import 'package:inventory_controller/containers/homePage/sold_entry_container.dart';
 
 import 'package:inventory_controller/views/ProductDetail/NewEntryPage/NewEntryPage.dart';
@@ -53,7 +54,9 @@ class ProductDetailState extends State {
                   child: NewEntryPage()),
             ],),
             Expanded(
-              child: SoldEntryContainer()
+              child: 
+              // Example()
+              SoldEntryContainer()
             ),
           ],
         ),
