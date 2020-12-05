@@ -14,7 +14,6 @@ class PopupAppbarScreen extends StatefulWidget {
 class _PopupAppbarScreenState extends State<PopupAppbarScreen> {
   @override
   Widget build(BuildContext context) {
-    print(widget.underLine);
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,

@@ -12,6 +12,7 @@ import 'package:inventory_controller/redux/reducers/app_reducer.dart';
 import 'package:inventory_controller/redux/middlewares/all_transactins_middlewares.dart';
 // import 'package:inventory_controller/redux/store.dart';
 import 'package:inventory_controller/servives/TransactionService.dart';
+import 'package:inventory_controller/views/onboarding/onboarding.dart';
 import 'package:redux/redux.dart';
 // import './pages/home.dart';
 import 'package:get_it/get_it.dart';
@@ -49,7 +50,7 @@ class MyApp extends StatelessWidget {
       store: store,
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: MyHomePage(),
+        home: OnboardingScreen(),
         theme: ThemeData(
           primarySwatch: Colors.blue,
           visualDensity: VisualDensity.adaptivePlatformDensity,
