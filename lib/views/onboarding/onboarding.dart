@@ -1,6 +1,6 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:inventory_controller/views/auth/login/login.dart';
 import 'package:inventory_controller/views/onboarding/styles.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -28,7 +28,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       height: 8.0,
       width: isActive ? 24.0 : 16.0,
       decoration: BoxDecoration(
-        color: isActive ? Colors.white : Color(0xFF7B51D3),
+        color: isActive ? Color(0xFF0bd50b) : Color(0xFFD9D9D9),
         borderRadius: BorderRadius.all(Radius.circular(12)),
       ),
     );
@@ -40,39 +40,26 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       body: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.light,
         child: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              stops: [0.1, 0.4, 0.7, 0.9],
-              colors: [
-                Color(0xFF3594DD),
-                Color(0xFF4563DB),
-                Color(0xFF5036D5),
-                Color(0xFF5B16D0),
-              ],
-            ),
-          ),
+          decoration: BoxDecoration(color: Colors.white
+              // gradient: LinearGradient(
+              //   begin: Alignment.topCenter,
+              //   end: Alignment.bottomCenter,
+              //   stops: [0.1, 0.4, 0.7, 0.9],
+              //   colors: [
+              //     Color(0xFF3594DD),
+              //     Color(0xFF4563DB),
+              //     Color(0xFF5036D5),
+              //     Color(0xFF5B16D0),
+              //   ],
+              // ),
+              ),
           child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 40.0),
+            padding: EdgeInsets.only(top: 40.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
-                Container(
-                  alignment: Alignment.centerRight,
-                  child: FlatButton(
-                    onPressed: () => print('Skip'),
-                    child: Text(
-                      'Skip',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20.0,
-                      ),
-                    ),
-                  ),
-                ),
-                Container(
-                  height: 600.0,
+                Expanded(
+                  // height: 400.0,
                   child: PageView(
                     physics: ClampingScrollPhysics(),
                     controller: _pageController,
@@ -84,16 +71,16 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     children: <Widget>[
                       Padding(
                         padding: EdgeInsets.all(40.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        child: ListView(
+                          // crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Center(
                               child: Image(
                                 image: AssetImage(
-                                  'assets/images/onboarding0.png',
+                                  'assets/undraw_Data_re_80ws.png',
                                 ),
-                                height: 300.0,
-                                width: 300.0,
+                                // height: 300.0,
+                                // width: 300.0,
                               ),
                             ),
                             SizedBox(height: 30.0),
@@ -101,31 +88,24 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                               'Connect people\naround the world',
                               style: kTitleStyle,
                             ),
-                            SizedBox(height: 15.0),
-                            Text(
-                              'Lorem ipsum dolor sit amet, consect adipiscing elit, sed do eiusmod tempor incididunt ut labore et.',
-                              style: kSubtitleStyle,
-                            ),
                           ],
                         ),
                       ),
                       Padding(
                         padding: EdgeInsets.all(40.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        child: ListView(
+                          // crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Center(
                               child: Image(
                                 image: AssetImage(
-                                  'assets/images/onboarding1.png',
+                                  'assets/undraw_right_direction_tge8.png',
                                 ),
-                                height: 300.0,
-                                width: 300.0,
                               ),
                             ),
                             SizedBox(height: 30.0),
                             Text(
-                              'Live your life smarter\nwith us!',
+                              'Run your business in the right direction',
                               style: kTitleStyle,
                             ),
                             SizedBox(height: 15.0),
@@ -138,21 +118,19 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       ),
                       Padding(
                         padding: EdgeInsets.all(40.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        child: ListView(
+                          // crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Center(
                               child: Image(
                                 image: AssetImage(
-                                  'assets/images/onboarding2.png',
+                                  'assets/undraw_season_change_f99v.png',
                                 ),
-                                height: 300.0,
-                                width: 300.0,
                               ),
                             ),
                             SizedBox(height: 30.0),
                             Text(
-                              'Get a new experience\nof imagination',
+                              'Monitor all your season changes',
                               style: kTitleStyle,
                             ),
                             SizedBox(height: 15.0),
@@ -171,37 +149,76 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   children: _buildPageIndicator(),
                 ),
                 _currentPage != _numPages - 1
-                    ? Expanded(
-                        child: Align(
-                          alignment: FractionalOffset.bottomRight,
-                          child: FlatButton(
-                            onPressed: () {
-                              _pageController.nextPage(
-                                duration: Duration(milliseconds: 500),
-                                curve: Curves.ease,
-                              );
-                            },
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              mainAxisSize: MainAxisSize.min,
-                              children: <Widget>[
-                                Text(
-                                  'Next',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 22.0,
-                                  ),
-                                ),
-                                SizedBox(width: 10.0),
-                                Icon(
-                                  Icons.arrow_forward,
-                                  color: Colors.white,
-                                  size: 30.0,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
+                    ? Container(
+                        padding:
+                            EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              InkWell(
+                                  customBorder: new CircleBorder(),
+                                  onTap: () => print('Skip'),
+                                  splashColor: Colors.red,
+                                  child: Container(
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: 8, horizontal: 15),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(30),
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: <Widget>[
+                                        Text(
+                                          'Skip',
+                                          style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 18.0,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  )),
+                              InkWell(
+                                  customBorder: new CircleBorder(),
+                                  onTap: () {
+                                    _pageController.nextPage(
+                                      duration: Duration(milliseconds: 500),
+                                      curve: Curves.ease,
+                                    );
+                                  },
+                                  splashColor: Colors.red,
+                                  child: Container(
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: 8, horizontal: 15),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(30),
+                                      color: Color(0xFF0bd50b),
+                                    ),
+                                    // color: Colors.red,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: <Widget>[
+                                        Text(
+                                          'Next',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 18.0,
+                                          ),
+                                        ),
+                                        SizedBox(width: 10.0),
+                                        Icon(
+                                          Icons.arrow_forward,
+                                          color: Colors.white,
+                                          size: 25.0,
+                                        ),
+                                      ],
+                                    ),
+                                  )),
+                            ]),
                       )
                     : Text(''),
               ],
@@ -211,23 +228,64 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       ),
       bottomSheet: _currentPage == _numPages - 1
           ? Container(
+              decoration: BoxDecoration(
+                // border: Border(top: BorderSide(width: 1, color: Color(0xFF0bd50b)))
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(.5),
+                    spreadRadius: 1,
+                    blurRadius: 3,
+                    offset: Offset(0, 2), // changes position of shadow
+                  ),
+                ],
+                color: Colors.white,
+              ),
               height: 100.0,
               width: double.infinity,
-              color: Colors.white,
               child: GestureDetector(
                 onTap: () => print('Get started'),
                 child: Center(
-                  child: Padding(
-                    padding: EdgeInsets.only(bottom: 30.0),
-                    child: Text(
-                      'Get started',
-                      style: TextStyle(
-                        color: Color(0xFF5B16D0),
-                        fontSize: 20.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
+                  child: InkWell(
+                      customBorder: new CircleBorder(),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return LoginScreen();
+                            },
+                          ),
+                        );
+                      },
+                      splashColor: Colors.red,
+                      child: Container(
+                        padding:
+                            EdgeInsets.symmetric(vertical: 8, horizontal: 15),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30),
+                          color: Color(0xFF0bd50b),
+                        ),
+                        // color: Colors.red,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            Text(
+                              'Get started',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 18.0,
+                              ),
+                            ),
+                            SizedBox(width: 10.0),
+                            Icon(
+                              Icons.arrow_forward,
+                              color: Colors.white,
+                              size: 25.0,
+                            ),
+                          ],
+                        ),
+                      )),
                 ),
               ),
             )
