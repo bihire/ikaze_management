@@ -1,12 +1,14 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:animations/animations.dart';
+import 'package:inventory_controller/common/constants.dart';
 import 'package:inventory_controller/containers/homePage/homePopup/popupAppbar_container.dart';
 import 'package:inventory_controller/views/homePopup/popupAppbar_screen.dart';
 import 'package:inventory_controller/views/PopupMenuButtonPage/PopupMenuButtonPage.dart';
 import 'package:inventory_controller/views/ProductDetail/ProductDetail.dart';
 import 'package:inventory_controller/views/all_products/all_products.dart';
 import '../views/dashboard/dashboard.dart';
-
 
 class MyHomePage extends StatefulWidget {
   @override
@@ -18,11 +20,12 @@ class MyHomePage extends StatefulWidget {
 class MyHomePageState extends State<MyHomePage>
     with SingleTickerProviderStateMixin {
   AnimationController _controller;
+  bool _isDialogShowing = false;
 
   @override
   void initState() {
     _controller = AnimationController(
-      value: 0.0,
+      value: 1.0,
       duration: const Duration(milliseconds: 150),
       reverseDuration: const Duration(milliseconds: 75),
       vsync: this,
@@ -62,68 +65,96 @@ class MyHomePageState extends State<MyHomePage>
       appBar: AppBar(
         title: Text('data'),
       ),
-      body: DashBoard(),
-      floatingActionButton: AnimatedBuilder(
-        animation: _controller,
-        builder: (BuildContext context, Widget child) {
-          return FadeScaleTransition(
-            animation: _controller,
-            child: child,
-          );
-        },
-        child: Visibility(
-          visible: _controller.status != AnimationStatus.dismissed,
+      body: Stack(children: [
+        DashBoard(),
+        Positioned(
+          bottom: 30,
+          right: 30,
           child: FloatingActionButton(
-            child: const Icon(Icons.add),
+            child: const Icon(Icons.view_day_sharp),
+            backgroundColor: primaryColor,
             onPressed: () {
-              if (_isAnimationRunningForwardsOrComplete) {
-                _controller.reverse();
-              } else {
-                _controller.forward();
-              }
+              // if (_isAnimationRunningForwardsOrComplete) {
+              //   _controller.reverse();
+
+              // } else {
+              //   _controller.forward();
+
+              // }
+
+              showModal<void>(
+                context: context,
+                configuration: FadeScaleTransitionConfiguration(
+                    barrierColor: Colors.black.withOpacity(.7)),
+                builder: (BuildContext context) {
+                  return BackdropFilter(
+            filter: ImageFilter.blur(
+                sigmaX: 4, sigmaY: 4),
+            child:_ExampleAlertDialog(loading: loading));
+                },
+              );
             },
           ),
         ),
-      ),
-      bottomNavigationBar: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          const Divider(height: 0.0),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                ElevatedButton(
-                  onPressed: () {
-                    showModal<void>(
-                      context: context,
-                      configuration: FadeScaleTransitionConfiguration(barrierColor: Colors.black.withOpacity(.7)),
-                      builder: (BuildContext context) {
-                        return _ExampleAlertDialog(loading: loading);
-                      },
-                    );
-                  },
-                  child: const Text('SHOW MODAL'),
-                ),
-                const SizedBox(width: 10),
-                ElevatedButton(
-                  onPressed: () {
-                    if (_isAnimationRunningForwardsOrComplete) {
-                      _controller.reverse();
-                    } else {
-                      _controller.forward();
-                    }
-                  },
-                  child: _isAnimationRunningForwardsOrComplete
-                      ? const Text('HIDE FAB')
-                      : const Text('SHOW FAB'),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
+      ]),
+      // floatingActionButton: AnimatedBuilder(
+      //   animation: _controller,
+      //   builder: (BuildContext context, Widget child) {
+      //     return FadeScaleTransition(
+      //       animation: _controller,
+      //       child: child,
+      //     );
+      //   },
+      //   child: Visibility(
+      //     visible: _controller.status != AnimationStatus.dismissed,
+      //     child: FloatingActionButton(
+      //       child: const Icon(Icons.add),
+      //       onPressed: () {
+      //         if (_isAnimationRunningForwardsOrComplete) {
+      //           _controller.reverse();
+
+      //         } else {
+      //           _controller.forward();
+
+      //         }
+      //       },
+      //     ),
+      //   ),
+      // ),
+      // bottomNavigationBar: Column(
+      //   mainAxisSize: MainAxisSize.min,
+      //   children: <Widget>[
+      //     const Divider(height: 0.0),
+      //     Padding(
+      //       padding: const EdgeInsets.symmetric(vertical: 8.0),
+      //       child: Row(
+      //         mainAxisAlignment: MainAxisAlignment.center,
+      //         children: <Widget>[
+      //           ElevatedButton(
+      //             onPressed: () {
+
+      //               );
+      //             },
+      //             child: const Text('SHOW MODAL'),
+      //           ),
+      //           const SizedBox(width: 10),
+      //           ElevatedButton(
+      //             onPressed: () {
+      //               if (_isAnimationRunningForwardsOrComplete) {
+      //                 _controller.reverse();
+      //               } else {
+      //                 _controller.forward();
+      //               }
+      //             },
+      //             child: _isAnimationRunningForwardsOrComplete
+      //                 ? const Text('HIDE FAB')
+      //                 : const Text('SHOW FAB'),
+      //           ),
+      //         ],
+      //       ),
+      //     ),
+      //   ],
+      // ),
     );
   }
 }
@@ -159,7 +190,6 @@ class __ExampleAlertDialogState extends State<_ExampleAlertDialog> {
       // color: Colors.white,
       margin: EdgeInsets.symmetric(vertical: 50, horizontal: 20),
       child: Expanded(
-        
         child: ClipRRect(
           borderRadius: BorderRadius.circular(5),
           child: Material(
@@ -177,23 +207,30 @@ class __ExampleAlertDialogState extends State<_ExampleAlertDialog> {
                     padding: EdgeInsets.symmetric(vertical: 20, horizontal: 12),
                     itemCount: 16,
                     separatorBuilder: (context, index) {
-                      return Divider();
+                      return Divider(
+                        height: 1,
+                      );
                     },
                     itemBuilder: (BuildContext ctxt, int index) {
                       return InkWell(
+                        highlightColor: primaryColor.withOpacity(.4),
+                        splashColor: primaryColor,
                         onTap: () {
                           Navigator.of(context).pop();
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => ProductDetail()));
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ProductDetail()));
                         },
                         child: Container(
                           padding:
-                              EdgeInsets.symmetric(vertical: 10, horizontal: 3),
+                              EdgeInsets.symmetric(vertical: 20, horizontal: 3),
                           // width: MediaQuery.of(context).size.width * 1,
                           child: Row(
                             children: <Widget>[
                               Icon(
                                 Icons.radio_button_unchecked,
-                                color: Colors.blue,
+                                color: primaryColor,
                                 size: 7.0,
                               ),
                               SizedBox(
