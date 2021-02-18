@@ -1,125 +1,89 @@
 import 'package:flutter/material.dart';
-import 'package:inventory_controller/components/bottom_bar_navigation_pattern/bottom_bar_navigation_pattern_example.dart';
+import 'package:inventory_controller/common/constants.dart';
+import 'package:inventory_controller/components/common.dart';
+import 'package:inventory_controller/components/github_issue_list_item.dart';
 import 'package:inventory_controller/views/ProductDetail/NewEntryPage/barChart_with_tab.dart';
-import 'package:inventory_controller/views/ProductDetail/NewEntryPage/bar_chart.dart';
 import 'package:inventory_controller/views/ProductDetail/NewEntryPage/top_summary_card.dart';
 
-class NewEntryPage extends StatefulWidget {
+import 'components/persistent_header.dart';
+
+class NewEntryScreen extends StatefulWidget {
+  const NewEntryScreen({
+    Key key,
+    this.loading,
+    this.isNextPageAvailable,
+    this.transactions,
+    this.refresh,
+    this.loadNextPage,
+    this.noError,
+  });
+
+  final bool loading;
+  final bool isNextPageAvailable;
+  final transactions;
+  final Function refresh;
+  final Function loadNextPage;
+  final bool noError;
   @override
   State<StatefulWidget> createState() => NewEntryPageState();
 }
 
-class NewEntryPageState extends State<NewEntryPage>
-  with SingleTickerProviderStateMixin {
-  final List<Tab> myTabs = <Tab>[
-    Tab(text: 'bro'),
-    Tab(text: 'bro'),
-    Tab(text: 'bro'),
-    Tab(text: 'bro'),
-    Tab(text: 'bro'),
-    Tab(text: 'bro'),
-    Tab(text: 'bro'),
-    Tab(text: 'bro'),
-    Tab(text: 'bro'),
-    Tab(text: 'bro'),
-    Tab(text: 'bro'),
-    Tab(text: 'bro'),
-    Tab(text: 'bro'),
-    Tab(text: 'bro'),
-    Tab(text: 'bro'),
-    Tab(text: 'bro'),
-    Tab(text: 'bro'),
-    Tab(text: 'bro'),
-    Tab(text: 'bro'),
-    Tab(text: 'bro'),
-  ];
-
-  TabController _tabController;
-
-  @override
-  void initState() {
-    super.initState();
-    _tabController = TabController(vsync: this, length: myTabs.length);
-  }
-
-  @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
-  }
-
+class NewEntryPageState extends State<NewEntryScreen> {
+  
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    return Column(
-      children: <Widget>[
-        TopSummaryCard(),
-        Example()
-      ],
+    return SafeArea(
+          child: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+                    backgroundColor: Colors.white,
+                    pinned: true,
+                    titleSpacing: 0,
+                    elevation: 3,
+                    title: Row(
+                      children: [
+                        Expanded(
+                          child: Container(
+                            padding: EdgeInsets.only(top: 10, bottom: 10, left: 10),
+                            child: Text('Lime new-entries', style: TextStyle(color: Colors.black),)
+                          ),
+                        ),
+                        // Container(
+                        //   child: LeadingButton(
+                        //     color: lightShadeColor,
+                        //     icon: Icons.qr_code_scanner_rounded,
+                        //     iconColor: darkColor,
+                        //     size: 37, // btnShadow: false
+                        //   ),
+                        // ),
+                      ],
+                    ),
+                  ),
+          SliverToBoxAdapter(
+            child: TopSummaryCard(),
+          ),
+          SliverToBoxAdapter(
+            child: Example(),
+          ),
+          SliverPersistentHeader(
+            delegate: PersistentHeader(
+              widget: HeaderDatePicker()
+            ),
+            pinned: true,
+            ),
+          SliverList(
+            delegate: SliverChildBuilderDelegate((context, index) {
+              return MoneyTransactionModelListItem(
+                itemIndex: index, transaction: widget.transactions[index]);
+                
+            }, 
+            childCount: widget.transactions.length
+            ),
+            
+            )
+          
+        ],
+      ),
     );
   }
 }
-
-
-        // Container(
-        //   margin: EdgeInsets.symmetric(vertical: 20.0),
-        //   padding: const EdgeInsets.all(10.0),
-        //   color: Colors.white,
-        //   child: Column(
-        //     children: <Widget>[
-        //       // Container(
-        //       //   child: Row(
-        //       //     children: [
-        //       //       IconButton(
-        //       //         icon: Icon(Icons.arrow_back_ios),
-        //       //         onPressed: () {
-        //       //           if (_tabController.index > 0) {
-        //       //             _tabController.animateTo(_tabController.index - 1);
-        //       //           } else {
-        //       //             Scaffold.of(context).showSnackBar(SnackBar(
-        //       //               content: Text("Can't go back"),
-        //       //             ));
-        //       //           }
-        //       //         },
-        //       //       ),
-        //       //       Expanded(
-        //       //         child: TabBar(
-        //       //           isScrollable: true,
-        //       //           controller: _tabController,
-        //       //           labelStyle: TextStyle(color: Colors.black),
-        //       //           unselectedLabelColor: Colors.black,
-        //       //           labelColor: Colors.blue,
-        //       //           tabs: List.generate(
-        //       //             20,
-        //       //             (index) {
-        //       //               return Tab(
-        //       //                 text: "Tab $index",
-        //       //               );
-        //       //             },
-        //       //           ),
-        //       //         ),
-        //       //       ),
-        //       //       IconButton(
-        //       //         icon: Icon(Icons.arrow_forward_ios),
-        //       //         onPressed: () {
-        //       //           if (_tabController.index + 1 < 20) {
-        //       //             _tabController.animateTo(_tabController.index + 1);
-        //       //           } else {
-        //       //             Scaffold.of(context).showSnackBar(SnackBar(
-        //       //               content: Text("Can't move forward"),
-        //       //             ));
-        //       //           }
-        //       //         },
-        //       //       ),
-        //       //     ],
-        //       //   ),
-        //       //   //   }
-        //       // ),
-        //       // )
-        //       // BarChartSample1(),
-
-        //       Example()
-        //     ],
-        //   ),
-        // ),
-        // BottomBarNavigationPatternExample(),

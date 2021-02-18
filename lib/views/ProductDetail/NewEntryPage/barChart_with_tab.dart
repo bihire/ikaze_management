@@ -26,7 +26,7 @@ class _ExampleState extends State<Example> {
         // print(;
         return Container(
           margin: const EdgeInsets.only(top: 20.0),
-          padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+          padding: EdgeInsets.symmetric(vertical: 10.0),
           decoration: BoxDecoration(
             color: Colors.white,
             // border: Border.all(color: Colors.red, width: 1, style: BorderStyle.solid)
@@ -45,7 +45,7 @@ class _ExampleState extends State<Example> {
                       color: Colors.black, fontWeight: FontWeight.normal),
                   labelStyle: TextStyle(color: Colors.white),
                   contentPadding:
-                      EdgeInsets.symmetric(vertical: 2.0, horizontal: 11.0),
+                      EdgeInsets.symmetric(vertical: 0.0, horizontal: 11.0),
                   tabs: [
                     Tab(
                       text: "Overall(Dailly)",
@@ -61,15 +61,19 @@ class _ExampleState extends State<Example> {
                 Expanded(
                   child: TabBarView(
                     children: <Widget>[
-                      Center(
-                        child: BarChartSample1(
-                          day_0: ((vm.overalDailydata).firstWhere((item) => item.rangeName == 'day_0')).totalAmount,
-                          day_1: ((vm.overalDailydata).firstWhere((item) => item.rangeName == 'day_1')).totalAmount,
-                          day_2: ((vm.overalDailydata).firstWhere((item) => item.rangeName == 'day_2')).totalAmount,
-                          day_3: ((vm.overalDailydata).firstWhere((item) => item.rangeName == 'day_3')).totalAmount,
-                          day_4: ((vm.overalDailydata).firstWhere((item) => item.rangeName == 'day_4')).totalAmount,
-                          day_5: ((vm.overalDailydata).firstWhere((item) => item.rangeName == 'day_5')).totalAmount,
-                          day_6: ((vm.overalDailydata).firstWhere((item) => item.rangeName == 'day_6')).totalAmount,
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal:10.0),
+                        child: Center(
+                          
+                          child: BarChartSample1(
+                            day_0: ((vm.overalDailydata).firstWhere((item) => item.rangeName == 'day_0')).totalAmount,
+                            day_1: ((vm.overalDailydata).firstWhere((item) => item.rangeName == 'day_1')).totalAmount,
+                            day_2: ((vm.overalDailydata).firstWhere((item) => item.rangeName == 'day_2')).totalAmount,
+                            day_3: ((vm.overalDailydata).firstWhere((item) => item.rangeName == 'day_3')).totalAmount,
+                            day_4: ((vm.overalDailydata).firstWhere((item) => item.rangeName == 'day_4')).totalAmount,
+                            day_5: ((vm.overalDailydata).firstWhere((item) => item.rangeName == 'day_5')).totalAmount,
+                            day_6: ((vm.overalDailydata).firstWhere((item) => item.rangeName == 'day_6')).totalAmount,
+                          ),
                         ),
                       ),
                       Center(

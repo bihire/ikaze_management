@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:inventory_controller/components/bottom_bar_navigation_pattern/animated_bottom_bar.dart';
+import 'package:inventory_controller/components/custom_tabs.dart';
 import 'package:inventory_controller/components/sticky_list_try.dart';
-import 'package:inventory_controller/containers/homePage/sold_entry_container.dart';
+import 'package:inventory_controller/containers/entryPage/newEntry/new_entry_container.dart';
+import 'package:inventory_controller/containers/entryPage/sold_entry_container.dart';
 
 import 'package:inventory_controller/views/ProductDetail/NewEntryPage/NewEntryPage.dart';
 
@@ -29,55 +31,104 @@ class ProductDetailState extends State {
   @override
   Widget build(BuildContext context) {
 
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        title: Text('Lime new-entries', style: TextStyle(color: Colors.black),),
-      ),
-      body: SizedBox(
-        child: PageView(
-          
-          controller: _pageController,
-          onPageChanged: (index) {
-            setState(() => selectedBarIndex= index);
-          },
-          children: <Widget>[
-            
-            ListView(
-              shrinkWrap: true,
-              children: <Widget>[
-              
-              // Container(color: Colors.purple, child: NewEntryPage(),),
-              Container(
-                  padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 0.0),
-                  alignment: Alignment.topLeft,
-                  child: NewEntryPage()),
-            ],),
-            Expanded(
-              child: 
-              // Example()
-              SoldEntryContainer()
+    return  Material(
+          child: DefaultTabController(
+            length: 2,
+            child: NestedScrollView(
+              physics: BouncingScrollPhysics(),
+              headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+                return <Widget>[
+                  // SliverPersistentHeader(
+                  //   delegate: PersistentHeader(
+                  //     widget: 
+                  //     CustomTabs(
+                  //       tabs: [
+                  //         Tab(
+                  //           text: "Products",
+                  //         ),
+                  //         Tab(
+                  //           text: "Shops",
+                  //         ),
+                  //       ],
+                  //     )
+                  //   ),
+                  //   pinned: true,
+                  // ),
+                  
+                ];
+              },
+              body: Column(
+                children: [
+                  Expanded(
+                    child: TabBarView(
+                      children: <Widget>[
+                        NewEntryContainer(),
+                        SoldEntryContainer()
+                      ],
+                    ),
+                  ),
+                  Container(
+                    child: CustomTabs(
+                        tabs: [
+                          Tab(
+                            text: "Products",
+                            icon: Icon(Icons.assignment_returned),
+                          ),
+                          Tab(
+                            text: "Shops",
+                            icon: Icon(Icons.apps),
+                          ),
+                        ],
+                      ),
+                  )
+                ],
+              ),
             ),
-          ],
-        ),
+          
       ),
-      bottomNavigationBar: BottomNavyBar(
-        selectedIndex: selectedBarIndex,
-        onItemSelected: (index) {
-          setState(() => selectedBarIndex = index);
-          _pageController.jumpToPage(index);
-        },
-        items: <BottomNavyBarItem>[
-          BottomNavyBarItem(
-            title: Text('Sold-entries'),
-            icon: Icon(Icons.assignment_returned)
-          ),
-          BottomNavyBarItem(
-            title: Text('New-entries'),
-            icon: Icon(Icons.apps)
-          ),
-        ],
-        ),
     );
+    // PageView(
+          
+    //       controller: _pageController,
+    //       onPageChanged: (index) {
+    //         setState(() => selectedBarIndex= index);
+    //       },
+    //       children: <Widget>[
+    //         Expanded(
+    //           child: NewEntryContainer()),
+    //         Expanded(
+    //           child: 
+    //           // Example()
+    //           SoldEntryContainer()
+    //         ),
+    //       ],
+    //     );
+    
+    // Scaffold(
+    //   appBar: AppBar(
+    //     backgroundColor: Colors.white,
+    //     title: Text('Lime new-entries', style: TextStyle(color: Colors.black),),
+    //   ),
+    //   body: SizedBox(
+    //     child: 
+    //   ),
+    //   bottomNavigationBar: BottomNavyBar(
+    //     selectedIndex: selectedBarIndex,
+    //     onItemSelected: (index) {
+    //       setState(() => selectedBarIndex = index);
+    //       _pageController.jumpToPage(index);
+    //     },
+    //     items: <BottomNavyBarItem>[
+    //       BottomNavyBarItem(
+    //         title: Text('Sold-entries'),
+    //         icon: Icon(Icons.assignment_returned)
+    //       ),
+    //       BottomNavyBarItem(
+    //         title: Text('New-entries'),
+    //         icon: Icon(Icons.apps)
+    //       ),
+    //     ],
+    //     ),
+    // );
   }
 }

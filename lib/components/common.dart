@@ -128,99 +128,21 @@ class HeaderDatePicker extends StatelessWidget {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width - 30;
 
-    return Row(children: [
+    return Column(children: [
       Container(
-        margin: EdgeInsets.only(top: 7.0),
+        margin: EdgeInsets.only(top: 7.0, left: 7.0, right: 7.0),
         padding: EdgeInsets.symmetric(horizontal: 11.0, vertical: 7.0),
                   alignment: Alignment.centerLeft,
         child: OpenContainer(
         closedBuilder: (_, openContainer) {
           return Container(
-                    color: Colors.blue,
-                    child: Container(
-                    decoration: BoxDecoration(
-                      // border: Border.all(color: Color(0xFFBEB501)),
-                      color: Color(0xFFBEB501).withOpacity(0.2),
-                      borderRadius: BorderRadius.all(
-                          Radius.circular(5.0) //                 <--- border radius here
-                      ),
-                    ),
-                    width: width,
-
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 7.0, vertical: 10.0),
-                          child:  Column(
-                          children: <Widget>[
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: <Widget>[
-                                Padding(
-                                  padding: EdgeInsets.only(right: 7.0),
-                                  child: Text(
-                                    "From",
-                                    style: TextStyle(
-                                        fontSize: 16.0,
-                                        fontWeight: FontWeight.w600),
-                                    textAlign: TextAlign.right,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: <Widget>[
-                                Text(
-                                  "2020-07-12",
-                                  style: TextStyle(
-                                      fontSize: 14.0, fontWeight: FontWeight.w400, color: Color(0xFFD9D9D9)),
-                                  textAlign: TextAlign.right,
-                                ),
-                              ],
-                            ),
-
-                            ]
-                          ),
-                        ),
-                        Container(
-                          child:  Column(
-                          children: <Widget>[
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: <Widget>[
-                                Padding(
-                                  padding: EdgeInsets.only(right: 7.0),
-                                  child: Text(
-                                    "To",
-                                    style: TextStyle(
-                                        fontSize: 16.0,
-                                        fontWeight: FontWeight.w600),
-                                    textAlign: TextAlign.right,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: <Widget>[
-                                Text(
-                                  "2020-07-12",
-                                  style: TextStyle(
-                                      fontSize: 14.0, fontWeight: FontWeight.w400, color: Color(0xFFD9D9D9)),
-                                  textAlign: TextAlign.right,
-                                ),
-                              ],
-                            ),
-
-                            ]
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  );
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Colors.grey[200]),
+                width: width,
+            height: 40,
+            child: Center(child: Text('Search by range here...', style: TextStyle(color: Colors.grey[500]),),),
+          );
         },
         openColor: Color(0xFFBEB501),
         closedElevation: 0,
@@ -231,6 +153,14 @@ class HeaderDatePicker extends StatelessWidget {
           return ProductRange();
           
         }),
+      ),
+      Container(
+        padding: EdgeInsets.symmetric(horizontal: 5, vertical: 1),
+        decoration: BoxDecoration(
+          color: Colors.black,
+          borderRadius: BorderRadius.circular(5)
+        ),
+        child: Text('today', style: TextStyle(color: Colors.white),),
       )
     ],);
     ;
