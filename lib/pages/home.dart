@@ -1,14 +1,19 @@
 import 'dart:ui';
+import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:animations/animations.dart';
 import 'package:inventory_controller/common/constants.dart';
+import 'package:inventory_controller/components/leadingButton/leading_button.dart';
 import 'package:inventory_controller/containers/homePage/homePopup/popupAppbar_container.dart';
+import 'package:inventory_controller/containers/homePage/home_container.dart';
 import 'package:inventory_controller/views/homePopup/popupAppbar_screen.dart';
 import 'package:inventory_controller/views/PopupMenuButtonPage/PopupMenuButtonPage.dart';
 import 'package:inventory_controller/views/ProductDetail/ProductDetail.dart';
 import 'package:inventory_controller/views/all_products/all_products.dart';
+import 'package:inventory_controller/views/notificationDrawer/notification_drawer.dart';
 import '../views/dashboard/dashboard.dart';
+import 'package:flutter_svg/svg.dart';
 
 class MyHomePage extends StatefulWidget {
   @override
@@ -21,6 +26,7 @@ class MyHomePageState extends State<MyHomePage>
     with SingleTickerProviderStateMixin {
   AnimationController _controller;
   bool _isDialogShowing = false;
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
@@ -62,11 +68,62 @@ class MyHomePageState extends State<MyHomePage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
+      drawerEnableOpenDragGesture: false,
+      drawer: NotificationDrawer(),
       appBar: AppBar(
-        title: Text('data'),
+        backgroundColor: primaryLightColor,
+        titleSpacing: 0,
+        automaticallyImplyLeading: false,
+        title: Row(
+          children: [
+            InkWell(
+              onTap: () {
+                _scaffoldKey.currentState.openDrawer();
+              },
+              // customBorder: BorderRadius.circular(50),
+              child: Container(
+                margin: EdgeInsets.only(left: 16, right: 16),
+                child: SvgPicture.asset(
+                  "assets/svg/agaseke_logo.svg",
+                  color: Color(0xFF0bd50b),
+                  height: 45,
+                  width: 25,
+                ),
+              ),
+            ),
+            Expanded(
+              child: Container(
+                  padding: EdgeInsets.only(top: 10, bottom: 10, left: 10),
+                  child: Text(
+                    'Lime new-entries',
+                    style: TextStyle(color: Colors.black),
+                  )),
+            ),
+            Container(
+              child: LeadingButton(
+                color: lightShadeColor,
+                icon: Icons.send,
+                margin: EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 0),
+                rotate: -20 * math.pi / 180,
+                iconColor: darkColor,
+                onPressed: ()=> { _scaffoldKey.currentState.openDrawer()},
+                size: 37, // btnShadow: false
+              ),
+            ),
+            Container(
+              child: LeadingButton(
+                color: lightShadeColor,
+                icon: Icons.more_horiz_outlined,
+                iconColor: darkColor,
+                size: 37, // btnShadow: false
+              ),
+            ),
+          ],
+        ),
       ),
       body: Stack(children: [
-        DashBoard(),
+        HomePageContainer(),
         Positioned(
           bottom: 30,
           right: 30,
@@ -88,73 +145,14 @@ class MyHomePageState extends State<MyHomePage>
                     barrierColor: Colors.black.withOpacity(.7)),
                 builder: (BuildContext context) {
                   return BackdropFilter(
-            filter: ImageFilter.blur(
-                sigmaX: 4, sigmaY: 4),
-            child:_ExampleAlertDialog(loading: loading));
+                      filter: ImageFilter.blur(sigmaX: 4, sigmaY: 4),
+                      child: _ExampleAlertDialog(loading: loading));
                 },
               );
             },
           ),
         ),
       ]),
-      // floatingActionButton: AnimatedBuilder(
-      //   animation: _controller,
-      //   builder: (BuildContext context, Widget child) {
-      //     return FadeScaleTransition(
-      //       animation: _controller,
-      //       child: child,
-      //     );
-      //   },
-      //   child: Visibility(
-      //     visible: _controller.status != AnimationStatus.dismissed,
-      //     child: FloatingActionButton(
-      //       child: const Icon(Icons.add),
-      //       onPressed: () {
-      //         if (_isAnimationRunningForwardsOrComplete) {
-      //           _controller.reverse();
-
-      //         } else {
-      //           _controller.forward();
-
-      //         }
-      //       },
-      //     ),
-      //   ),
-      // ),
-      // bottomNavigationBar: Column(
-      //   mainAxisSize: MainAxisSize.min,
-      //   children: <Widget>[
-      //     const Divider(height: 0.0),
-      //     Padding(
-      //       padding: const EdgeInsets.symmetric(vertical: 8.0),
-      //       child: Row(
-      //         mainAxisAlignment: MainAxisAlignment.center,
-      //         children: <Widget>[
-      //           ElevatedButton(
-      //             onPressed: () {
-
-      //               );
-      //             },
-      //             child: const Text('SHOW MODAL'),
-      //           ),
-      //           const SizedBox(width: 10),
-      //           ElevatedButton(
-      //             onPressed: () {
-      //               if (_isAnimationRunningForwardsOrComplete) {
-      //                 _controller.reverse();
-      //               } else {
-      //                 _controller.forward();
-      //               }
-      //             },
-      //             child: _isAnimationRunningForwardsOrComplete
-      //                 ? const Text('HIDE FAB')
-      //                 : const Text('SHOW FAB'),
-      //           ),
-      //         ],
-      //       ),
-      //     ),
-      //   ],
-      // ),
     );
   }
 }

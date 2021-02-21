@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 // import 'package:inventory_controller/containers/homePage/overal_daily_mv.dart';
-import 'package:inventory_controller/views/ProductDetail/NewEntryPage/bar_chart.dart';
+import 'package:inventory_controller/views/ProductDetail/NewEntryPage/components/bar_chart.dart';
 // import 'package:inventory_controller/views/ProductDetail/NewEntryPage/bar_chart.dart';
 import 'package:inventory_controller/views/screens/buttons_tabbar.dart';
 

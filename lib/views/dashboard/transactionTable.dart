@@ -47,7 +47,7 @@ class _TransactionTableState extends State {
 
     return Container(
       height: 300.0,
-      child: HomeContainer(),
+      child: HomePageContainer(),
     );
 
     // ;

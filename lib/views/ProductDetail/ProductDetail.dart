@@ -3,7 +3,7 @@ import 'package:inventory_controller/components/bottom_bar_navigation_pattern/an
 import 'package:inventory_controller/components/custom_tabs.dart';
 import 'package:inventory_controller/components/sticky_list_try.dart';
 import 'package:inventory_controller/containers/entryPage/newEntry/new_entry_container.dart';
-import 'package:inventory_controller/containers/entryPage/sold_entry_container.dart';
+import 'package:inventory_controller/containers/entryPage/SoldEntry/sold_entry_container.dart';
 
 import 'package:inventory_controller/views/ProductDetail/NewEntryPage/NewEntryPage.dart';
 
@@ -71,11 +71,11 @@ class ProductDetailState extends State {
                     child: CustomTabs(
                         tabs: [
                           Tab(
-                            text: "Products",
+                            text: "Sold",
                             icon: Icon(Icons.assignment_returned),
                           ),
                           Tab(
-                            text: "Shops",
+                            text: "Supplies",
                             icon: Icon(Icons.apps),
                           ),
                         ],

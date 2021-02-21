@@ -5,11 +5,12 @@ import 'package:inventory_controller/components/github_issue_list_item.dart';
 import 'package:inventory_controller/components/leadingButton/leading_button.dart';
 import 'package:inventory_controller/views/ProductDetail/NewEntryPage/components/barChart_with_tab.dart';
 import 'package:inventory_controller/views/ProductDetail/NewEntryPage/components/top_summary_card.dart';
+import 'package:inventory_controller/views/ProductDetail/SoldEntryPage/components/SoldEntryPage.dart';
 
 import 'components/persistent_header.dart';
 
-class NewEntryScreen extends StatefulWidget {
-  const NewEntryScreen({
+class SoldEntryScreen extends StatefulWidget {
+  const SoldEntryScreen({
     Key key,
     this.loading,
     this.isNextPageAvailable,
@@ -26,10 +27,10 @@ class NewEntryScreen extends StatefulWidget {
   final Function loadNextPage;
   final bool noError;
   @override
-  State<StatefulWidget> createState() => NewEntryPageState();
+  State<StatefulWidget> createState() => SoldEntryPageState();
 }
 
-class NewEntryPageState extends State<NewEntryScreen> with AutomaticKeepAliveClientMixin <NewEntryScreen> {
+class SoldEntryPageState extends State<SoldEntryScreen> with AutomaticKeepAliveClientMixin <SoldEntryScreen> {
   
   @override
   Widget build(BuildContext context) {
@@ -55,32 +56,23 @@ class NewEntryPageState extends State<NewEntryScreen> with AutomaticKeepAliveCli
                         Expanded(
                           child: Container(
                             padding: EdgeInsets.only(top: 10, bottom: 10, left: 10),
-                            child: Text('Lime new-entries', style: TextStyle(color: Colors.black),)
+                            child: Text('Lime supply-entries', style: TextStyle(color: Colors.black),)
                           ),
                         ),
-                        Container(
-                          child: LeadingButton(
-                            color: lightShadeColor,
-                            icon: Icons.more_horiz_outlined,
-                            iconColor: darkColor,
-                            size: 37, // btnShadow: false
-                          ),
-                        ),
+                        
                       ],
                     ),
                   ),
           SliverToBoxAdapter(
-            child: TopSummaryCard(),
+            child: SoldEntryPage(),
           ),
-          SliverToBoxAdapter(
-            child: Example(),
-          ),
-          SliverPersistentHeader(
-            delegate: PersistentHeader(
-              widget: HeaderDatePicker()
-            ),
-            pinned: true,
-            ),
+          
+          // SliverPersistentHeader(
+          //   delegate: PersistentHeader(
+          //     widget: HeaderDatePicker()
+          //   ),
+          //   pinned: true,
+          //   ),
           SliverList(
             delegate: SliverChildBuilderDelegate((context, index) {
               return MoneyTransactionModelListItem(

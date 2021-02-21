@@ -6,7 +6,7 @@ import 'package:inventory_controller/components/custom_progress_indicator.dart';
 import 'package:inventory_controller/components/github_issue_list_item.dart';
 import 'package:inventory_controller/components/sticky_list_try.dart';
 import 'package:inventory_controller/models/moneyTransaction.dart';
-import 'package:inventory_controller/views/ProductDetail/SoldEntryPage/SoldEntryPage.dart';
+import 'package:inventory_controller/views/ProductDetail/SoldEntryPage/components/SoldEntryPage.dart';
 // import 'package:inventory_controller/views/dashboard/ExpendableListTile.dart';
 import 'package:inventory_controller/views/dashboard/transactionTable.dart';
 import 'package:inventory_controller/views/screens/home_screen.dart';
