@@ -9,11 +9,8 @@ import 'package:inventory_controller/redux/appState/app_state.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_logging/redux_logging.dart';
 
-List<Middleware<AppState>> dashboardDailyTotalMiddleware() {
-  return [
-    TypedMiddleware<AppState, LoadDashboardDailyTotalAction>(_loadDailyTotal()),
-    // LoggingMiddleware.printer(),
-  ];
+Middleware<AppState> dashboardDailyTotalMiddleware() {
+  return TypedMiddleware<AppState, LoadDashboardDailyTotalAction>(_loadDailyTotal());
 }
 
 _loadDailyTotal() {

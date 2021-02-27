@@ -1,6 +1,6 @@
 
 import 'package:inventory_controller/redux/actions/dashboard_daily_total.dart';
-import 'package:inventory_controller/redux/appState/dashboard_daily_total_state.dart';
+import 'package:inventory_controller/redux/appState/homePage/dashboard_daily_total_state.dart';
 
 import 'package:redux/redux.dart';
 

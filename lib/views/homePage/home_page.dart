@@ -6,6 +6,7 @@ import 'package:inventory_controller/components/leadingButton/leading_button.dar
 import 'package:inventory_controller/containers/homePage/daily_total.dart';
 import 'package:inventory_controller/views/ProductDetail/NewEntryPage/components/barChart_with_tab.dart';
 import 'package:inventory_controller/views/ProductDetail/NewEntryPage/components/top_summary_card.dart';
+import 'package:inventory_controller/views/homePage/chartSlide/home_chart_slide.dart';
 
 
 import 'components/persistent_header.dart';
@@ -38,39 +39,6 @@ class HomePageScreenState extends State<HomePageScreen> {
     return SafeArea(
           child: CustomScrollView(
         slivers: [
-          // SliverAppBar(
-          //           backgroundColor: Colors.white,
-          //           pinned: true,
-          //           titleSpacing: 0,
-          //           elevation: 3,
-          //           automaticallyImplyLeading: false,
-          //           title: Row(
-          //             children: [
-          //               Container(
-          //                 child: LeadingButton(
-          //                   color: lightShadeColor,
-          //                   icon: Icons.arrow_back_ios_outlined,
-          //                   iconColor: darkColor,
-          //                   size: 37, // btnShadow: false
-          //                 ),
-          //               ),
-          //               Expanded(
-          //                 child: Container(
-          //                   padding: EdgeInsets.only(top: 10, bottom: 10, left: 10),
-          //                   child: Text('Lime new-entries', style: TextStyle(color: Colors.black),)
-          //                 ),
-          //               ),
-          //               Container(
-          //                 child: LeadingButton(
-          //                   color: lightShadeColor,
-          //                   icon: Icons.more_horiz_outlined,
-          //                   iconColor: darkColor,
-          //                   size: 37, // btnShadow: false
-          //                 ),
-          //               ),
-          //             ],
-          //           ),
-          //         ),
           SliverToBoxAdapter(
             child: Container(
                       margin: const EdgeInsets.only(top: 40.0),
@@ -81,7 +49,7 @@ class HomePageScreenState extends State<HomePageScreen> {
                       ),
           ),
           SliverToBoxAdapter(
-            child: Example(),
+            child: HomeChartScreens(),
           ),
           SliverPersistentHeader(
             delegate: PersistentHeader(

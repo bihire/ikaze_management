@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 // import 'package:inventory_controller/containers/homePage/overal_daily_mv.dart';
-import 'package:inventory_controller/views/ProductDetail/NewEntryPage/components/bar_chart.dart';
+import 'package:inventory_controller/components/charts/bar_chart.dart';
 // import 'package:inventory_controller/views/ProductDetail/NewEntryPage/bar_chart.dart';
-import 'package:inventory_controller/views/screens/buttons_tabbar.dart';
+import 'package:inventory_controller/components/slidingTabView/buttons_tabbar.dart';
 
-import 'package:inventory_controller/models/overal_daily_model.dart';
-import 'package:inventory_controller/redux/actions/overal_daily_action.dart';
+import 'package:inventory_controller/models/homePage/overal_daily_model.dart';
+import 'package:inventory_controller/redux/actions/homePage/overal_daily_action.dart';
 // import 'package:inventory_controller/views/ProductDetail/NewEntryPage/bar_chart.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';

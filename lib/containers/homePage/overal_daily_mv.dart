@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 // import 'package:inventory_controller/models/overal_daily_model.dart';
 // import 'package:inventory_controller/redux/actions/overal_daily_action.dart';
-import 'package:inventory_controller/views/ProductDetail/NewEntryPage/components/bar_chart.dart';
+import 'package:inventory_controller/components/charts/bar_chart.dart';
 // import 'package:redux/redux.dart';
 // import 'package:flutter_redux/flutter_redux.dart';
 // import 'package:inventory_controller/redux/appState/app_state.dart';

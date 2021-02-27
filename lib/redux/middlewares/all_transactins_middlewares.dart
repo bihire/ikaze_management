@@ -6,12 +6,9 @@ import 'package:inventory_controller/redux/appState/app_state.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_logging/redux_logging.dart';
 
-List<Middleware<AppState>> createAllTransactionsMiddleware() {
-  return [
-    TypedMiddleware<AppState, LoadTransactionsPageAction>(
-        _loadItemsPage()),
-    // LoggingMiddleware.printer(),
-  ];
+Middleware<AppState> createAllTransactionsMiddleware() {
+  return TypedMiddleware<AppState, LoadTransactionsPageAction>(
+        _loadItemsPage());
 }
 
 _loadItemsPage() {

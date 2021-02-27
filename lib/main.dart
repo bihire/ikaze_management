@@ -5,7 +5,9 @@ import 'package:inventory_controller/pages/home.dart';
 import 'package:inventory_controller/redux/appState/all_transactions_state.dart';
 import 'package:inventory_controller/redux/appState/app_state.dart';
 import 'package:inventory_controller/redux/middlewares/dashboard_daily_total.dart';
-import 'package:inventory_controller/redux/middlewares/overal_daily_middleware.dart';
+import 'package:inventory_controller/redux/middlewares/homePage/overal_daily_middleware.dart';
+import 'package:inventory_controller/redux/middlewares/homePage/overal_monthly_middleware.dart';
+import 'package:inventory_controller/redux/middlewares/homePage/overal_weekly_middleware.dart';
 import 'package:inventory_controller/redux/middlewares/popup_middleware.dart';
 import 'package:inventory_controller/redux/middlewares/range_middleware.dart';
 import 'package:inventory_controller/redux/reducers/app_reducer.dart';
@@ -24,26 +26,23 @@ void setupLocator() {
 }
 
 void main() async {
-  // await Redux.init();
   setupLocator();
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-//   void main() {
-//   var now = new DateTime.now();
-//   var formatter = new DateFormat('MM');
-//   String month = formatter.format(now);
-//   print(now.month);
-// }
   final store = Store<AppState>(
     appReducer,
     initialState: AppState.initial(),
-    middleware: createAllTransactionsMiddleware()
-      ..addAll(dashboardDailyTotalMiddleware())
-      ..addAll(overalDailyTransactionsMiddleware())
-      ..addAll(createAllTransactionsRangeMiddleware())
-      ..addAll(popupMiddleware()),
+    middleware: [
+      createAllTransactionsMiddleware(),
+      dashboardDailyTotalMiddleware(),
+      overalDailyTransactionsMiddleware(),
+      overalWeeklyTransactionsMiddleware(),
+      createAllTransactionsRangeMiddleware(),
+      popupMiddleware(),
+      overalMonthlyTransactionsMiddleware()
+    ]
   );
   // This widget is the root of your application.
   @override
@@ -59,17 +58,6 @@ class MyApp extends StatelessWidget {
         ),
       ),
     );
-    // MaterialApp(
-    //   title: 'ikaze management',
-    //   theme: ThemeData(
-    //     primarySwatch: Colors.blue,
-    //     visualDensity: VisualDensity.adaptivePlatformDensity,
-    //   ),
-    //   home: StoreProvider<AppState>(
-    //     store: Redux.store,
-    //     child: MyHomePage(),
-    //   )
-    // );
   }
 }
 

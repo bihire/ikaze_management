@@ -1,7 +1,7 @@
 
-import 'package:inventory_controller/models/overal_daily_model.dart';
-import 'package:inventory_controller/redux/actions/overal_daily_action.dart';
-import 'package:inventory_controller/redux/appState/overal_daily_state.dart';
+import 'package:inventory_controller/models/homePage/overal_daily_model.dart';
+import 'package:inventory_controller/redux/actions/homePage/overal_daily_action.dart';
+import 'package:inventory_controller/redux/appState/homePage/overal_daily_state.dart';
 
 import 'package:redux/redux.dart';
 

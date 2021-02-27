@@ -1,16 +1,12 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:inventory_controller/models/overal_daily_model.dart';
-import 'package:inventory_controller/redux/actions/overal_daily_action.dart';
+import 'package:inventory_controller/models/homePage/overal_daily_model.dart';
+import 'package:inventory_controller/redux/actions/homePage/overal_daily_action.dart';
 import 'package:inventory_controller/redux/appState/app_state.dart';
 import 'package:redux/redux.dart';
-import 'package:redux_logging/redux_logging.dart';
 
-List<Middleware<AppState>> overalDailyTransactionsMiddleware() {
-  return [
-    TypedMiddleware<AppState, LoadOvaralDailyAction>(_loadOveralDailyTotal()),
-    // LoggingMiddleware.printer()
-  ];
+Middleware<AppState> overalDailyTransactionsMiddleware() {
+  return TypedMiddleware<AppState, LoadOvaralDailyAction>(_loadOveralDailyTotal());
 }
 
 _loadOveralDailyTotal() {

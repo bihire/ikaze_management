@@ -1,5 +1,5 @@
 
-import 'package:inventory_controller/models/overal_daily_model.dart';
+import 'package:inventory_controller/models/homePage/overal_daily_model.dart';
 
 class LoadOvaralDailyAction {}
 
