@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:animations/animations.dart';
 import 'package:inventory_controller/common/constants.dart';
 import 'package:inventory_controller/components/leadingButton/leading_button.dart';
+import 'package:inventory_controller/components/page_transition/enum.dart';
+import 'package:inventory_controller/components/page_transition/page_transtion.dart';
 import 'package:inventory_controller/containers/homePage/homePopup/popupAppbar_container.dart';
 import 'package:inventory_controller/containers/homePage/home_container.dart';
 import 'package:inventory_controller/views/homePopup/popupAppbar_screen.dart';
@@ -22,8 +24,8 @@ class MyHomePage extends StatefulWidget {
   }
 }
 
-class MyHomePageState extends State<MyHomePage>
-    with SingleTickerProviderStateMixin {
+class MyHomePageState extends State<MyHomePage> 
+    with SingleTickerProviderStateMixin, AutomaticKeepAliveClientMixin<MyHomePage> {
   AnimationController _controller;
   bool _isDialogShowing = false;
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
@@ -69,34 +71,34 @@ class MyHomePageState extends State<MyHomePage>
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      drawerEnableOpenDragGesture: false,
-      drawer: NotificationDrawer(),
+      // drawerEnableOpenDragGesture: false,
+      // drawer: NotificationDrawer(),
       appBar: AppBar(
         backgroundColor: primaryLightColor,
         titleSpacing: 0,
         automaticallyImplyLeading: false,
         title: Row(
           children: [
-            InkWell(
-              onTap: () {
-                _scaffoldKey.currentState.openDrawer();
-              },
-              // customBorder: BorderRadius.circular(50),
-              child: Container(
-                margin: EdgeInsets.only(left: 16, right: 16),
-                child: SvgPicture.asset(
-                  "assets/svg/agaseke_logo.svg",
-                  color: Color(0xFF0bd50b),
-                  height: 45,
-                  width: 25,
-                ),
-              ),
-            ),
+            // InkWell(
+            //   onTap: () {
+                
+            //   },
+            //   // customBorder: BorderRadius.circular(50),
+            //   child: Container(
+            //     margin: EdgeInsets.only(left: 16, right: 16),
+            //     child: SvgPicture.asset(
+            //       "assets/svg/agaseke_logo.svg",
+            //       color: Color(0xFF0bd50b),
+            //       height: 45,
+            //       width: 25,
+            //     ),
+            //   ),
+            // ),
             Expanded(
               child: Container(
                   padding: EdgeInsets.only(top: 10, bottom: 10, left: 10),
                   child: Text(
-                    'Lime new-entries',
+                    'Invetory Controller',
                     style: TextStyle(color: Colors.black),
                   )),
             ),
@@ -104,10 +106,16 @@ class MyHomePageState extends State<MyHomePage>
               child: LeadingButton(
                 color: lightShadeColor,
                 icon: Icons.send,
-                margin: EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 0),
+                margin:
+                    EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 0),
                 rotate: -20 * math.pi / 180,
                 iconColor: darkColor,
-                onPressed: ()=> { _scaffoldKey.currentState.openDrawer()},
+                onPressed: () => {Navigator.push(
+                    context,
+                    PageTransition(
+                        child: NotificationDrawer(),
+                        childCurrent: MyHomePage(),
+                        type: PageTransitionType.leftToRightJoined))},
                 size: 37, // btnShadow: false
               ),
             ),
@@ -155,6 +163,8 @@ class MyHomePageState extends State<MyHomePage>
       ]),
     );
   }
+  @override
+  bool get wantKeepAlive => true;
 }
 
 class _ExampleAlertDialog extends StatefulWidget {
