@@ -30,7 +30,7 @@ _loadItemsPage() {
 Future<List<MoneyTransactionModel>> _loadFlutterGithubIssues(
     int page, int perPage) async {
   var response = await http.get(
-      'http://192.168.137.97:5000/api/transactions?page=$page&numberOfRows=$perPage');
+      'http://192.168.43.56:5000/api/transactions?page=$page&numberOfRows=$perPage');
   if (response.statusCode == 200) {
     final jsonData = (json.decode(response.body))['data'] as List;
     return  jsonData.map((item) => MoneyTransactionModel.fromJson(item)).toList();

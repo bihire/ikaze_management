@@ -20,7 +20,7 @@ class HomeDailyChartScreen extends StatelessWidget {
   });
   @override
   Widget build(BuildContext context) {
-    return BarChartSample1(
+    return BarChartContainer(
       day_0: day_0,
       day_1: day_1,
       day_2: day_2,

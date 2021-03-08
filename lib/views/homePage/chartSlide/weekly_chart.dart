@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:inventory_controller/components/charts/line_chart_mothly.dart';
+import 'package:inventory_controller/components/charts/line_chart_weekly.dart';
 
 class HomeWeeklyChartScreen extends StatelessWidget {
   final String week_0;
@@ -13,6 +15,11 @@ class HomeWeeklyChartScreen extends StatelessWidget {
   });
   @override
   Widget build(BuildContext context) {
-    return Column(children: [Text(week_0), Text(week_1),Text(week_2),Text(week_3),],);
+    return LineChartWeekly(
+      week_0: double.parse(week_0),
+      week_1: double.parse(week_0),
+      week_2: double.parse(week_2),
+      week_3: double.parse(week_3),
+      );
   }
 }

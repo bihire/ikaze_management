@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:inventory_controller/common/constants.dart';
 import 'package:inventory_controller/components/charts/bar_chart.dart';
 import 'package:inventory_controller/components/slidingTabView/buttons_tabbar.dart';
 import 'package:inventory_controller/containers/homePage/chartSlide/home_daily_chart.dart';
@@ -46,10 +47,13 @@ class HomeChartScreens extends StatelessWidget {
                 Expanded(
                   child: TabBarView(
                     children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal:10.0),
-                        child: Center(
-                          child: HomeDailyChartContainer()
+                      Container(
+                        // color: lightGreyColor,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal:10.0),
+                          child: Center(
+                            child: HomeDailyChartContainer()
+                          ),
                         ),
                       ),
                       Center(

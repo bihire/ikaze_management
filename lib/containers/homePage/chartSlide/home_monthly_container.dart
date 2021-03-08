@@ -6,14 +6,7 @@ import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:inventory_controller/redux/appState/app_state.dart';
 
-makeDoubleDigit(number) => (number.toString()).length < 2
-    ? '0' + number.toString()
-    : number.toString();
-String getDate(DateTime date, int number) {
-  int curNum = date.month;
-  if (curNum - number > 0) return '${makeDoubleDigit(curNum - number)}/${date.year}';
-  return '${makeDoubleDigit(curNum - number + 12)}/${date.year - 1}';
-}
+
 
 class HomeMonthlyChartContainer extends StatefulWidget {
   HomeMonthlyChartContainer({Key key}) : super(key: key);
@@ -24,10 +17,11 @@ class HomeMonthlyChartContainer extends StatefulWidget {
 }
 
 class _HomeMonthlyChartContainerState extends State<HomeMonthlyChartContainer>
-    with AutomaticKeepAliveClientMixin<HomeMonthlyChartContainer> {
+     {
+      //  with AutomaticKeepAliveClientMixin<HomeMonthlyChartContainer>
   @override
   Widget build(BuildContext context) {
-    final dateObj = DateTime.now();
+    
     return StoreConnector<AppState, _ViewModel>(
       builder: (context, vm) {
         return HomeMonthlyChartScreen(
@@ -47,8 +41,8 @@ class _HomeMonthlyChartContainerState extends State<HomeMonthlyChartContainer>
     );
   }
 
-  @override
-  bool get wantKeepAlive => true;
+  // @override
+  // bool get wantKeepAlive => true;
 }
 
 class _ViewModel {

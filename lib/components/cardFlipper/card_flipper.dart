@@ -5,6 +5,7 @@ class AnimatedFlipCounter extends StatelessWidget {
   final int value;
   final Duration duration;
   final double size;
+  final FontWeight fontWeight;
   final Color color;
 
   const AnimatedFlipCounter({
@@ -13,6 +14,7 @@ class AnimatedFlipCounter extends StatelessWidget {
     @required this.duration,
     this.size = 72,
     this.color = Colors.black,
+    this.fontWeight = FontWeight.w600
   }) : super(key: key);
 
   @override
@@ -36,8 +38,12 @@ class AnimatedFlipCounter extends StatelessWidget {
           value: digits[digits.length - i - 1].toDouble(),
           duration: duration,
           height: size,
+          comma: (digits.length - 1) != i &&
+                (digits.length - i) % 3 == 1 ??
+            true,
           width: size / 1.8,
           color: color,
+          fontWeight: fontWeight,
         );
       }),
     );
@@ -50,6 +56,8 @@ class _SingleDigitFlipCounter extends StatelessWidget {
   final double height;
   final double width;
   final Color color;
+  final bool comma;
+  final FontWeight fontWeight;
 
   const _SingleDigitFlipCounter({
     Key key,
@@ -58,6 +66,8 @@ class _SingleDigitFlipCounter extends StatelessWidget {
     @required this.height,
     @required this.width,
     @required this.color,
+    @required this.comma,
+    @required this.fontWeight
   }) : super(key: key);
 
   @override
@@ -68,24 +78,32 @@ class _SingleDigitFlipCounter extends StatelessWidget {
       builder: (context, value, child) {
         final whole = value ~/ 1;
         final decimal = value - whole;
-        return SizedBox(
-          height: height,
-          width: width,
-          child: Stack(
-            fit: StackFit.expand,
-            children: <Widget>[
-              _buildSingleDigit(
-                digit: whole % 10,
-                offset: height * decimal,
-                opacity: 1 - decimal,
+        return Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SizedBox(
+              height: height,
+              width: width,
+              child: Stack(
+                fit: StackFit.expand,
+                children: <Widget>[
+                  _buildSingleDigit(
+                    digit: whole % 10,
+                    offset: height * decimal,
+                    opacity: 1 - decimal,
+                  ),
+                  _buildSingleDigit(
+                    digit: (whole + 1) % 10,
+                    offset: height * decimal - height,
+                    opacity: decimal,
+                  ),
+                ],
               ),
-              _buildSingleDigit(
-                digit: (whole + 1) % 10,
-                offset: height * decimal - height,
-                opacity: decimal,
-              ),
-            ],
-          ),
+            ),
+            comma == true ? Padding(
+              padding: EdgeInsets.symmetric(horizontal: 2),
+              child: Text(',', style: TextStyle(fontSize: 30, fontWeight: fontWeight),)) : SizedBox()
+          ],
         );
       },
     );
@@ -99,7 +117,7 @@ class _SingleDigitFlipCounter extends StatelessWidget {
           opacity: opacity,
           child: Text(
             "$digit",
-            style: TextStyle(fontSize: height, color: color),
+            style: TextStyle(fontSize: height, color: color, fontWeight: fontWeight),
             textAlign: TextAlign.center,
           ),
         ),

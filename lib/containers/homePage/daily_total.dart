@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inventory_controller/common/constants.dart';
 import 'package:inventory_controller/components/cardFlipper/card_flipper.dart';
 import 'package:inventory_controller/redux/actions/dashboard_daily_total.dart';
 import 'package:redux/redux.dart';
@@ -14,7 +15,6 @@ class DailyTotal extends StatefulWidget {
 
 class _DailyTotalState extends State<DailyTotal> {
   int _value = 10;
-
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, _ViewModel>(
@@ -38,10 +38,22 @@ class _DailyTotalState extends State<DailyTotal> {
                         )
                       : AnimatedFlipCounter(
                           duration: Duration(milliseconds: 500),
-                          value: _value, /* pass in a number like 2014 */
+                          value: int.parse(vm.dailTotal),
+                          /* pass in a number like 2014 */
                           color: Colors.black,
-                          size: 50,
+                          size: 40,
                         ),
+                ),
+                SizedBox(
+                  width: 15,
+                ),
+                Text(
+                  "rwf",
+                  style: TextStyle(
+                      fontSize: 15.0,
+                      fontWeight: FontWeight.w600,
+                      color: hardGreyColor),
+                  textAlign: TextAlign.right,
                 ),
               ],
             ),
@@ -63,30 +75,32 @@ class _DailyTotalState extends State<DailyTotal> {
                       : Text(
                           "Today's revenue",
                           style: TextStyle(
-                              fontSize: 14.0, fontWeight: FontWeight.w400),
+                              fontSize: 14.0,
+                              fontWeight: FontWeight.w400,
+                              color: hardGreyColor),
                           textAlign: TextAlign.right,
                         ),
                 ),
               ],
             ),
-            Row(
-              children: [
-                FlatButton(
-                    onPressed: () {
-                      setState(() {
-                        _value = _value + 10;
-                      });
-                    },
-                    child: Icon(Icons.add)),
-                FlatButton(
-                    onPressed: () {
-                      setState(() {
-                        _value = _value - 10;
-                      });
-                    },
-                    child: Icon(Icons.remove))
-              ],
-            )
+            // Row(
+            //   children: [
+            //     FlatButton(
+            //         onPressed: () {
+            //           setState(() {
+            //             _value = _value + 10000;
+            //           });
+            //         },
+            //         child: Icon(Icons.add)),
+            //     FlatButton(
+            //         onPressed: () {
+            //           setState(() {
+            //             _value = _value - 10000;
+            //           });
+            //         },
+            //         child: Icon(Icons.remove))
+            //   ],
+            // )
           ],
         );
       },

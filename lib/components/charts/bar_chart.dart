@@ -4,8 +4,8 @@ import 'dart:math';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
-class BarChartSample1 extends StatefulWidget {
-  BarChartSample1({
+class BarChartContainer extends StatefulWidget {
+  BarChartContainer({
     this.day_0,
     this.day_1,
     this.day_2,
@@ -31,10 +31,10 @@ class BarChartSample1 extends StatefulWidget {
   ];
 
   @override
-  State<StatefulWidget> createState() => BarChartSample1State();
+  State<StatefulWidget> createState() => BarChartContainerState();
 }
 
-class BarChartSample1State extends State<BarChartSample1> {
+class BarChartContainerState extends State<BarChartContainer> {
   final Color barBackgroundColor = const Color(0xffD9D9D9);
   final Duration animDuration = const Duration(milliseconds: 250);
 

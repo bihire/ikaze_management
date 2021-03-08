@@ -26,7 +26,7 @@ class _HomeWeeklyChartContainerState extends State<HomeWeeklyChartContainer> wit
           week_2: ((vm.overalWeeklyData)
           .firstWhere((item) => item.rangeName == 'week_2')).totalAmount,
           week_3: ((vm.overalWeeklyData)
-          .firstWhere((item) => item.rangeName == 'week_3')).totalAmount,
+          .firstWhere((item) => item.rangeName == 'week_3')).totalAmount
         );
       },
       converter: _ViewModel.fromStore,

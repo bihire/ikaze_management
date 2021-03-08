@@ -65,7 +65,7 @@ class _ExampleState extends State<Example> {
                         padding: const EdgeInsets.symmetric(horizontal:10.0),
                         child: Center(
                           
-                          child: BarChartSample1(
+                          child: BarChartContainer(
                             day_0: ((vm.overalDailydata).firstWhere((item) => item.rangeName == 'day_0')).totalAmount,
                             day_1: ((vm.overalDailydata).firstWhere((item) => item.rangeName == 'day_1')).totalAmount,
                             day_2: ((vm.overalDailydata).firstWhere((item) => item.rangeName == 'day_2')).totalAmount,
