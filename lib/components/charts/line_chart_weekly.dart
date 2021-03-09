@@ -156,7 +156,7 @@ class _LineChartWeeklyState extends State<LineChartWeekly> {
           curveSmoothness: 0.07,
           preventCurveOverShooting: true,
           colors: gradientColors,
-          barWidth: 3,
+          barWidth: 3, 
           isStrokeCapRound: true,
           dotData: FlDotData(
             show: false,
