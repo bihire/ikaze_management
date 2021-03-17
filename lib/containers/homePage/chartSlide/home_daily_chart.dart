@@ -6,6 +6,8 @@ import 'package:inventory_controller/components/slidingTabView/buttons_tabbar.da
 
 import 'package:inventory_controller/models/homePage/overal_daily_model.dart';
 import 'package:inventory_controller/redux/actions/homePage/overal_daily_action.dart';
+import 'package:inventory_controller/redux/actions/homePage/overal_monthly_action.dart';
+import 'package:inventory_controller/redux/actions/homePage/overal_weekly_actions.dart';
 import 'package:inventory_controller/views/homePage/chartSlide/daily_chart.dart';
 // import 'package:inventory_controller/views/ProductDetail/NewEntryPage/bar_chart.dart';
 import 'package:redux/redux.dart';
@@ -16,17 +18,19 @@ class HomeDailyChartContainer extends StatefulWidget {
   HomeDailyChartContainer({Key key}) : super(key: key);
 
   @override
-  _HomeDailyChartContainerState createState() => _HomeDailyChartContainerState();
+  _HomeDailyChartContainerState createState() =>
+      _HomeDailyChartContainerState();
 }
 
-class _HomeDailyChartContainerState extends State<HomeDailyChartContainer> with AutomaticKeepAliveClientMixin <HomeDailyChartContainer>{
+class _HomeDailyChartContainerState extends State<HomeDailyChartContainer>
+    with AutomaticKeepAliveClientMixin<HomeDailyChartContainer> {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, _ViewModel>(
       builder: (context, vm) {
         return HomeDailyChartScreen(
           day_0: ((vm.overalDailydata)
-          .firstWhere((item) => item.rangeName == 'day_0')).totalAmount,
+              .firstWhere((item) => item.rangeName == 'day_0')).totalAmount,
           day_1: ((vm.overalDailydata)
               .firstWhere((item) => item.rangeName == 'day_1')).totalAmount,
           day_2: ((vm.overalDailydata)
@@ -46,6 +50,12 @@ class _HomeDailyChartContainerState extends State<HomeDailyChartContainer> with 
         store.dispatch(
           LoadOvaralDailyAction(),
         );
+        store.dispatch(
+          LoadOveralWeeklyAction(),
+        );
+        store.dispatch(
+          LoadOveralMonthlyAction(),
+        );
       },
     );
   }
@@ -53,7 +63,6 @@ class _HomeDailyChartContainerState extends State<HomeDailyChartContainer> with 
   @override
   bool get wantKeepAlive => true;
 }
-
 
 class _ViewModel {
   _ViewModel({

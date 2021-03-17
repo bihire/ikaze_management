@@ -30,11 +30,11 @@ class _HomeWeeklyChartContainerState extends State<HomeWeeklyChartContainer> wit
         );
       },
       converter: _ViewModel.fromStore,
-      onInit: (store) {
-        store.dispatch(
-          LoadOveralWeeklyAction(),
-        );
-      },
+      // onInit: (store) {
+      //   store.dispatch(
+      //     LoadOveralWeeklyAction(),
+      //   );
+      // },
     );
   }
 

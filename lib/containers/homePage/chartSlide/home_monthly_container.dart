@@ -17,8 +17,8 @@ class HomeMonthlyChartContainer extends StatefulWidget {
 }
 
 class _HomeMonthlyChartContainerState extends State<HomeMonthlyChartContainer>
-     {
-      //  with AutomaticKeepAliveClientMixin<HomeMonthlyChartContainer>
+     
+       with AutomaticKeepAliveClientMixin<HomeMonthlyChartContainer> {
   @override
   Widget build(BuildContext context) {
     
@@ -33,16 +33,16 @@ class _HomeMonthlyChartContainerState extends State<HomeMonthlyChartContainer>
         );
       },
       converter: _ViewModel.fromStore,
-      onInit: (store) {
-        store.dispatch(
-          LoadOveralMonthlyAction(),
-        );
-      },
+      // onInit: (store) {
+      //   store.dispatch(
+      //     LoadOveralMonthlyAction(),
+      //   );
+      // },
     );
   }
 
-  // @override
-  // bool get wantKeepAlive => true;
+  @override
+  bool get wantKeepAlive => true;
 }
 
 class _ViewModel {
