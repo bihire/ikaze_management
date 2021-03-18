@@ -19,14 +19,10 @@ class _HomeWeeklyChartContainerState extends State<HomeWeeklyChartContainer> wit
     return StoreConnector<AppState, _ViewModel>(
       builder: (context, vm) {
         return HomeWeeklyChartScreen(
-          week_0: ((vm.overalWeeklyData)
-          .firstWhere((item) => item.rangeName == 'week_0')).totalAmount,
-          week_1: ((vm.overalWeeklyData)
-          .firstWhere((item) => item.rangeName == 'week_1')).totalAmount,
-          week_2: ((vm.overalWeeklyData)
-          .firstWhere((item) => item.rangeName == 'week_2')).totalAmount,
-          week_3: ((vm.overalWeeklyData)
-          .firstWhere((item) => item.rangeName == 'week_3')).totalAmount
+          loading: vm.loading,
+          error: vm.noError,
+          overalWeeklyData: vm.overalWeeklyData
+          
         );
       },
       converter: _ViewModel.fromStore,

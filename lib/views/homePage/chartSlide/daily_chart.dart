@@ -1,33 +1,51 @@
 import 'package:flutter/material.dart';
+import 'package:inventory_controller/common/constants.dart';
 import 'package:inventory_controller/components/charts/bar_chart.dart';
+import 'package:inventory_controller/models/homePage/overal_daily_model.dart';
+
+
+makeDoubleDigit(number) => (number.toString()).length < 2
+    ? '0' + number.toString()
+    : number.toString();
+
+String getDate(DateTime date, int number) {
+  int curNum = date.month;
+  if (curNum - number > 0)
+    return '${makeDoubleDigit(curNum - number)}/${date.year}';
+  return '${makeDoubleDigit(curNum - number + 12)}/${date.year - 1}';
+}
 
 class HomeDailyChartScreen extends StatelessWidget {
-  final String day_0;
-  final String day_1;
-  final String day_2;
-  final String day_3;
-  final String day_4;
-  final String day_5;
-  final String day_6;
+  final bool loading;
+  final List<OveralDailyTransactionModel> overalDailyData;
+  final error;
   HomeDailyChartScreen({
-    this.day_0,
-    this.day_1,
-    this.day_2,
-    this.day_3,
-    this.day_4,
-    this.day_5,
-    this.day_6,
+    @required this.loading,
+    @required this.overalDailyData,
+    @required this.error,
   });
   @override
   Widget build(BuildContext context) {
-    return BarChartContainer(
-      day_0: day_0,
-      day_1: day_1,
-      day_2: day_2,
-      day_3: day_3,
-      day_4: day_4,
-      day_5: day_5,
-      day_6: day_6,
+    return loading == true ? Center(
+      child: CircularProgressIndicator(
+        valueColor: new AlwaysStoppedAnimation<Color>(lightGreyColor),
+        strokeWidth: 2.0,
+              ),
+    ): BarChartContainer(
+      day_0: ((overalDailyData)
+          .firstWhere((item) => item.rangeName == 'day_0')).totalAmount,
+      day_1: ((overalDailyData)
+          .firstWhere((item) => item.rangeName == 'day_1')).totalAmount,
+      day_2: ((overalDailyData)
+          .firstWhere((item) => item.rangeName == 'day_2')).totalAmount,
+      day_3: ((overalDailyData)
+          .firstWhere((item) => item.rangeName == 'day_3')).totalAmount,
+      day_4: ((overalDailyData)
+          .firstWhere((item) => item.rangeName == 'day_4')).totalAmount,
+      day_5: ((overalDailyData)
+          .firstWhere((item) => item.rangeName == 'day_5')).totalAmount,
+      day_6: ((overalDailyData)
+          .firstWhere((item) => item.rangeName == 'day_6')).totalAmount,
     );
   }
 }

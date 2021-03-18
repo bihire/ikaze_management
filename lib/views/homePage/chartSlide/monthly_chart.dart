@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inventory_controller/common/constants.dart';
 import 'package:inventory_controller/components/charts/line_chart_mothly.dart';
 import 'package:inventory_controller/models/homePage/overal_monthly_model.dart';
 
@@ -24,7 +25,11 @@ class HomeMonthlyChartScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final dateObj = DateTime.now();
-    return LineChartMonthly(
+    return loading == true ? Center(
+      child:CircularProgressIndicator(
+        valueColor: new AlwaysStoppedAnimation<Color>(lightGreyColor),
+        strokeWidth: 2.0,
+      )): LineChartMonthly(
       month_0: double.parse((overalMonthlyData)
           .firstWhere((item) => item.month == getDate(dateObj, 0))
           .totalAmount),

@@ -45,7 +45,7 @@ class BarChartContainerState extends State<BarChartContainer> {
   @override
   Widget build(BuildContext context) {
     return AspectRatio(
-      aspectRatio: 1.4,
+      aspectRatio: 1.47,
       child: Card(
         elevation: 0,
         // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
@@ -190,8 +190,9 @@ class BarChartContainerState extends State<BarChartContainer> {
         bottomTitles: SideTitles(
           showTitles: true,
           textStyle: TextStyle(
-              color: Colors.black, fontWeight: FontWeight.bold, fontSize: 11),
-          margin: 16,
+              color: Color(0xff68737d),
+              fontWeight: FontWeight.bold,
+              fontSize: 10),
           getTitles: (double value) {
             switch (value.toInt()) {
               case 0:

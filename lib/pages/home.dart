@@ -136,7 +136,7 @@ class MyHomePageState extends State<MyHomePage>
           bottom: 30,
           right: 30,
           child: FloatingActionButton(
-            child: const Icon(Icons.view_day_sharp),
+            child: const Icon(Icons.view_headline_sharp),
             backgroundColor: primaryColor,
             onPressed: () {
               // if (_isAnimationRunningForwardsOrComplete) {

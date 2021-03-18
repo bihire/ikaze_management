@@ -29,20 +29,10 @@ class _HomeDailyChartContainerState extends State<HomeDailyChartContainer>
     return StoreConnector<AppState, _ViewModel>(
       builder: (context, vm) {
         return HomeDailyChartScreen(
-          day_0: ((vm.overalDailydata)
-              .firstWhere((item) => item.rangeName == 'day_0')).totalAmount,
-          day_1: ((vm.overalDailydata)
-              .firstWhere((item) => item.rangeName == 'day_1')).totalAmount,
-          day_2: ((vm.overalDailydata)
-              .firstWhere((item) => item.rangeName == 'day_2')).totalAmount,
-          day_3: ((vm.overalDailydata)
-              .firstWhere((item) => item.rangeName == 'day_3')).totalAmount,
-          day_4: ((vm.overalDailydata)
-              .firstWhere((item) => item.rangeName == 'day_4')).totalAmount,
-          day_5: ((vm.overalDailydata)
-              .firstWhere((item) => item.rangeName == 'day_5')).totalAmount,
-          day_6: ((vm.overalDailydata)
-              .firstWhere((item) => item.rangeName == 'day_6')).totalAmount,
+          loading: vm.isDataLoading,
+          error: vm.noError,
+          overalDailyData: vm.overalDailydata,
+          
         );
       },
       converter: _ViewModel.fromStore,
