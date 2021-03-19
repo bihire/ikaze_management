@@ -29,32 +29,38 @@ class _DailyTotalState extends State<DailyTotal> {
                   child: vm.isDataLoading == true
                       ? SkeletonAnimation(
                           child: Container(
-                            width: 120.0,
+                            width: 220.0,
                             height: 40.0,
                             decoration: BoxDecoration(
                               color: Colors.grey[300],
                             ),
                           ),
                         )
-                      : AnimatedFlipCounter(
-                          duration: Duration(milliseconds: 500),
-                          value: int.parse(vm.dailTotal),
-                          /* pass in a number like 2014 */
-                          color: Colors.black,
-                          size: 40,
-                        ),
+                      : Row(
+                        children: [
+                          AnimatedFlipCounter(
+                              duration: Duration(milliseconds: 500),
+                              value: int.parse(vm.dailTotal),
+                              /* pass in a number like 2014 */
+                              color: Colors.black,
+                              size: 40,
+                            ),
+                          SizedBox(
+                            width: 15,
+                          ),
+                          Text(
+                            "rwf",
+                            style: TextStyle(
+                                fontSize: 15.0,
+                                fontWeight: FontWeight.w600,
+                                color: hardGreyColor),
+                            textAlign: TextAlign.right,
+                          ),
+                        ],
+                      ),
                 ),
-                SizedBox(
-                  width: 15,
-                ),
-                Text(
-                  "rwf",
-                  style: TextStyle(
-                      fontSize: 15.0,
-                      fontWeight: FontWeight.w600,
-                      color: hardGreyColor),
-                  textAlign: TextAlign.right,
-                ),
+                
+                
               ],
             ),
             Row(
@@ -65,6 +71,7 @@ class _DailyTotalState extends State<DailyTotal> {
                   child: vm.isDataLoading == true
                       ? SkeletonAnimation(
                           child: Container(
+                            margin: EdgeInsets.only(top: 6.0),
                             width: 100.0,
                             height: 10.0,
                             decoration: BoxDecoration(

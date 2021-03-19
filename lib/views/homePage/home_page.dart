@@ -37,39 +37,48 @@ class HomePageScreenState extends State<HomePageScreen> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-          child: CustomScrollView(
+          child: RefreshIndicator(
+            color: primaryColor,
+            onRefresh: _onRefresh,
+                      child: CustomScrollView(
         slivers: [
-          SliverToBoxAdapter(
-            child: Container(
-                      margin: const EdgeInsets.only(top: 40.0),
-                      padding:EdgeInsets.symmetric(vertical: 0.0, horizontal: 10.0),
-                      
-                      width: MediaQuery.of(context).size.width * 1,
-                      child: DailyTotal()
-                      ),
-          ),
-          SliverToBoxAdapter(
-            child: HomeChartScreens(),
-          ),
-          SliverPersistentHeader(
-            delegate: PersistentHeader(
-              widget: HeaderDatePicker()
+            SliverToBoxAdapter(
+              child: Container(
+                        margin: const EdgeInsets.only(top: 40.0),
+                        padding:EdgeInsets.symmetric(vertical: 0.0, horizontal: 10.0),
+                        
+                        width: MediaQuery.of(context).size.width * 1,
+                        child: DailyTotal()
+                        ),
             ),
-            pinned: true,
+            SliverToBoxAdapter(
+              child: HomeChartScreens(),
             ),
-          SliverList(
-            delegate: SliverChildBuilderDelegate((context, index) {
-              return MoneyTransactionModelListItem(
-                itemIndex: index, transaction: widget.transactions[index]);
-                
-            }, 
-            childCount: widget.transactions.length
-            ),
+            SliverPersistentHeader(
+              delegate: PersistentHeader(
+                widget: HeaderDatePicker()
+              ),
+              pinned: true,
+              ),
+            SliverList(
+              delegate: SliverChildBuilderDelegate((context, index) {
+                return MoneyTransactionModelListItem(
+                  itemIndex: index, transaction: widget.transactions[index]);
+                  
+              }, 
+              childCount: widget.transactions.length
+              ),
+              
+              )
             
-            )
-          
         ],
       ),
+          ),
     );
+  }
+
+  Future _onRefresh() {
+    widget.refresh();
+    return Future.value();
   }
 }

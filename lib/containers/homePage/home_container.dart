@@ -78,13 +78,16 @@
 //   }
 // }
 
-
 import 'package:flutter/material.dart';
 
 import 'package:flutter_redux/flutter_redux.dart';
 // import 'package:inventory_controller/components/sticky_header_list.dart';
 // import 'package:flutter/material.dart';
 import 'package:inventory_controller/models/money_transactions.dart';
+import 'package:inventory_controller/redux/actions/dashboard_daily_total.dart';
+import 'package:inventory_controller/redux/actions/homePage/overal_daily_action.dart';
+import 'package:inventory_controller/redux/actions/homePage/overal_monthly_action.dart';
+import 'package:inventory_controller/redux/actions/homePage/overal_weekly_actions.dart';
 import 'package:inventory_controller/redux/appState/all_transactions_state.dart';
 import 'package:inventory_controller/redux/actions/all_transactions_actions.dart';
 import 'package:inventory_controller/redux/appState/app_state.dart';
@@ -122,7 +125,6 @@ class HomePageContainer extends StatelessWidget {
   }
 }
 
-
 class _ViewModel {
   _ViewModel({
     this.isDataLoading,
@@ -148,12 +150,11 @@ class _ViewModel {
     }
   }
 
-  void onRefresh() {
-    store.dispatch(
-      LoadTransactionsPageAction(
-          pageNumber: 1,
-          transactionsPerPage: TransactionState.transactionsPerPage),
-    );
+  onRefresh() {
+    store.dispatch(LoadDashboardDailyTotalAction());
+    store.dispatch(LoadOvaralDailyAction());
+    store.dispatch(LoadOveralWeeklyAction());
+    store.dispatch(LoadOveralMonthlyAction());
   }
 
   static _ViewModel fromStore(Store<AppState> store) {

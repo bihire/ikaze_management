@@ -3,9 +3,14 @@ import 'package:inventory_controller/redux/appState/homePage/dashboard_daily_tot
 import 'package:inventory_controller/redux/appState/homePage/overal_daily_state.dart';
 import 'package:inventory_controller/redux/appState/homePage/overal_monthly_state.dart';
 import 'package:inventory_controller/redux/appState/homePage/overal_weekly_state.dart';
+import 'package:inventory_controller/redux/appState/itemDetail/daily_detail_sum.dart';
 import 'package:inventory_controller/redux/appState/popup_state.dart';
 import 'package:inventory_controller/redux/appState/range_state.dart';
 import 'package:meta/meta.dart';
+
+import 'itemDetail/charts/detail_overal_daily_state.dart';
+import 'itemDetail/charts/detail_overal_monthly_state.dart';
+import 'itemDetail/charts/detail_overal_weekly_state.dart';
 
 @immutable
 class AppState {
@@ -17,6 +22,13 @@ class AppState {
   final TransactionRangeState transactionRangeState;
   final PopupState popupState;
 
+  //===========This is the state for detail page=============
+
+  final DetailDailySalesTotalState detailDailySalesTotalState;
+  final DetailOvaraldailyState detailOveraldailyState;
+  final DetailOveralWeeklyState detailOveralWeeklyState;
+  final DetailOveralMonthlyState detailOveralMonthlyState;
+
   AppState({
     @required this.allTransactionsState,
     @required this.dashboardDailyTotalState,
@@ -25,6 +37,11 @@ class AppState {
     @required this.overalMonthlyState,
     @required this.transactionRangeState,
     @required this.popupState,
+//===========================================================
+    @required this.detailDailySalesTotalState,
+    @required this.detailOveraldailyState,
+    @required this.detailOveralWeeklyState,
+    @required this.detailOveralMonthlyState,
   });
 
   factory AppState.initial() {
@@ -35,7 +52,12 @@ class AppState {
         overalWeeklyState: OveralWeeklyState.initial(),
         overalMonthlyState: OveralMonthlyState.initial(),
         transactionRangeState: TransactionRangeState.initial(),
-        popupState: PopupState.initial());
+        popupState: PopupState.initial(),
+//====================================================================================
+        detailDailySalesTotalState: DetailDailySalesTotalState.initial(),
+        detailOveraldailyState: DetailOvaraldailyState.initial(),
+        detailOveralWeeklyState: DetailOveralWeeklyState.initial(),
+        detailOveralMonthlyState: DetailOveralMonthlyState.initial());
   }
 
   AppState copyWith({TransactionState allTransactionsState}) {
@@ -47,6 +69,11 @@ class AppState {
       overalMonthlyState: overalMonthlyState ?? this.overalMonthlyState,
       transactionRangeState: transactionRangeState ?? this.transactionRangeState,
       popupState: popupState ?? this.popupState,
+//==========================================================================================
+      detailDailySalesTotalState: detailDailySalesTotalState ?? this.detailDailySalesTotalState,
+      detailOveraldailyState: detailOveraldailyState ?? this.detailOveraldailyState,
+      detailOveralWeeklyState: detailOveralWeeklyState ?? this.detailOveralWeeklyState,
+      detailOveralMonthlyState: detailOveralMonthlyState ?? this.detailOveralMonthlyState,
     );
   }
 }
