@@ -1,24 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:inventory_controller/containers/homePage/home_container.dart';
 import 'package:inventory_controller/pages/home.dart';
-import 'package:inventory_controller/redux/appState/all_transactions_state.dart';
 import 'package:inventory_controller/redux/appState/app_state.dart';
 import 'package:inventory_controller/redux/middlewares/dashboard_daily_total.dart';
 import 'package:inventory_controller/redux/middlewares/homePage/overal_daily_middleware.dart';
 import 'package:inventory_controller/redux/middlewares/homePage/overal_monthly_middleware.dart';
 import 'package:inventory_controller/redux/middlewares/homePage/overal_weekly_middleware.dart';
+import 'package:inventory_controller/redux/middlewares/itemDetail/detail_daily_total.dart';
+import 'package:inventory_controller/redux/middlewares/itemDetail/detail_overal_daily_middleware.dart';
+import 'package:inventory_controller/redux/middlewares/itemDetail/detail_overal_monthly_middleware.dart';
+import 'package:inventory_controller/redux/middlewares/itemDetail/detail_overal_weekly_middleware.dart';
 import 'package:inventory_controller/redux/middlewares/popup_middleware.dart';
 import 'package:inventory_controller/redux/middlewares/range_middleware.dart';
 import 'package:inventory_controller/redux/reducers/app_reducer.dart';
 import 'package:inventory_controller/redux/middlewares/all_transactins_middlewares.dart';
-// import 'package:inventory_controller/redux/store.dart';
 import 'package:inventory_controller/servives/TransactionService.dart';
-import 'package:inventory_controller/views/ProductDetail/ProductDetail.dart';
-import 'package:inventory_controller/views/dashboard/dashboard.dart';
-import 'package:inventory_controller/views/onboarding/onboarding.dart';
 import 'package:redux/redux.dart';
-// import './pages/home.dart';
 import 'package:get_it/get_it.dart';
 
 void setupLocator() {
@@ -41,7 +38,11 @@ class MyApp extends StatelessWidget {
       overalWeeklyTransactionsMiddleware(),
       createAllTransactionsRangeMiddleware(),
       popupMiddleware(),
-      overalMonthlyTransactionsMiddleware()
+      overalMonthlyTransactionsMiddleware(),
+      detailDailyTotalMiddleware(),
+      detailOveralDailyTotalMiddleware(),
+      detailOveralMonthlyMiddleware(),
+      detailOveralWeeklyMiddleware()
     ]
   );
   // This widget is the root of your application.

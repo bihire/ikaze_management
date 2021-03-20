@@ -1,22 +1,23 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:inventory_controller/models/homePage/overal_weekly_model.dart';
-import 'package:inventory_controller/redux/actions/homePage/overal_weekly_actions.dart';
+import 'package:inventory_controller/redux/actions/itemDetail/charts/overal_weekly_actions.dart';
+// import 'package:inventory_controller/redux/actions/homePage/overal_weekly_actions.dart';
 import 'package:inventory_controller/redux/appState/app_state.dart';
 import 'package:redux/redux.dart';
 
-Middleware<AppState> overalWeeklyTransactionsMiddleware() {
-  return TypedMiddleware<AppState, LoadOveralWeeklyAction>(_loadOveralWeekly());
+Middleware<AppState> detailOveralWeeklyMiddleware() {
+  return TypedMiddleware<AppState, DetailOveralWeeklyAction>(_loadOveralWeekly());
 }
 
 _loadOveralWeekly() {
-  return (Store<AppState> store, LoadOveralWeeklyAction action,
+  return (Store<AppState> store, DetailOveralWeeklyAction action,
       NextDispatcher next) {
     next(action);
 
     _loadOveralWeeklyTotalAmount().then(
       (items) {
-        store.dispatch(OveralWeeklyLoadedAction(items));
+        store.dispatch(DetailOveralWeeklyLoadedAction(items));
       },
     ).catchError((exception, stacktrace) {
       store.dispatch(ErrorOccurredAction(exception));

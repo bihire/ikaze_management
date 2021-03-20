@@ -1,23 +1,23 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:inventory_controller/models/homePage/overal_daily_model.dart';
-import 'package:inventory_controller/redux/actions/homePage/overal_daily_action.dart';
+import 'package:inventory_controller/redux/actions/itemDetail/charts/overal_daily_action.dart';
 import 'package:inventory_controller/redux/appState/app_state.dart';
 import 'package:redux/redux.dart';
 
-Middleware<AppState> overalDailyTransactionsMiddleware() {
-  return TypedMiddleware<AppState, LoadOvaralDailyAction>(
-      _loadOveralDailyTotal());
+Middleware<AppState> detailOveralDailyTotalMiddleware() {
+  return TypedMiddleware<AppState, DetailOvaralDailyAction>(
+      _loadDetailOveralDailyTotal());
 }
 
-_loadOveralDailyTotal() {
-  return (Store<AppState> store, LoadOvaralDailyAction action,
+_loadDetailOveralDailyTotal() {
+  return (Store<AppState> store, DetailOvaralDailyAction action,
       NextDispatcher next) {
     next(action);
 
-    _loadOveralDailyTotalAmount().then(
+    _loadDetailOveralDailyTotalAmount().then(
       (items) {
-        store.dispatch(OvaralDailyLoadedAction(items));
+        store.dispatch(DetailOvaralDailyLoadedAction(items));
       },
     ).catchError((exception, stacktrace) {
       print('======================================= this is the error ====================================');
@@ -27,7 +27,7 @@ _loadOveralDailyTotal() {
   };
 }
 
-Future<List<OveralDailyTransactionModel>> _loadOveralDailyTotalAmount() async {
+Future<List<OveralDailyTransactionModel>> _loadDetailOveralDailyTotalAmount() async {
   var response =
       await http.get('http://192.168.43.56:5000/api/alltransactions/daily');
   if (response.statusCode == 200) {

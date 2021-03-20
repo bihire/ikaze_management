@@ -8,7 +8,6 @@ import 'package:inventory_controller/views/ProductDetail/NewEntryPage/components
 import 'package:inventory_controller/views/ProductDetail/NewEntryPage/components/top_summary_card.dart';
 import 'package:inventory_controller/views/homePage/chartSlide/home_chart_slide.dart';
 
-
 import 'components/persistent_header.dart';
 
 class HomePageScreen extends StatefulWidget {
@@ -33,47 +32,38 @@ class HomePageScreen extends StatefulWidget {
 }
 
 class HomePageScreenState extends State<HomePageScreen> {
-  
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-          child: RefreshIndicator(
-            color: primaryColor,
-            onRefresh: _onRefresh,
-                      child: CustomScrollView(
-        slivers: [
+      child: RefreshIndicator(
+        color: primaryColor,
+        onRefresh: _onRefresh,
+        child: CustomScrollView(
+          slivers: [
             SliverToBoxAdapter(
               child: Container(
-                        margin: const EdgeInsets.only(top: 40.0),
-                        padding:EdgeInsets.symmetric(vertical: 0.0, horizontal: 10.0),
-                        
-                        width: MediaQuery.of(context).size.width * 1,
-                        child: DailyTotal()
-                        ),
+                  margin: const EdgeInsets.only(top: 40.0),
+                  padding:
+                      EdgeInsets.symmetric(vertical: 0.0, horizontal: 10.0),
+                  width: MediaQuery.of(context).size.width * 1,
+                  child: DailyTotal()),
             ),
             SliverToBoxAdapter(
               child: HomeChartScreens(),
             ),
             SliverPersistentHeader(
-              delegate: PersistentHeader(
-                widget: HeaderDatePicker()
-              ),
+              delegate: PersistentHeader(widget: HeaderDatePicker()),
               pinned: true,
-              ),
+            ),
             SliverList(
               delegate: SliverChildBuilderDelegate((context, index) {
                 return MoneyTransactionModelListItem(
-                  itemIndex: index, transaction: widget.transactions[index]);
-                  
-              }, 
-              childCount: widget.transactions.length
-              ),
-              
-              )
-            
-        ],
+                    itemIndex: index, transaction: widget.transactions[index]);
+              }, childCount: widget.transactions.length),
+            )
+          ],
+        ),
       ),
-          ),
     );
   }
 
