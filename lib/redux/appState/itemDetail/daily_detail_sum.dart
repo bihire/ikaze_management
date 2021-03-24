@@ -4,27 +4,27 @@ import 'package:meta/meta.dart';
 @immutable
 class DetailDailySalesTotalState {
   DetailDailySalesTotalState({
-    this.isDataLoading,
+    this.loading,
     this.dailyTotal,
     this.error,
   });
 
-  final bool isDataLoading;
+  final bool loading;
   final String dailyTotal;
   final Exception error;
 
   static const int transactionsPerPage = 10;
 
   factory DetailDailySalesTotalState.initial() =>
-      DetailDailySalesTotalState(isDataLoading: false, dailyTotal: '');
+      DetailDailySalesTotalState(loading: false, dailyTotal: '');
 
   DetailDailySalesTotalState copyWith({
-    isDataLoading,
+    loading,
     dailyTotal,
     error,
   }) {
     return DetailDailySalesTotalState(
-      isDataLoading: isDataLoading ?? this.isDataLoading,
+      loading: loading ?? this.loading,
       dailyTotal: dailyTotal ?? this.dailyTotal,
       error: error != this.error ? error : this.error,
     );
@@ -32,7 +32,7 @@ class DetailDailySalesTotalState {
 
   @override
   String toString() {
-    return "DetailDailySalesTotalState: isDataLoading = $isDataLoading, "
+    return "DetailDailySalesTotalState: loading = $loading, "
         "itemsDailTotal = $dailyTotal, "
         "error = $error.";
   }

@@ -35,6 +35,8 @@ dependencies:
   flutter_redux: ^0.7.0
   redux_thunk: ^0.3.0
   redux: ^4.0.0+3
+  socket_io: ^0.9.4
+  socket_io_client: ^0.9.12
   intl: ^0.16.1
   redux_logging: ^0.4.0
   skeleton_text: ^1.0.0

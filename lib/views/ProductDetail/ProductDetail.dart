@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:inventory_controller/components/bottom_bar_navigation_pattern/animated_bottom_bar.dart';
 import 'package:inventory_controller/components/custom_tabs.dart';
 import 'package:inventory_controller/components/sticky_list_try.dart';
-import 'package:inventory_controller/containers/entryPage/newEntry/new_entry_container.dart';
+import 'package:inventory_controller/containers/entryPage/newEntry/new_entry_history_container.dart';
 import 'package:inventory_controller/containers/entryPage/SoldEntry/sold_entry_container.dart';
 
 import 'package:inventory_controller/views/ProductDetail/NewEntryPage/NewEntryPage.dart';

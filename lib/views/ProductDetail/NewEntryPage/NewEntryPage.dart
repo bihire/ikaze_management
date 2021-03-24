@@ -3,6 +3,7 @@ import 'package:inventory_controller/common/constants.dart';
 import 'package:inventory_controller/components/common.dart';
 import 'package:inventory_controller/components/github_issue_list_item.dart';
 import 'package:inventory_controller/components/leadingButton/leading_button.dart';
+import 'package:inventory_controller/containers/entryPage/newEntry/new_entry_container.dart';
 import 'package:inventory_controller/views/ProductDetail/NewEntryPage/chartSlide/detail_chart_slide.dart';
 import 'package:inventory_controller/views/ProductDetail/NewEntryPage/components/barChart_with_tab.dart';
 import 'package:inventory_controller/views/ProductDetail/NewEntryPage/components/top_summary_card.dart';
@@ -71,7 +72,7 @@ class NewEntryPageState extends State<NewEntryScreen> with AutomaticKeepAliveCli
                     ),
                   ),
           SliverToBoxAdapter(
-            child: TopSummaryCard(),
+            child: DetailDailyTotal(),
           ),
           SliverToBoxAdapter(
             child: ProductDetailChartScreens(),

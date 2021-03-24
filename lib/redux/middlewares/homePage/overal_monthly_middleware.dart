@@ -26,7 +26,7 @@ _loadOveralMonthly() {
 
 Future<List<OveralMonthlyTransactionModel>> _loadOveralMonthlyTotalAmount() async {
   var response = await http
-      .get('http://172.17.2.204:5000/api/alltransactions/monthly');
+      .get('http://172.17.2.129:5000/api/alltransactions/all/monthly');
   if (response.statusCode == 200) {
     // List<MoneyTransactionModel> listFromJson(List<dynamic> json) {
     //   return json == null ? List<MoneyTransactionModel>() : json.map((value) => MoneyTransactionModel.fromJson(value)).toList();

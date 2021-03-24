@@ -17,23 +17,20 @@ _loadDetailOveralDailyTotal() {
 
     _loadDetailOveralDailyTotalAmount().then(
       (items) {
+        
+
         store.dispatch(DetailOvaralDailyLoadedAction(items));
       },
     ).catchError((exception, stacktrace) {
-      print('======================================= this is the error ====================================');
-      print(exception);
       store.dispatch(ErrorOccurredAction(exception));
     });
   };
 }
 
-Future<List<OveralDailyTransactionModel>> _loadDetailOveralDailyTotalAmount() async {
-  var response =
-      await http.get('http://172.17.2.204:5000/api/alltransactions/daily');
+Future<List<OveralDailyTransactionModel>>
+    _loadDetailOveralDailyTotalAmount() async {
+  var response = await http.get('http://172.17.2.129:5000/api/alltransactions/all/daily');
   if (response.statusCode == 200) {
-    // List<MoneyTransactionModel> listFromJson(List<dynamic> json) {
-    //   return json == null ? List<MoneyTransactionModel>() : json.map((value) => MoneyTransactionModel.fromJson(value)).toList();
-    // }
     final jsonData = (json.decode(response.body))['data'] as List;
     return jsonData
         .map((item) => OveralDailyTransactionModel.fromJson(item))

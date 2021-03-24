@@ -18,6 +18,7 @@ import 'package:inventory_controller/servives/TransactionService.dart';
 import 'package:redux/redux.dart';
 import 'package:get_it/get_it.dart';
 
+
 void setupLocator() {
   GetIt.I.registerLazySingleton(() => TransactionService());
 }

@@ -1,14 +1,13 @@
 
-// import 'package:inventory_controller/redux/actions/dashboard_daily_total.dart';
+
 import 'package:inventory_controller/redux/actions/itemDetail/dashboard_daily_total.dart';
-// import 'package:inventory_controller/redux/appState/homePage/dashboard_daily_total_state.dart';
 import 'package:inventory_controller/redux/appState/itemDetail/daily_detail_sum.dart';
 
 import 'package:redux/redux.dart';
 
 DetailDailySalesTotalState detailDailySalesTotalReducer(DetailDailySalesTotalState state, action) {
   return state.copyWith(
-    isDataLoading: _isDataLoadingReducer(state.isDataLoading, action),
+    loading: _isDataLoadingReducer(state.loading, action),
     dailyTotal: _dailyTotalReducer(state.dailyTotal, action),
     error: _errorReducer(state.error, action),
   );
@@ -16,7 +15,7 @@ DetailDailySalesTotalState detailDailySalesTotalReducer(DetailDailySalesTotalSta
 
 final Reducer<bool> _isDataLoadingReducer = combineReducers<bool>([
   TypedReducer<bool, DetailDailySumAction>(_isDataLoadingStartedReducer),
-  TypedReducer<bool, DetailDailySalesTotalState>(_isDataLoadingFinishedReducer),
+  TypedReducer<bool, DetailDailySumLoadedAction>(_isDataLoadingFinishedReducer),
   TypedReducer<bool, ErrorOccurredAction>(_isDataLoadingFinishedReducer),
 ]);
 
