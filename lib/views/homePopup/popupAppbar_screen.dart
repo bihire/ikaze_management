@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inventory_controller/common/constants.dart';
 
 class PopupAppbarScreen extends StatefulWidget {
   PopupAppbarScreen({
@@ -31,7 +32,7 @@ class _PopupAppbarScreenState extends State<PopupAppbarScreen> {
       padding: EdgeInsets.symmetric(vertical: 10, horizontal: 12),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [Icon(Icons.arrow_back), Icon(Icons.refresh)],
+        children: [Icon(Icons.arrow_back), Icon(Icons.refresh, color: lightShadeColor,)],
       ),
     );
   }

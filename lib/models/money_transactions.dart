@@ -24,7 +24,4 @@ class MoneyTransactionModel {
       transactionTotal = json['transactionTotal'],
       createdAt = DateTime.parse(json['createdAt']),
       updatedAt = DateTime.parse(json['updatedAt']);
-    
-  
-
 }

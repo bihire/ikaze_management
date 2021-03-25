@@ -11,6 +11,7 @@ import 'package:inventory_controller/redux/middlewares/itemDetail/detail_overal_
 import 'package:inventory_controller/redux/middlewares/itemDetail/detail_overal_monthly_middleware.dart';
 import 'package:inventory_controller/redux/middlewares/itemDetail/detail_overal_weekly_middleware.dart';
 import 'package:inventory_controller/redux/middlewares/popup_middleware.dart';
+import 'package:inventory_controller/redux/middlewares/productList/product_list.dart';
 import 'package:inventory_controller/redux/middlewares/range_middleware.dart';
 import 'package:inventory_controller/redux/reducers/app_reducer.dart';
 import 'package:inventory_controller/redux/middlewares/all_transactins_middlewares.dart';
@@ -43,7 +44,8 @@ class MyApp extends StatelessWidget {
       detailDailyTotalMiddleware(),
       detailOveralDailyTotalMiddleware(),
       detailOveralMonthlyMiddleware(),
-      detailOveralWeeklyMiddleware()
+      detailOveralWeeklyMiddleware(),
+      productListMiddleware()
     ]
   );
   // This widget is the root of your application.

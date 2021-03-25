@@ -8,6 +8,9 @@ import 'package:inventory_controller/containers/entryPage/SoldEntry/sold_entry_c
 import 'package:inventory_controller/views/ProductDetail/NewEntryPage/NewEntryPage.dart';
 
 class ProductDetail extends StatefulWidget {
+  final int productId;
+  final String productName;
+  final int unitPrice;
   @override
   State<StatefulWidget> createState() => ProductDetailState();
 }
@@ -30,65 +33,42 @@ class ProductDetailState extends State {
 
   @override
   Widget build(BuildContext context) {
-
-    return  Material(
-          child: DefaultTabController(
-            length: 2,
-            child: NestedScrollView(
-              physics: BouncingScrollPhysics(),
-              headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-                return <Widget>[
-                  // SliverPersistentHeader(
-                  //   delegate: PersistentHeader(
-                  //     widget: 
-                  //     CustomTabs(
-                  //       tabs: [
-                  //         Tab(
-                  //           text: "Products",
-                  //         ),
-                  //         Tab(
-                  //           text: "Shops",
-                  //         ),
-                  //       ],
-                  //     )
-                  //   ),
-                  //   pinned: true,
-                  // ),
-                  
-                ];
-              },
-              body: Column(
-                children: [
-                  Expanded(
-                    child: TabBarView(
-                      children: <Widget>[
-                        NewEntryContainer(),
-                        SoldEntryContainer()
-                      ],
-                    ),
-                  ),
-                  Container(
-                    child: CustomTabs(
-                        tabs: [
-                          Tab(
-                            text: "Sold",
-                            icon: Icon(Icons.assignment_returned),
-                          ),
-                          Tab(
-                            text: "Supplies",
-                            icon: Icon(Icons.apps),
-                          ),
-                        ],
-                      ),
-                  )
-                ],
+    return Material(
+      child: DefaultTabController(
+        length: 2,
+        child: NestedScrollView(
+          physics: BouncingScrollPhysics(),
+          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+            return <Widget>[];
+          },
+          body: Column(
+            children: [
+              Expanded(
+                child: TabBarView(
+                  children: <Widget>[NewEntryContainer(), SoldEntryContainer()],
+                ),
               ),
-            ),
-          
+              Container(
+                child: CustomTabs(
+                  tabs: [
+                    Tab(
+                      text: "Sold",
+                      icon: Icon(Icons.assignment_returned),
+                    ),
+                    Tab(
+                      text: "Supplies",
+                      icon: Icon(Icons.apps),
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
+        ),
       ),
     );
     // PageView(
-          
+
     //       controller: _pageController,
     //       onPageChanged: (index) {
     //         setState(() => selectedBarIndex= index);
@@ -97,20 +77,20 @@ class ProductDetailState extends State {
     //         Expanded(
     //           child: NewEntryContainer()),
     //         Expanded(
-    //           child: 
+    //           child:
     //           // Example()
     //           SoldEntryContainer()
     //         ),
     //       ],
     //     );
-    
+
     // Scaffold(
     //   appBar: AppBar(
     //     backgroundColor: Colors.white,
     //     title: Text('Lime new-entries', style: TextStyle(color: Colors.black),),
     //   ),
     //   body: SizedBox(
-    //     child: 
+    //     child:
     //   ),
     //   bottomNavigationBar: BottomNavyBar(
     //     selectedIndex: selectedBarIndex,

@@ -6,7 +6,8 @@ import 'package:inventory_controller/redux/appState/app_state.dart';
 import 'package:redux/redux.dart';
 
 Middleware<AppState> overalMonthlyTransactionsMiddleware() {
-  return TypedMiddleware<AppState, LoadOveralMonthlyAction>(_loadOveralMonthly());
+  return TypedMiddleware<AppState, LoadOveralMonthlyAction>(
+      _loadOveralMonthly());
 }
 
 _loadOveralMonthly() {
@@ -24,15 +25,18 @@ _loadOveralMonthly() {
   };
 }
 
-Future<List<OveralMonthlyTransactionModel>> _loadOveralMonthlyTotalAmount() async {
-  var response = await http
-      .get('http://172.17.2.129:5000/api/alltransactions/all/monthly');
+Future<List<OveralMonthlyTransactionModel>>
+    _loadOveralMonthlyTotalAmount() async {
+  var response =
+      await http.get('http://172.17.2.35:5000/api/alltransactions/all/monthly');
   if (response.statusCode == 200) {
     // List<MoneyTransactionModel> listFromJson(List<dynamic> json) {
     //   return json == null ? List<MoneyTransactionModel>() : json.map((value) => MoneyTransactionModel.fromJson(value)).toList();
     // }
     final jsonData = (json.decode(response.body))['data'] as List;
-    return jsonData.map((item) => OveralMonthlyTransactionModel.fromJson(item)).toList();
+    return jsonData
+        .map((item) => OveralMonthlyTransactionModel.fromJson(item))
+        .toList();
   } else {
     throw Exception('Error getting data, http code: ${response.statusCode}.');
   }

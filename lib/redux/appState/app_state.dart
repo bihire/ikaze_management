@@ -5,6 +5,7 @@ import 'package:inventory_controller/redux/appState/homePage/overal_monthly_stat
 import 'package:inventory_controller/redux/appState/homePage/overal_weekly_state.dart';
 import 'package:inventory_controller/redux/appState/itemDetail/daily_detail_sum.dart';
 import 'package:inventory_controller/redux/appState/popup_state.dart';
+import 'package:inventory_controller/redux/appState/productList/product_list.dart';
 import 'package:inventory_controller/redux/appState/range_state.dart';
 import 'package:meta/meta.dart';
 
@@ -28,6 +29,8 @@ class AppState {
   final DetailOvaraldailyState detailOveraldailyState;
   final DetailOveralWeeklyState detailOveralWeeklyState;
   final DetailOveralMonthlyState detailOveralMonthlyState;
+  //===========This the state for product page================
+  final ProductListState productListState;
 
   AppState({
     @required this.allTransactionsState,
@@ -42,6 +45,8 @@ class AppState {
     @required this.detailOveraldailyState,
     @required this.detailOveralWeeklyState,
     @required this.detailOveralMonthlyState,
+//============================================================
+    @required this.productListState
   });
 
   factory AppState.initial() {
@@ -53,27 +58,38 @@ class AppState {
         overalMonthlyState: OveralMonthlyState.initial(),
         transactionRangeState: TransactionRangeState.initial(),
         popupState: PopupState.initial(),
-//====================================================================================
+//===========================Detail Product=============================================
         detailDailySalesTotalState: DetailDailySalesTotalState.initial(),
         detailOveraldailyState: DetailOvaraldailyState.initial(),
         detailOveralWeeklyState: DetailOveralWeeklyState.initial(),
-        detailOveralMonthlyState: DetailOveralMonthlyState.initial());
+        detailOveralMonthlyState: DetailOveralMonthlyState.initial(),
+
+//===========================Product List===============================================
+        productListState: ProductListState.initial());
   }
 
   AppState copyWith({TransactionState allTransactionsState}) {
     return AppState(
       allTransactionsState: allTransactionsState ?? this.allTransactionsState,
-      dashboardDailyTotalState: dashboardDailyTotalState ?? this.dashboardDailyTotalState,
+      dashboardDailyTotalState:
+          dashboardDailyTotalState ?? this.dashboardDailyTotalState,
       ovaraldailyState: ovaraldailyState ?? this.ovaraldailyState,
       overalWeeklyState: overalWeeklyState ?? this.overalWeeklyState,
       overalMonthlyState: overalMonthlyState ?? this.overalMonthlyState,
-      transactionRangeState: transactionRangeState ?? this.transactionRangeState,
+      transactionRangeState:
+          transactionRangeState ?? this.transactionRangeState,
       popupState: popupState ?? this.popupState,
 //==========================================================================================
-      detailDailySalesTotalState: detailDailySalesTotalState ?? this.detailDailySalesTotalState,
-      detailOveraldailyState: detailOveraldailyState ?? this.detailOveraldailyState,
-      detailOveralWeeklyState: detailOveralWeeklyState ?? this.detailOveralWeeklyState,
-      detailOveralMonthlyState: detailOveralMonthlyState ?? this.detailOveralMonthlyState,
+      detailDailySalesTotalState:
+          detailDailySalesTotalState ?? this.detailDailySalesTotalState,
+      detailOveraldailyState:
+          detailOveraldailyState ?? this.detailOveraldailyState,
+      detailOveralWeeklyState:
+          detailOveralWeeklyState ?? this.detailOveralWeeklyState,
+      detailOveralMonthlyState:
+          detailOveralMonthlyState ?? this.detailOveralMonthlyState,
+    //===========================================================================
+      productListState: productListState ?? this.productListState,
     );
   }
 }

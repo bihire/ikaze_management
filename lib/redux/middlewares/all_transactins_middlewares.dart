@@ -8,7 +8,7 @@ import 'package:redux_logging/redux_logging.dart';
 
 Middleware<AppState> createAllTransactionsMiddleware() {
   return TypedMiddleware<AppState, LoadTransactionsPageAction>(
-        _loadItemsPage());
+      _loadItemsPage());
 }
 
 _loadItemsPage() {
@@ -30,10 +30,12 @@ _loadItemsPage() {
 Future<List<MoneyTransactionModel>> _loadFlutterGithubIssues(
     int page, int perPage) async {
   var response = await http.get(
-      'http://172.17.2.129:5000/api/transactions?page=$page&numberOfRows=$perPage');
+      'http://172.17.2.35:5000/api/transactions?page=$page&numberOfRows=$perPage');
   if (response.statusCode == 200) {
     final jsonData = (json.decode(response.body))['data'] as List;
-    return  jsonData.map((item) => MoneyTransactionModel.fromJson(item)).toList();
+    return jsonData
+        .map((item) => MoneyTransactionModel.fromJson(item))
+        .toList();
   } else {
     throw Exception('Error getting data, http code: ${response.statusCode}.');
   }
