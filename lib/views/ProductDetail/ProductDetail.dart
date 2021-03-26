@@ -4,13 +4,15 @@ import 'package:inventory_controller/components/custom_tabs.dart';
 import 'package:inventory_controller/components/sticky_list_try.dart';
 import 'package:inventory_controller/containers/entryPage/newEntry/new_entry_history_container.dart';
 import 'package:inventory_controller/containers/entryPage/SoldEntry/sold_entry_container.dart';
+import 'package:inventory_controller/models/productList/product_list.dart';
 
 import 'package:inventory_controller/views/ProductDetail/NewEntryPage/NewEntryPage.dart';
 
 class ProductDetail extends StatefulWidget {
-  final int productId;
-  final String productName;
-  final int unitPrice;
+  final ProductInfoModel productInfo;
+  ProductDetail({
+    this.productInfo,
+  });
   @override
   State<StatefulWidget> createState() => ProductDetailState();
 }
@@ -45,7 +47,11 @@ class ProductDetailState extends State {
             children: [
               Expanded(
                 child: TabBarView(
-                  children: <Widget>[NewEntryContainer(), SoldEntryContainer()],
+                  children: <Widget>[
+                    NewEntryScreen(),
+                    // NewEntryContainer(productInfo: widget.productInfo),
+                    SoldEntryContainer()
+                    ],
                 ),
               ),
               Container(

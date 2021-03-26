@@ -66,14 +66,14 @@ class _ProductListDialogState extends State<ProductListDialog> {
   // }
 }
 
+
+
 class ProductListScreen extends StatelessWidget {
   final bool loading;
   final List<ProductModel> products;
   final bool error;
 
-  void _loadpageState() {
-    
-  }
+  void _loadpageState() {}
 
   ProductListScreen(
       {@required this.loading, @required this.products, @required this.error});
@@ -105,7 +105,6 @@ class ProductListScreen extends StatelessWidget {
                       child: Container(
                         width: (width) - 90,
                         height: 30.0,
-                        
                         decoration: BoxDecoration(
                           color: Colors.grey[300],
                         ),

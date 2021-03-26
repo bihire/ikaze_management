@@ -36,66 +36,68 @@ class NewEntryPageState extends State<NewEntryScreen> with AutomaticKeepAliveCli
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-          child: CustomScrollView(
+          child: Scaffold(
+                      body: CustomScrollView(
         slivers: [
-          SliverAppBar(
-                    backgroundColor: Colors.white,
-                    pinned: true,
-                    titleSpacing: 0,
-                    elevation: 3,
-                    automaticallyImplyLeading: false,
-                    title: Row(
-                      children: [
-                        Container(
-                          child: LeadingButton(
-                            color: lightShadeColor,
-                            icon: Icons.arrow_back_ios_outlined,
-                            iconColor: darkColor,
-                            size: 37, // btnShadow: false
+            SliverAppBar(
+                      backgroundColor: Colors.white,
+                      pinned: true,
+                      titleSpacing: 0,
+                      elevation: 3,
+                      automaticallyImplyLeading: false,
+                      title: Row(
+                        children: [
+                          Container(
+                            child: LeadingButton(
+                              color: lightShadeColor,
+                              icon: Icons.arrow_back_ios_outlined,
+                              iconColor: darkColor,
+                              size: 37, // btnShadow: false
+                            ),
                           ),
-                        ),
-                        Expanded(
-                          child: Container(
-                            padding: EdgeInsets.only(top: 10, bottom: 10, left: 10),
-                            child: Text('Lime new-entries', style: TextStyle(color: Colors.black),)
+                          Expanded(
+                            child: Container(
+                              padding: EdgeInsets.only(top: 10, bottom: 10, left: 10),
+                              child: Text('Lime new-entries', style: TextStyle(color: Colors.black),)
+                            ),
                           ),
-                        ),
-                        Container(
-                          child: LeadingButton(
-                            color: lightShadeColor,
-                            icon: Icons.more_horiz_outlined,
-                            iconColor: darkColor,
-                            size: 37, // btnShadow: false
+                          Container(
+                            child: LeadingButton(
+                              color: lightShadeColor,
+                              icon: Icons.more_horiz_outlined,
+                              iconColor: darkColor,
+                              size: 37, // btnShadow: false
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-          SliverToBoxAdapter(
-            child: DetailDailyTotal(),
-          ),
-          SliverToBoxAdapter(
-            child: ProductDetailChartScreens(),
-          ),
-          SliverPersistentHeader(
-            delegate: PersistentHeader(
-              widget: HeaderDatePicker()
+            SliverToBoxAdapter(
+              child: DetailDailyTotalContainer(),
             ),
-            pinned: true,
+            SliverToBoxAdapter(
+              child: ProductDetailChartScreens(),
             ),
-          SliverList(
-            delegate: SliverChildBuilderDelegate((context, index) {
-              return MoneyTransactionModelListItem(
-                itemIndex: index, transaction: widget.transactions[index]);
-                
-            }, 
-            childCount: widget.transactions.length
-            ),
+            SliverPersistentHeader(
+              delegate: PersistentHeader(
+                widget: HeaderDatePicker()
+              ),
+              pinned: true,
+              ),
+            // SliverList(
+            //   delegate: SliverChildBuilderDelegate((context, index) {
+            //     return MoneyTransactionModelListItem(
+            //       itemIndex: index, transaction: widget.transactions[index]);
+                  
+            //   }, 
+            //   childCount: widget.transactions.length
+            //   ),
+              
+            //   )
             
-            )
-          
         ],
       ),
+          ),
     );
   }
 

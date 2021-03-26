@@ -23,3 +23,10 @@ class ProductModel {
       createdAt = DateTime.parse(json['createdAt']),
       updatedAt = DateTime.parse(json['updatedAt']);
 }
+
+
+class ProductInfoModel {
+  int productId;
+  String productName;
+  int unitPrice;
+}

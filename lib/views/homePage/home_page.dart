@@ -4,6 +4,7 @@ import 'package:inventory_controller/components/common.dart';
 import 'package:inventory_controller/components/github_issue_list_item.dart';
 import 'package:inventory_controller/components/leadingButton/leading_button.dart';
 import 'package:inventory_controller/containers/homePage/daily_total.dart';
+import 'package:inventory_controller/containers/homePage/homeList/home_list_container.dart';
 import 'package:inventory_controller/views/ProductDetail/NewEntryPage/components/barChart_with_tab.dart';
 import 'package:inventory_controller/views/ProductDetail/NewEntryPage/components/top_summary_card.dart';
 import 'package:inventory_controller/views/homePage/chartSlide/home_chart_slide.dart';
@@ -13,20 +14,20 @@ import 'components/persistent_header.dart';
 class HomePageScreen extends StatefulWidget {
   const HomePageScreen({
     Key key,
-    this.loading,
-    this.isNextPageAvailable,
-    this.transactions,
+    // this.loading,
+    // this.isNextPageAvailable,
+    // this.transactions,
     this.refresh,
-    this.loadNextPage,
-    this.noError,
+    // this.loadNextPage,
+    // this.noError,
   });
 
-  final bool loading;
-  final bool isNextPageAvailable;
-  final transactions;
+  // final bool loading;
+  // final bool isNextPageAvailable;
+  // final transactions;
   final Function refresh;
-  final Function loadNextPage;
-  final bool noError;
+  // final Function loadNextPage;
+  // final bool noError;
   @override
   State<StatefulWidget> createState() => HomePageScreenState();
 }
@@ -55,12 +56,13 @@ class HomePageScreenState extends State<HomePageScreen> {
               delegate: PersistentHeader(widget: HeaderDatePicker()),
               pinned: true,
             ),
-            SliverList(
-              delegate: SliverChildBuilderDelegate((context, index) {
-                return MoneyTransactionModelListItem(
-                    itemIndex: index, transaction: widget.transactions[index]);
-              }, childCount: widget.transactions.length),
-            )
+            HomePageContainer()
+            // SliverList(
+            //   delegate: SliverChildBuilderDelegate((context, index) {
+            //     return MoneyTransactionModelListItem(
+            //         itemIndex: index, transaction: widget.transactions[index]);
+            //   }, childCount: widget.transactions.length),
+            // )
           ],
         ),
       ),

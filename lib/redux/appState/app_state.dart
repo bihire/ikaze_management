@@ -9,13 +9,17 @@ import 'package:inventory_controller/redux/appState/productList/product_list.dar
 import 'package:inventory_controller/redux/appState/range_state.dart';
 import 'package:meta/meta.dart';
 
+import 'homePage/transactions/home_transaction_list.dart';
 import 'itemDetail/charts/detail_overal_daily_state.dart';
 import 'itemDetail/charts/detail_overal_monthly_state.dart';
 import 'itemDetail/charts/detail_overal_weekly_state.dart';
+import 'itemDetail/transactions/new_transactions_list.dart';
+import 'itemDetail/transactions/supply_transactions_list.dart';
 
 @immutable
 class AppState {
   final TransactionState allTransactionsState;
+  final HomeTransactionListState homeTransactionListState;
   final DashoardDailyTotalState dashboardDailyTotalState;
   final OvaraldailyState ovaraldailyState;
   final OveralWeeklyState overalWeeklyState;
@@ -29,10 +33,13 @@ class AppState {
   final DetailOvaraldailyState detailOveraldailyState;
   final DetailOveralWeeklyState detailOveralWeeklyState;
   final DetailOveralMonthlyState detailOveralMonthlyState;
+  final NewTransactionListState newTransactionListState;
+  final SupplyTransactionListState supplyTransactionListState;
   //===========This the state for product page================
   final ProductListState productListState;
 
   AppState({
+    @required this.homeTransactionListState,
     @required this.allTransactionsState,
     @required this.dashboardDailyTotalState,
     @required this.ovaraldailyState,
@@ -45,6 +52,8 @@ class AppState {
     @required this.detailOveraldailyState,
     @required this.detailOveralWeeklyState,
     @required this.detailOveralMonthlyState,
+    @required this.newTransactionListState,
+    @required this.supplyTransactionListState,
 //============================================================
     @required this.productListState
   });
@@ -52,6 +61,7 @@ class AppState {
   factory AppState.initial() {
     return AppState(
         allTransactionsState: TransactionState.initial(),
+        homeTransactionListState: HomeTransactionListState.initial(),
         dashboardDailyTotalState: DashoardDailyTotalState.initial(),
         ovaraldailyState: OvaraldailyState.initial(),
         overalWeeklyState: OveralWeeklyState.initial(),
@@ -63,7 +73,8 @@ class AppState {
         detailOveraldailyState: DetailOvaraldailyState.initial(),
         detailOveralWeeklyState: DetailOveralWeeklyState.initial(),
         detailOveralMonthlyState: DetailOveralMonthlyState.initial(),
-
+        newTransactionListState: NewTransactionListState.initial(),
+        supplyTransactionListState: SupplyTransactionListState.initial(),
 //===========================Product List===============================================
         productListState: ProductListState.initial());
   }
@@ -71,6 +82,7 @@ class AppState {
   AppState copyWith({TransactionState allTransactionsState}) {
     return AppState(
       allTransactionsState: allTransactionsState ?? this.allTransactionsState,
+      homeTransactionListState: homeTransactionListState ?? this.homeTransactionListState,
       dashboardDailyTotalState:
           dashboardDailyTotalState ?? this.dashboardDailyTotalState,
       ovaraldailyState: ovaraldailyState ?? this.ovaraldailyState,
@@ -88,7 +100,10 @@ class AppState {
           detailOveralWeeklyState ?? this.detailOveralWeeklyState,
       detailOveralMonthlyState:
           detailOveralMonthlyState ?? this.detailOveralMonthlyState,
-    //===========================================================================
+      newTransactionListState: newTransactionListState ?? this.newTransactionListState,
+      supplyTransactionListState: supplyTransactionListState ?? this.supplyTransactionListState,
+      
+//==========================================================================================
       productListState: productListState ?? this.productListState,
     );
   }

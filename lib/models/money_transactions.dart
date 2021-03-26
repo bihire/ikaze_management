@@ -16,7 +16,7 @@ class MoneyTransactionModel {
 
   MoneyTransactionModel.fromJson(Map<String, dynamic> json) 
     : id = json['id'],
-      productId = json['productId'],
+      productId = json['product']['product_name'],
       entryType = json['entryType'],
       quantity = json['quantity'],
       unitPrice = json['unitPrice'],
