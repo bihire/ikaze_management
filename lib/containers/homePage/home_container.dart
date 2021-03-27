@@ -23,9 +23,10 @@ class HomePageContainer extends StatelessWidget {
     return StoreConnector<AppState, _ViewModel>(
       builder: (context, vm) {
         return HomePageScreen(
-          // loading: vm.loading,
-          // isNextPageAvailable: vm.isNextPageAvailable,
-          // transactions: vm.transactions,
+          homeloading: vm.homeloading,
+          isNextPageAvailable: vm.isNextPageAvailable,
+          transactions: vm.transactions,
+          store: vm.store,
           refresh: vm.onRefresh,
           // loadNextPage: vm.onLoadNextPage,
           // noError: vm.noError,
@@ -45,16 +46,16 @@ class HomePageContainer extends StatelessWidget {
 
 class _ViewModel {
   _ViewModel({
-    // this.loading,
-    // this.isNextPageAvailable,
-    // this.transactions,
+    this.homeloading,
+    this.isNextPageAvailable,
+    this.transactions,
     this.store,
     // this.noError,
   });
 
-  // final bool loading;
-  // final bool isNextPageAvailable;
-  // final List<MoneyTransactionModel> transactions;
+  final bool homeloading;
+  final bool isNextPageAvailable;
+  final List<MoneyTransactionModel> transactions;
   final Store<AppState> store;
   // final bool noError;
 
@@ -77,9 +78,9 @@ class _ViewModel {
 
   static _ViewModel fromStore(Store<AppState> store) {
     return _ViewModel(
-      // loading: store.state.homeTransactionListState.loading,
-      // isNextPageAvailable: store.state.allTransactionsState.isNextPageAvailable,
-      // transactions: store.state.allTransactionsState.transactions,
+      homeloading: store.state.homeTransactionListState.loading,
+      isNextPageAvailable: store.state.homeTransactionListState.isNextPageAvailable,
+      transactions: store.state.homeTransactionListState.transactions,
       store: store,
       // noError: store.state.allTransactionsState.error == null,
     );

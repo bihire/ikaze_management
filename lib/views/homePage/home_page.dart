@@ -1,22 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:inventory_controller/common/constants.dart';
 import 'package:inventory_controller/components/common.dart';
-import 'package:inventory_controller/components/github_issue_list_item.dart';
-import 'package:inventory_controller/components/leadingButton/leading_button.dart';
 import 'package:inventory_controller/containers/homePage/daily_total.dart';
 import 'package:inventory_controller/containers/homePage/homeList/home_list_container.dart';
-import 'package:inventory_controller/views/ProductDetail/NewEntryPage/components/barChart_with_tab.dart';
-import 'package:inventory_controller/views/ProductDetail/NewEntryPage/components/top_summary_card.dart';
+import 'package:inventory_controller/redux/actions/homePage/transactions/transactionList.dart';
+import 'package:inventory_controller/redux/appState/all_transactions_state.dart';
+import 'package:inventory_controller/redux/appState/app_state.dart';
 import 'package:inventory_controller/views/homePage/chartSlide/home_chart_slide.dart';
+import 'package:redux/redux.dart';
 
 import 'components/persistent_header.dart';
 
 class HomePageScreen extends StatefulWidget {
+  final bool homeloading;
+  final bool isNextPageAvailable;
+  final Store<AppState> store;
+
   const HomePageScreen({
     Key key,
-    // this.loading,
-    // this.isNextPageAvailable,
-    // this.transactions,
+    this.homeloading,
+    this.isNextPageAvailable,
+    this.transactions,
+    this.store,
     this.refresh,
     // this.loadNextPage,
     // this.noError,
@@ -24,7 +29,7 @@ class HomePageScreen extends StatefulWidget {
 
   // final bool loading;
   // final bool isNextPageAvailable;
-  // final transactions;
+  final transactions;
   final Function refresh;
   // final Function loadNextPage;
   // final bool noError;
@@ -33,6 +38,21 @@ class HomePageScreen extends StatefulWidget {
 }
 
 class HomePageScreenState extends State<HomePageScreen> {
+  ScrollController controller;
+  // List<String> items = new List.generate(100, (index) => 'Hello $index');
+
+  @override
+  void initState() {
+    super.initState();
+    controller = new ScrollController()..addListener(_scrollListener);
+  }
+
+  @override
+  void dispose() {
+    controller.removeListener(_scrollListener);
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -40,6 +60,7 @@ class HomePageScreenState extends State<HomePageScreen> {
         color: primaryColor,
         onRefresh: _onRefresh,
         child: CustomScrollView(
+          controller: controller,
           slivers: [
             SliverToBoxAdapter(
               child: Container(
@@ -67,6 +88,18 @@ class HomePageScreenState extends State<HomePageScreen> {
         ),
       ),
     );
+  }
+
+  void _scrollListener() {
+    if (!widget.homeloading &&
+        widget.isNextPageAvailable &&
+        controller.position.extentAfter < 20.0) {
+          widget.store.dispatch(
+        LoadHomeTransactionsPageAction(
+            pageNumber: (widget.transactions.length ~/ TransactionState.transactionsPerPage) + 1,
+            transactionsPerPage: TransactionState.transactionsPerPage),
+      );
+    }
   }
 
   Future _onRefresh() {

@@ -88,7 +88,31 @@ class ProductListScreen extends StatelessWidget {
               );
             },
             itemBuilder: (ctx, index) {
-              return Container(
+              return index == 4 ? Container(
+                padding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+                child: Row(
+                  children: <Widget>[
+                    Icon(
+                      Icons.radio_button_unchecked,
+                      color: primaryColor,
+                      size: 7.0,
+                    ),
+                    SizedBox(
+                      width: 20.0,
+                    ),
+                    SkeletonAnimation(
+                      shimmerColor: Colors.white24,
+                      child: Container(
+                        width: (width) - 90,
+                        height: 30.0,
+                        decoration: BoxDecoration(
+                          color: lightGreyColor,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ) : Container(
                 padding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
                 child: Row(
                   children: <Widget>[
@@ -114,7 +138,7 @@ class ProductListScreen extends StatelessWidget {
                 ),
               );
             },
-            itemCount: 4,
+            itemCount: 5,
           )
         : ListView.separated(
             // physics: BouncingScrollPhysics(
@@ -133,6 +157,7 @@ class ProductListScreen extends StatelessWidget {
                 splashColor: primaryColor,
                 onTap: () {
                   Navigator.of(context).pop();
+                  
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => ProductDetail()));
                 },

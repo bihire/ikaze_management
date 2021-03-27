@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:inventory_controller/common/constants.dart';
 import 'package:inventory_controller/components/github_issue_list_item.dart';
 import 'package:inventory_controller/models/money_transactions.dart';
 import 'package:inventory_controller/redux/actions/homePage/transactions/transactionList.dart';
@@ -15,13 +16,38 @@ class HomePageContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
     return StoreConnector<AppState, _ViewModel>(
       builder: (context, vm) {
         return SliverList(
           delegate: SliverChildBuilderDelegate((context, index) {
-            return MoneyTransactionModelListItem(
-                itemIndex: index, transaction: vm.transactions[index]);
-          }, childCount: vm.transactions.length),
+            return index == vm.transactions.length
+                ? Container(
+                    width: width,
+                    height: 80,
+                    color: primaryLightColor,
+                    child: Center(
+                      child: vm.loading == true
+                          ? Container(
+                              margin: EdgeInsets.symmetric(vertical: 20),
+                              width: 40,
+                              height: 40,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2.0,
+                                backgroundColor: lightGreyColor,
+                                valueColor: new AlwaysStoppedAnimation<Color>(
+                                    primaryColor),
+                              ),
+                            )
+                          : Text(
+                              'No transactions',
+                              style: TextStyle(color: hardGreyColor),
+                            ),
+                    ),
+                  )
+                : MoneyTransactionModelListItem(
+                    itemIndex: index, transaction: vm.transactions[index]);
+          }, childCount: vm.transactions.length + 1),
         );
         // HomePageScreen(
         //   loading: vm.loading,
@@ -37,7 +63,8 @@ class HomePageContainer extends StatelessWidget {
         store.dispatch(
           LoadHomeTransactionsPageAction(
               pageNumber: 1,
-              transactionsPerPage: HomeTransactionListState.transactionsPerPage),
+              transactionsPerPage:
+                  HomeTransactionListState.transactionsPerPage),
         );
       },
     );
@@ -62,8 +89,9 @@ class _ViewModel {
   void onLoadNextPage() {
     if (!loading && isNextPageAvailable) {
       store.dispatch(LoadHomeTransactionsPageAction(
-        pageNumber:
-            (transactions.length ~/ HomeTransactionListState.transactionsPerPage) + 1,
+        pageNumber: (transactions.length ~/
+                HomeTransactionListState.transactionsPerPage) +
+            1,
         transactionsPerPage: HomeTransactionListState.transactionsPerPage,
       ));
     }
@@ -79,7 +107,8 @@ class _ViewModel {
   static _ViewModel fromStore(Store<AppState> store) {
     return _ViewModel(
       loading: store.state.homeTransactionListState.loading,
-      isNextPageAvailable: store.state.homeTransactionListState.isNextPageAvailable,
+      isNextPageAvailable:
+          store.state.homeTransactionListState.isNextPageAvailable,
       transactions: store.state.homeTransactionListState.transactions,
       store: store,
       noError: store.state.allTransactionsState.error == null,
