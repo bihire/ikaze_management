@@ -1,26 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:inventory_controller/redux/actions/itemDetail/dashboard_daily_total.dart';
+import 'package:inventory_controller/views/ProductDetail/NewEntryPage/NewEntryPage.dart';
 import 'package:inventory_controller/views/ProductDetail/NewEntryPage/components/top_summary_card.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:inventory_controller/redux/appState/app_state.dart';
 
-class DetailDailyTotalContainer extends StatefulWidget {
+class NewDetailContainer extends StatefulWidget {
   @override
-  _DetailDailyTotalState createState() => _DetailDailyTotalState();
+  _NewDetailContainerState createState() => _NewDetailContainerState();
 }
 
-class _DetailDailyTotalState extends State<DetailDailyTotalContainer> {
+class _NewDetailContainerState extends State<NewDetailContainer> {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, _ViewModel>(
       builder: (context, vm) {
-        return TopSummaryCard(
+        return NewEntryScreen(
           loading: vm.loading,
+          error: vm.error,
           dailyTotal: vm.dailyTotal,
-          error: vm.noError,
-        );
-        
+          // productInfo: widget.productInfo
+          );
       },
       converter: _ViewModel.fromStore,
       distinct: true,
@@ -38,20 +39,20 @@ class _ViewModel {
     this.loading,
     this.dailyTotal,
     this.store,
-    this.noError,
+    this.error,
   });
 
   final bool loading;
   final String dailyTotal;
   final Store<AppState> store;
-  final bool noError;
+  final bool error;
 
   static _ViewModel fromStore(Store<AppState> store) {
     return _ViewModel(
       loading: store.state.detailDailySalesTotalState.loading,
       dailyTotal: store.state.detailDailySalesTotalState.dailyTotal,
       store: store,
-      noError: store.state.detailDailySalesTotalState.error == null,
+      error: store.state.detailDailySalesTotalState.error == null,
     );
   }
 }

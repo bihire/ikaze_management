@@ -24,11 +24,11 @@ class NewEntryContainer extends StatelessWidget {
       builder: (context, vm) {
         return NewEntryScreen(
           loading: vm.isDataLoading,
-          isNextPageAvailable: vm.isNextPageAvailable,
-          transactions: vm.transactions,
+          // isNextPageAvailable: vm.isNextPageAvailable,
+          // transactions: vm.transactions,
           refresh: vm.onRefresh,
           loadNextPage: vm.onLoadNextPage,
-          noError: vm.noError,
+          // noError: vm.noError,
         );
       },
       converter: _ViewModel.fromStore,

@@ -141,9 +141,6 @@ class ProductListScreen extends StatelessWidget {
             itemCount: 5,
           )
         : ListView.separated(
-            // physics: BouncingScrollPhysics(
-            //     parent: const AlwaysScrollableScrollPhysics()), // new
-            // controller: _scrollController,
             padding: EdgeInsets.symmetric(vertical: 20, horizontal: 12),
             itemCount: products.length,
             separatorBuilder: (context, index) {
@@ -157,9 +154,15 @@ class ProductListScreen extends StatelessWidget {
                 splashColor: primaryColor,
                 onTap: () {
                   Navigator.of(context).pop();
-                  
+
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => ProductDetail()));
+                      MaterialPageRoute(builder: (context) => ProductDetail(
+                        productInfo: ProductInfoModel(
+                          products[index].id,
+                          products[index].productName,
+                          products[index].unitPrice
+                        )
+                        )));
                 },
                 child: Container(
                   padding: EdgeInsets.symmetric(vertical: 20, horizontal: 3),

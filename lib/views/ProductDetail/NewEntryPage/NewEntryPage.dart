@@ -14,19 +14,21 @@ class NewEntryScreen extends StatefulWidget {
   const NewEntryScreen({
     Key key,
     this.loading,
-    this.isNextPageAvailable,
-    this.transactions,
+    this.dailyTotal,
     this.refresh,
     this.loadNextPage,
-    this.noError,
+    this.error,
   });
+  // final  productInfo;
+  // ProductDetail({
+  //   this.productInfo,
+  // });
 
   final bool loading;
-  final bool isNextPageAvailable;
-  final transactions;
+  final String dailyTotal;
   final Function refresh;
   final Function loadNextPage;
-  final bool noError;
+  final bool error;
   @override
   State<StatefulWidget> createState() => NewEntryPageState();
 }
@@ -73,7 +75,12 @@ class NewEntryPageState extends State<NewEntryScreen> with AutomaticKeepAliveCli
                       ),
                     ),
             SliverToBoxAdapter(
-              child: DetailDailyTotalContainer(),
+              child: TopSummaryCard(
+                loading: widget.loading,
+                dailyTotal: widget.dailyTotal,
+                error: widget.error,
+              ),
+              // NewDetailContainer(),
             ),
             SliverToBoxAdapter(
               child: ProductDetailChartScreens(),

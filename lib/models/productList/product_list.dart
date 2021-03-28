@@ -14,19 +14,19 @@ class ProductModel {
   String get updatedAtFormatted =>
       DateFormat.yMMMd().add_Hm().format(updatedAt);
 
-  ProductModel.fromJson(Map<String, dynamic> json) 
-    : id = json['id'],
-      productName = json['product_name'],
-      unitPrice = int.parse(json['unit_price']),
-      unitQuantity = json['unit_quantity'],
-      userId = json['user_id'],
-      createdAt = DateTime.parse(json['createdAt']),
-      updatedAt = DateTime.parse(json['updatedAt']);
+  ProductModel.fromJson(Map<String, dynamic> json)
+      : id = json['id'],
+        productName = json['product_name'],
+        unitPrice = int.parse(json['unit_price']),
+        unitQuantity = json['unit_quantity'],
+        userId = json['user_id'],
+        createdAt = DateTime.parse(json['createdAt']),
+        updatedAt = DateTime.parse(json['updatedAt']);
 }
-
 
 class ProductInfoModel {
   int productId;
   String productName;
   int unitPrice;
+  ProductInfoModel(this.productId, this.productName, this.unitPrice);
 }
