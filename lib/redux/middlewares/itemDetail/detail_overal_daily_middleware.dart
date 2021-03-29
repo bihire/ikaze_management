@@ -28,7 +28,7 @@ _loadDetailOveralDailyTotal() {
 Future<List<OveralDailyTransactionModel>>
     _loadDetailOveralDailyTotalAmount() async {
   var response =
-      await http.get('http://192.168.43.56:5000/api/alltransactions/all/daily');
+      await http.get('http://172.17.2.193:5000/api/alltransactions/all/daily');
   if (response.statusCode == 200) {
     final jsonData = (json.decode(response.body))['data'] as List;
     return jsonData

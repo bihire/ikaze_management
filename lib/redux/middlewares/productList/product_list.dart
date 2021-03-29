@@ -25,7 +25,7 @@ _loadItemsPage() {
 
 Future<List<ProductModel>> _loadFlutterGithubIssues() async {
   await new Future.delayed(const Duration(seconds: 5));
-  var response = await http.get('http://192.168.43.56:5000/api/products');
+  var response = await http.get('http://172.17.2.193:5000/api/products');
   if (response.statusCode == 200) {
     final jsonData = (json.decode(response.body))['data'] as List;
     return jsonData.map((item) => ProductModel.fromJson(item)).toList();

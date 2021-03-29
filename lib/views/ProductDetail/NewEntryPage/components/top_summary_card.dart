@@ -9,23 +9,14 @@ class TopSummaryCard extends StatelessWidget {
     Key key,
     this.loading,
     this.dailyTotal,
-    // this.isNextPageAvailable,
-    // this.transactions,
-    // this.refresh,
-    // this.loadNextPage,
     this.error,
   });
 
   final bool loading;
   final String dailyTotal;
-  // final bool isNextPageAvailable;
-  // final transactions;
-  // final Function refresh;
-  // final Function loadNextPage;
   final bool error;
   @override
   Widget build(BuildContext context) {
-    print(dailyTotal);
     return Column(
       children: [
         Container(
@@ -44,7 +35,7 @@ class TopSummaryCard extends StatelessWidget {
                                 width: 220.0,
                                 height: 40.0,
                                 decoration: BoxDecoration(
-                                  color: Colors.grey[300],
+                                  color: lightGreyColor,
                                 ),
                               ),
                             )
@@ -85,7 +76,7 @@ class TopSummaryCard extends StatelessWidget {
                                 width: 100.0,
                                 height: 10.0,
                                 decoration: BoxDecoration(
-                                  color: Colors.grey[300],
+                                  color: lightGreyColor,
                                 ),
                               ),
                             )
@@ -215,7 +206,7 @@ class TopSummaryCard extends StatelessWidget {
             //         ],
             //       ),
             ),
-            Container(
+        Container(
             padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
             color: Colors.white,
             child: Column(
@@ -231,7 +222,7 @@ class TopSummaryCard extends StatelessWidget {
                                 width: 220.0,
                                 height: 40.0,
                                 decoration: BoxDecoration(
-                                  color: Colors.grey[300],
+                                  color: lightGreyColor,
                                 ),
                               ),
                             )
@@ -272,7 +263,7 @@ class TopSummaryCard extends StatelessWidget {
                                 width: 100.0,
                                 height: 10.0,
                                 decoration: BoxDecoration(
-                                  color: Colors.grey[300],
+                                  color: lightGreyColor,
                                 ),
                               ),
                             )
@@ -284,6 +275,101 @@ class TopSummaryCard extends StatelessWidget {
                                   color: hardGreyColor),
                               textAlign: TextAlign.right,
                             ),
+                    ),
+                  ],
+                ),
+              ],
+            )),
+      ],
+    );
+  }
+}
+
+class TopSummaryCardLoading extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Container(
+            padding: EdgeInsets.only(top: 40, left: 10, right: 10),
+            color: Colors.white,
+            child: Column(
+              children: <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.only(right: 0.0),
+                      child: SkeletonAnimation(
+                              child: Container(
+                                width: 220.0,
+                                height: 40.0,
+                                decoration: BoxDecoration(
+                                  color: lightGreyColor,
+                                ),
+                              ),
+                            )
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.only(top: 4.0),
+                      child: SkeletonAnimation(
+                              child: Container(
+                                margin: EdgeInsets.only(top: 6.0),
+                                width: 100.0,
+                                height: 10.0,
+                                decoration: BoxDecoration(
+                                  color: lightGreyColor,
+                                ),
+                              ),
+                            )
+                    ),
+                  ],
+                ),
+              ],
+            )
+            ),
+            Container(
+            padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+            color: Colors.white,
+            child: Column(
+              children: <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.only(right: 0.0),
+                      child: SkeletonAnimation(
+                              child: Container(
+                                width: 220.0,
+                                height: 40.0,
+                                decoration: BoxDecoration(
+                                  color: lightGreyColor,
+                                ),
+                              ),
+                            )
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.only(top: 4.0),
+                      child: SkeletonAnimation(
+                              child: Container(
+                                margin: EdgeInsets.only(top: 6.0),
+                                width: 100.0,
+                                height: 10.0,
+                                decoration: BoxDecoration(
+                                  color: lightGreyColor,
+                                ),
+                              ),
+                            )
                     ),
                   ],
                 ),
