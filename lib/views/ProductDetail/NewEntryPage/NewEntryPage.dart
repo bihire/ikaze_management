@@ -193,7 +193,7 @@ class NewEntryPageState extends State<NewEntryScreen>
               ),
             ),
         ),
-        body: !widget.loading
+        body: widget.loading
                   ? _buildLoadingWidget()
                   : CustomScrollView(
                       slivers: [
@@ -220,7 +220,7 @@ class NewEntryPageState extends State<NewEntryScreen>
                                 title: Text('index $index'),
                               );
                             },
-                            // childCount: widget.transactions.length
+                            childCount: 3
                           ),
                         )
                       ],

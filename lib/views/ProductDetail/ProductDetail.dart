@@ -19,104 +19,54 @@ class ProductDetail extends StatefulWidget {
 }
 
 class ProductDetailState extends State {
-  int selectedBarIndex = 0;
-  PageController _pageController;
-
-  @override
-  void initState() {
-    super.initState();
-    _pageController = PageController();
-  }
-
-  @override
-  void dispose() {
-    _pageController.dispose();
-    super.dispose();
-  }
+  
 
   @override
   Widget build(BuildContext context) {
     return Material(
       child: DefaultTabController(
         length: 2,
-        child: NestedScrollView(
-          physics: BouncingScrollPhysics(),
-          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-            return <Widget>[];
-          },
-          body: Column(
-            children: [
-              Expanded(
-                child: TabBarView(
+        child: Column(
+          children: [
+            Expanded(
+              child: NestedScrollView(
+//                 physics: BouncingScrollPhysics(),
+                headerSliverBuilder:
+                    (BuildContext context, bool innerBoxIsScrolled) {
+                  return <Widget>[];
+                },
+                body: PageView( // this is a pageView container
                   children: <Widget>[
-                    NewDetailContainer(),
-                    
-                    // NewEntryContainer(productInfo: widget.productInfo),
-                    SoldEntryContainer()
-                    ],
-                ),
-              ),
-              Container(
-                child: CustomTabs(
-                  tabs: [
-                    Tab(
-                      text: "Sold",
-                      icon: Icon(Icons.assignment_returned),
+                    CustomScrollView(
+                      slivers: [
+                       SliverList(
+                          delegate: SliverChildBuilderDelegate(
+                            (context, index) {
+                              return ListTile(
+                                title: Text('index $index'),
+                              );
+                            },
+                            childCount: 15
+                          ),
+                        )
+                       ]
                     ),
-                    Tab(
-                      text: "Supplies",
-                      icon: Icon(Icons.apps),
+                    CustomScrollView(
+                      slivers: [
+                       // whatever nonesense, 
+                       ]
                     ),
                   ],
                 ),
-              )
-            ],
-          ),
+              ),
+            ),
+            Container(
+              height: 30,
+//               child: 
+            )
+          ],
         ),
       ),
     );
-    // PageView(
-
-    //       controller: _pageController,
-    //       onPageChanged: (index) {
-    //         setState(() => selectedBarIndex= index);
-    //       },
-    //       children: <Widget>[
-    //         Expanded(
-    //           child: NewEntryContainer()),
-    //         Expanded(
-    //           child:
-    //           // Example()
-    //           SoldEntryContainer()
-    //         ),
-    //       ],
-    //     );
-
-    // Scaffold(
-    //   appBar: AppBar(
-    //     backgroundColor: Colors.white,
-    //     title: Text('Lime new-entries', style: TextStyle(color: Colors.black),),
-    //   ),
-    //   body: SizedBox(
-    //     child:
-    //   ),
-    //   bottomNavigationBar: BottomNavyBar(
-    //     selectedIndex: selectedBarIndex,
-    //     onItemSelected: (index) {
-    //       setState(() => selectedBarIndex = index);
-    //       _pageController.jumpToPage(index);
-    //     },
-    //     items: <BottomNavyBarItem>[
-    //       BottomNavyBarItem(
-    //         title: Text('Sold-entries'),
-    //         icon: Icon(Icons.assignment_returned)
-    //       ),
-    //       BottomNavyBarItem(
-    //         title: Text('New-entries'),
-    //         icon: Icon(Icons.apps)
-    //       ),
-    //     ],
-    //     ),
-    // );
   }
 }
