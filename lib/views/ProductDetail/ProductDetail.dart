@@ -27,45 +27,34 @@ class ProductDetailState extends State {
       child: DefaultTabController(
         length: 2,
         child: Column(
-          children: [
-            Expanded(
-              child: NestedScrollView(
-//                 physics: BouncingScrollPhysics(),
-                headerSliverBuilder:
-                    (BuildContext context, bool innerBoxIsScrolled) {
-                  return <Widget>[];
-                },
-                body: PageView( // this is a pageView container
+            children: [
+              Expanded(
+                child: TabBarView(
                   children: <Widget>[
-                    CustomScrollView(
-                      slivers: [
-                       SliverList(
-                          delegate: SliverChildBuilderDelegate(
-                            (context, index) {
-                              return ListTile(
-                                title: Text('index $index'),
-                              );
-                            },
-                            childCount: 15
-                          ),
-                        )
-                       ]
+                    NewDetailContainer(),
+                    
+                    // NewEntryContainer(productInfo: widget.productInfo),
+                    SoldEntryContainer()
+                    ],
+                ),
+              ),
+              Container(
+                child: CustomTabs(
+                  tabs: [
+                    Tab(
+                      text: "Sold",
+                      icon: Icon(Icons.assignment_returned),
                     ),
-                    CustomScrollView(
-                      slivers: [
-                       // whatever nonesense, 
-                       ]
+                    Tab(
+                      text: "Supplies",
+                      icon: Icon(Icons.apps),
                     ),
                   ],
                 ),
-              ),
-            ),
-            Container(
-              height: 30,
-//               child: 
-            )
-          ],
-        ),
+              )
+            ],
+          ),
+        
       ),
     );
   }
