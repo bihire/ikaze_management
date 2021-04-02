@@ -78,12 +78,6 @@ class HomePageScreenState extends State<HomePageScreen> {
               pinned: true,
             ),
             HomePageContainer()
-            // SliverList(
-            //   delegate: SliverChildBuilderDelegate((context, index) {
-            //     return MoneyTransactionModelListItem(
-            //         itemIndex: index, transaction: widget.transactions[index]);
-            //   }, childCount: widget.transactions.length),
-            // )
           ],
         ),
       ),

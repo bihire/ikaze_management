@@ -3,25 +3,28 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:inventory_controller/common/constants.dart';
 import 'package:inventory_controller/components/common.dart';
-// import 'package:inventory_controller/components/github_issue_list_item.dart';
 import 'package:inventory_controller/components/leadingButton/leading_button.dart';
 import 'package:inventory_controller/containers/itemDetail/transactions/new_product_list_container.dart';
-// import 'package:inventory_controller/containers/entryPage/newEntry/new_entry_container.dart';
+import 'package:inventory_controller/models/money_transactions.dart';
+import 'package:inventory_controller/models/productList/product_list.dart';
 import 'package:inventory_controller/views/ProductDetail/NewEntryPage/chartSlide/detail_chart_slide.dart';
-// import 'package:inventory_controller/views/ProductDetail/NewEntryPage/components/barChart_with_tab.dart';
 import 'package:inventory_controller/views/ProductDetail/NewEntryPage/components/top_summary_card.dart';
 import 'package:skeleton_text/skeleton_text.dart';
 
 import 'components/persistent_header.dart';
 
 class NewEntryScreen extends StatefulWidget {
+  final ProductInfoModel productInfo;
   const NewEntryScreen({
     Key key,
     this.loading,
     this.dailyTotal,
+    this.isNextPageAvailable,
+    this.transactions,
     this.refresh,
     this.loadNextPage,
     this.error,
+    this.productInfo,
   });
   // final  productInfo;
   // ProductDetail({
@@ -29,6 +32,8 @@ class NewEntryScreen extends StatefulWidget {
   // });
 
   final bool loading;
+  final bool isNextPageAvailable;
+  final List<MoneyTransactionModel> transactions;
   final String dailyTotal;
   final Function refresh;
   final Function loadNextPage;
@@ -39,6 +44,21 @@ class NewEntryScreen extends StatefulWidget {
 
 class NewEntryPageState extends State<NewEntryScreen>
     with AutomaticKeepAliveClientMixin<NewEntryScreen> {
+  ScrollController controller;
+  // List<String> items = new List.generate(100, (index) => 'Hello $index');
+
+  @override
+  void initState() {
+    super.initState();
+    controller = new ScrollController()..addListener(_scrollListener);
+  }
+
+  @override
+  void dispose() {
+    controller.removeListener(_scrollListener);
+    super.dispose();
+  }
+
   Widget _buildLoadingWidget() {
     return CustomScrollView(
       shrinkWrap: true,
@@ -51,11 +71,9 @@ class NewEntryPageState extends State<NewEntryScreen>
             height: 30,
           ),
         ),
-
         SliverToBoxAdapter(
           child: _buildLoadingChart(),
         ),
-
         SliverToBoxAdapter(
           child: SizedBox(
             height: 30,
@@ -189,9 +207,11 @@ class NewEntryPageState extends State<NewEntryScreen>
         body: widget.loading
             ? _buildLoadingWidget()
             : CustomScrollView(
+                controller: controller,
                 slivers: [
                   SliverToBoxAdapter(
                     child: TopSummaryCard(
+                      productInfo: widget.productInfo,
                       loading: widget.loading,
                       dailyTotal: widget.dailyTotal,
                       error: widget.error,
@@ -206,13 +226,6 @@ class NewEntryPageState extends State<NewEntryScreen>
                     pinned: true,
                   ),
                   NewPageListContainer()
-                  // SliverList(
-                  //   delegate: SliverChildBuilderDelegate((context, index) {
-                  //     return ListTile(
-                  //       title: Text('index $index'),
-                  //     );
-                  //   }, childCount: 3),
-                  // )
                 ],
               ),
       ),
@@ -223,11 +236,7 @@ class NewEntryPageState extends State<NewEntryScreen>
     if (!widget.loading &&
         widget.isNextPageAvailable &&
         controller.position.extentAfter < 20.0) {
-          widget.store.dispatch(
-        LoadHomeTransactionsPageAction(
-            pageNumber: (widget.transactions.length ~/ TransactionState.transactionsPerPage) + 1,
-            transactionsPerPage: TransactionState.transactionsPerPage),
-      );
+      widget.loadNextPage();
     }
   }
 

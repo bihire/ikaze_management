@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:inventory_controller/common/constants.dart';
 import 'package:inventory_controller/components/cardFlipper/card_flipper.dart';
+import 'package:inventory_controller/models/productList/product_list.dart';
 import 'package:skeleton_text/skeleton_text.dart';
 
 class TopSummaryCard extends StatelessWidget {
   int _value = 10;
+  final ProductInfoModel productInfo;
   TopSummaryCard({
     Key key,
     this.loading,
     this.dailyTotal,
     this.error,
+    this.productInfo
   });
 
   final bool loading;
@@ -43,10 +46,10 @@ class TopSummaryCard extends StatelessWidget {
                               children: [
                                 AnimatedFlipCounter(
                                   duration: Duration(milliseconds: 500),
-                                  value: int.parse(dailyTotal),
+                                  value: productInfo.unitPrice,
                                   /* pass in a number like 2014 */
                                   color: Colors.black,
-                                  size: 40,
+                                  size: 30,
                                 ),
                                 SizedBox(
                                   width: 15,
@@ -81,7 +84,7 @@ class TopSummaryCard extends StatelessWidget {
                               ),
                             )
                           : Text(
-                              "Today's revenue",
+                              "Unit Price",
                               style: TextStyle(
                                   fontSize: 14.0,
                                   fontWeight: FontWeight.w400,
