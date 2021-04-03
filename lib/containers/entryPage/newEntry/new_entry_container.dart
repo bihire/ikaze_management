@@ -40,7 +40,7 @@ class _NewDetailContainerState extends State<NewDetailContainer> {
       distinct: true,
       onInit: (store) {
         store.dispatch(
-          DetailDailySumAction(),
+          DetailDailySumAction('${widget.productInfo.productId}'),
         );
       },
     );
@@ -64,11 +64,12 @@ class _ViewModel {
   final Store<AppState> store;
   final bool error;
 
-    void onLoadNextPage() {
+    void onLoadNextPage(String productId) {
       store.dispatch(LoadNewTransactionsPageAction(
         pageNumber:
             (transactions.length ~/ NewTransactionListState.transactionsPerPage) + 1,
         transactionsPerPage: NewTransactionListState.transactionsPerPage,
+        productId: productId
       ));
   }
 

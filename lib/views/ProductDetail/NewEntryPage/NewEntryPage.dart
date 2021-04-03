@@ -219,13 +219,13 @@ class NewEntryPageState extends State<NewEntryScreen>
                     // NewDetailContainer(),
                   ),
                   SliverToBoxAdapter(
-                    child: ProductDetailChartScreens(),
+                    child: ProductDetailChartScreens(widget.productInfo),
                   ),
                   SliverPersistentHeader(
                     delegate: PersistentHeader(widget: HeaderDatePicker()),
                     pinned: true,
                   ),
-                  NewPageListContainer()
+                  NewPageListContainer(productInfo: widget.productInfo)
                 ],
               ),
       ),
@@ -236,7 +236,7 @@ class NewEntryPageState extends State<NewEntryScreen>
     if (!widget.loading &&
         widget.isNextPageAvailable &&
         controller.position.extentAfter < 20.0) {
-      widget.loadNextPage();
+      widget.loadNextPage('${widget.productInfo.productId}');
     }
   }
 

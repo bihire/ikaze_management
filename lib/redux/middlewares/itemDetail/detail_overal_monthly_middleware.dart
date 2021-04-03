@@ -15,7 +15,7 @@ _loadOveralMonthly() {
       NextDispatcher next) {
     next(action);
 
-    _loadOveralMonthlyTotalAmount().then(
+    _loadOveralMonthlyTotalAmount(action.productId).then(
       (items) {
         store.dispatch(DetailOveralMonthlyLoadedAction(items));
       },
@@ -26,9 +26,9 @@ _loadOveralMonthly() {
 }
 
 Future<List<OveralMonthlyTransactionModel>>
-    _loadOveralMonthlyTotalAmount() async {
+    _loadOveralMonthlyTotalAmount(String productId) async {
   var response =
-      await http.get('http://172.17.2.40:5000/api/alltransactions/1/monthly');
+      await http.get('http://172.17.2.40:5000/api/alltransactions/$productId/monthly');
   if (response.statusCode == 200) {
     // List<MoneyTransactionModel> listFromJson(List<dynamic> json) {
     //   return json == null ? List<MoneyTransactionModel>() : json.map((value) => MoneyTransactionModel.fromJson(value)).toList();

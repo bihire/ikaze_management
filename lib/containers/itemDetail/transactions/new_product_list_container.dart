@@ -4,6 +4,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:inventory_controller/common/constants.dart';
 import 'package:inventory_controller/components/github_issue_list_item.dart';
 import 'package:inventory_controller/models/money_transactions.dart';
+import 'package:inventory_controller/models/productList/product_list.dart';
 // import 'package:inventory_controller/redux/actions/homePage/transactions/transactionList.dart';
 import 'package:inventory_controller/redux/actions/itemDetail/transactions/new_transaction_list.dart';
 import 'package:inventory_controller/redux/appState/app_state.dart';
@@ -11,8 +12,10 @@ import 'package:inventory_controller/redux/appState/itemDetail/transactions/new_
 import 'package:redux/redux.dart';
 
 class NewPageListContainer extends StatelessWidget {
+  final ProductInfoModel productInfo;
   const NewPageListContainer({
     Key key,
+    @required this.productInfo
   }) : super(key: key);
 
   @override
@@ -64,8 +67,9 @@ class NewPageListContainer extends StatelessWidget {
         store.dispatch(
           LoadNewTransactionsPageAction(
               pageNumber: 1,
-              transactionsPerPage:
-                  NewTransactionListState.transactionsPerPage),
+              transactionsPerPage: NewTransactionListState.transactionsPerPage,
+              productId: '${productInfo.productId}'
+              ),
         );
       },
     );

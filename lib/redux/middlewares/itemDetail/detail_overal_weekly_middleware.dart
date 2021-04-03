@@ -16,7 +16,7 @@ _loadOveralWeekly() {
       NextDispatcher next) {
     next(action);
 
-    _loadOveralWeeklyTotalAmount().then(
+    _loadOveralWeeklyTotalAmount(action.productId).then(
       (items) {
         store.dispatch(DetailOveralWeeklyLoadedAction(items));
       },
@@ -27,9 +27,9 @@ _loadOveralWeekly() {
 }
 
 Future<List<OveralWeeklyTransactionModel>>
-    _loadOveralWeeklyTotalAmount() async {
+    _loadOveralWeeklyTotalAmount(String productId) async {
   var response =
-      await http.get('http://172.17.2.40:5000/api/alltransactions/1/weekly');
+      await http.get('http://172.17.2.40:5000/api/alltransactions/$productId/weekly');
   if (response.statusCode == 200) {
     // List<MoneyTransactionModel> listFromJson(List<dynamic> json) {
     //   return json == null ? List<MoneyTransactionModel>() : json.map((value) => MoneyTransactionModel.fromJson(value)).toList();

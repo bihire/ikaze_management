@@ -1,5 +1,9 @@
 
-class DetailDailySumAction {}
+class DetailDailySumAction {
+  DetailDailySumAction(this.productId);
+
+  final String productId;
+}
 
 class DetailDailySumLoadedAction {
   DetailDailySumLoadedAction(this.detailDailyTotal);

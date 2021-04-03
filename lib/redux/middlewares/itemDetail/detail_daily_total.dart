@@ -13,7 +13,7 @@ _loadDailyTotal() {
       NextDispatcher next) {
     next(action);
 
-    _loadDailyTotalAmount().then(
+    _loadDailyTotalAmount(action.productId).then(
       (itemsPage) {
         store.dispatch(DetailDailySumLoadedAction(itemsPage));
       },
@@ -23,9 +23,9 @@ _loadDailyTotal() {
   };
 }
 
-Future<String> _loadDailyTotalAmount() async {
+Future<String> _loadDailyTotalAmount(String productId) async {
   var response =
-      await http.get('http://172.17.2.40:5000/api/transactions/1/daily_total');
+      await http.get('http://172.17.2.40:5000/api/transactions/$productId/daily_total');
   if (response.statusCode == 200) {
     // List<MoneyTransactionModel> listFromJson(List<dynamic> json) {
     //   return json == null ? List<MoneyTransactionModel>() : json.map((value) => MoneyTransactionModel.fromJson(value)).toList();
