@@ -28,6 +28,7 @@ class _DetailWeeklyChartContainerState extends State<DetailWeeklyChartContainer>
         );
       },
       converter: _ViewModel.fromStore,
+      distinct: true,
       // onInit: (store) {
       //   store.dispatch(
       //     LoadOveralWeeklyAction(),

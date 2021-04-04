@@ -29,7 +29,7 @@ bool _isDataLoadingFinishedReducer(bool _, dynamic action) {
 
 List<OveralMonthlyTransactionModel> _overalMonthlyTransactionReducer(List<OveralMonthlyTransactionModel> overalMonthlyData, dynamic action) {
   if (action is DetailOveralMonthlyLoadedAction) {
-    return  List.from(overalMonthlyData)..addAll(action.overalMonthly);
+    return  action.overalMonthly;
   } else {
     return overalMonthlyData;
   }

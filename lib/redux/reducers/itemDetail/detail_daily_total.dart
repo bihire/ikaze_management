@@ -16,7 +16,7 @@ DetailDailySalesTotalState detailDailySalesTotalReducer(DetailDailySalesTotalSta
 final Reducer<bool> _isDataLoadingReducer = combineReducers<bool>([
   TypedReducer<bool, DetailDailySumAction>(_isDataLoadingStartedReducer),
   TypedReducer<bool, DetailDailySumLoadedAction>(_isDataLoadingFinishedReducer),
-  TypedReducer<bool, ErrorOccurredAction>(_isDataLoadingFinishedReducer),
+  TypedReducer<bool, ErrorDetailDailyOccurredAction>(_isDataLoadingFinishedReducer),
 ]);
 
 bool _isDataLoadingStartedReducer(bool _, dynamic action) {
@@ -36,11 +36,11 @@ String _dailyTotalReducer(String dailyTotal, dynamic action) {
 }
 
 final Reducer<Exception> _errorReducer = combineReducers<Exception>([
-  TypedReducer<Exception, ErrorOccurredAction>(_errorOccurredReducer),
+  TypedReducer<Exception, ErrorDetailDailyOccurredAction>(_errorOccurredReducer),
   TypedReducer<Exception, ErrorHandledAction>(_errorHandledReducer),
 ]);
 
-Exception _errorOccurredReducer(Exception _, ErrorOccurredAction action) {
+Exception _errorOccurredReducer(Exception _, ErrorDetailDailyOccurredAction action) {
   return action.exception;
 }
 

@@ -29,7 +29,7 @@ bool _isDataLoadingFinishedReducer(bool _, dynamic action) {
 
 List<OveralDailyTransactionModel> _overalDailyDataReducer(List<OveralDailyTransactionModel> overalDailydata, dynamic action) {
   if (action is DetailOvaralDailyLoadedAction) {
-    return  List.from(overalDailydata)..addAll(action.overalDaily);
+    return  action.overalDaily;
   } else {
     return overalDailydata;
   }

@@ -33,6 +33,7 @@ class _DetailMonthlyChartContainerState extends State<DetailMonthlyChartContaine
         );
       },
       converter: _ViewModel.fromStore,
+      distinct: true,
     );
   }
 

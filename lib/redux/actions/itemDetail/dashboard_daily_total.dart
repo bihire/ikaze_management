@@ -11,8 +11,8 @@ class DetailDailySumLoadedAction {
   final String detailDailyTotal;
 }
 
-class ErrorOccurredAction {
-  ErrorOccurredAction(this.exception);
+class ErrorDetailDailyOccurredAction {
+  ErrorDetailDailyOccurredAction(this.exception);
 
   final Exception exception;
 }

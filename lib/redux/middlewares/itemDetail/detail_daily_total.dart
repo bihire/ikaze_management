@@ -1,5 +1,8 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:inventory_controller/redux/actions/itemDetail/charts/overal_daily_action.dart';
+import 'package:inventory_controller/redux/actions/itemDetail/charts/overal_monthly_action.dart';
+import 'package:inventory_controller/redux/actions/itemDetail/charts/overal_weekly_actions.dart';
 import 'package:inventory_controller/redux/actions/itemDetail/dashboard_daily_total.dart';
 import 'package:inventory_controller/redux/appState/app_state.dart';
 import 'package:redux/redux.dart';
@@ -15,21 +18,23 @@ _loadDailyTotal() {
 
     _loadDailyTotalAmount(action.productId).then(
       (itemsPage) {
+        // print(action.productId);
         store.dispatch(DetailDailySumLoadedAction(itemsPage));
+        store.dispatch(DetailOvaralDailyAction(action.productId));
+        store.dispatch(DetailOveralWeeklyAction(action.productId));
+        store.dispatch(DetailOveralMonthlyAction(action.productId));
+        
       },
     ).catchError((exception, stacktrace) {
-      store.dispatch(ErrorOccurredAction(exception));
+      store.dispatch(ErrorDetailDailyOccurredAction(exception));
     });
   };
 }
 
 Future<String> _loadDailyTotalAmount(String productId) async {
-  var response =
-      await http.get('http://172.17.2.40:5000/api/transactions/$productId/daily_total');
+  var response = await http
+      .get('http://172.17.2.40:5000/api/transactions/$productId/daily_total');
   if (response.statusCode == 200) {
-    // List<MoneyTransactionModel> listFromJson(List<dynamic> json) {
-    //   return json == null ? List<MoneyTransactionModel>() : json.map((value) => MoneyTransactionModel.fromJson(value)).toList();
-    // }
     final jsonData = (json.decode(response.body))['data'] as List;
     return jsonData[0]['total_amount'];
   } else {

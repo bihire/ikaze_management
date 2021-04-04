@@ -33,18 +33,11 @@ class _DetailDailyChartContainerState extends State<DetailDailyChartContainer>
         );
       },
       converter: _ViewModel.fromStore,
-      onInit: (store) {
-        print(widget.productInfo.productId);
-        store.dispatch(
-          DetailOvaralDailyAction('${widget.productInfo.productId}'),
-        );
-        store.dispatch(
-          DetailOveralWeeklyAction('${widget.productInfo.productId}'),
-        );
-        store.dispatch(
-          DetailOveralMonthlyAction('${widget.productInfo.productId}'),
-        );
-      },
+      distinct: true,
+      // onInit: (store) {
+      //   // print(widget.productInfo.productId);
+        
+      // },
     );
   }
 

@@ -29,7 +29,7 @@ bool _isDataLoadingFinishedReducer(bool _, dynamic action) {
 
 List<OveralWeeklyTransactionModel> _overalWeeklyTransactionReducer(List<OveralWeeklyTransactionModel> overalWeeklyData, dynamic action) {
   if (action is DetailOveralWeeklyLoadedAction) {
-    return  List.from(overalWeeklyData)..addAll(action.overalWeekly);
+    return  action.overalWeekly;
   } else {
     return overalWeeklyData;
   }
