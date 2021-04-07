@@ -1,33 +1,43 @@
+import 'package:redux/redux.dart';
 
-// void main() {
-//   final data = {
-//     "1-0002": {
-//       "name": "red",
-//       "hex": "FF0000"
-//     },
-//     "1-0001": {
-//       "name": "blue",
-//       "hex": "0000FF"
-//     },
-//     "1-0003": {
-//       "name": "green",
-//       "hex": "008000"
-//     }
-//   };
-//   // Map<String, dynamic> decoded = json.decode(data);
-//     for (var colour in data.keys) {
-//       print(colour);                   // prints 1-0001
-//       print(data[colour]['name']);  // prints red
-//       print(data[colour]['hex']);   // prints FF0000
-//     };
-// }
+import 'package:inventory_controller/redux/appState/app_state.dart';
+import 'package:inventory_controller/redux/middlewares/dashboard_daily_total.dart';
+import 'package:inventory_controller/redux/middlewares/homePage/overal_daily_middleware.dart';
+import 'package:inventory_controller/redux/middlewares/homePage/overal_monthly_middleware.dart';
+import 'package:inventory_controller/redux/middlewares/homePage/overal_weekly_middleware.dart';
+import 'package:inventory_controller/redux/middlewares/homePage/transactions/home_transactions_middleware.dart';
+import 'package:inventory_controller/redux/middlewares/itemDetail/detail_daily_total.dart';
+import 'package:inventory_controller/redux/middlewares/itemDetail/detail_overal_daily_middleware.dart';
+import 'package:inventory_controller/redux/middlewares/itemDetail/detail_overal_monthly_middleware.dart';
+import 'package:inventory_controller/redux/middlewares/itemDetail/detail_overal_weekly_middleware.dart';
+import 'package:inventory_controller/redux/middlewares/itemDetail/transactions/new_transactions_middlware.dart';
+import 'package:inventory_controller/redux/middlewares/itemDetail/transactions/supply_transactions_middleware.dart';
+import 'package:inventory_controller/redux/middlewares/popup_middleware.dart';
+import 'package:inventory_controller/redux/middlewares/productList/product_list.dart';
+import 'package:inventory_controller/redux/middlewares/range_middleware.dart';
+import 'package:inventory_controller/redux/reducers/app_reducer.dart';
+import 'package:inventory_controller/redux/middlewares/all_transactins_middlewares.dart';
 
-  // (action.transactionsPage).forEach((element) {
-  //       final formatedDate = Utils.dateFormater(element.createdAt);
-
-  //       // element.createdAt = formatedDate.dateTime;
-  //       // print(formatedDate['dateClass']);
-  //       if ((transactions[formatedDate['dateClass']] == null))
-  //         return (transactions[formatedDate['dateClass']] = [element]);
-  //       return transactions[formatedDate['dateClass']].add(element);
-  //     });
+Store<AppState> createStore() {
+  return Store<AppState>(
+    appReducer,
+    initialState: AppState.initial(),
+    middleware: [
+      createAllTransactionsMiddleware(),
+      homeTransactionsMiddleware(),
+      newTransactionsMiddleware(),
+      supplyTransactionsMiddleware(),
+      dashboardDailyTotalMiddleware(),
+      overalDailyTransactionsMiddleware(),
+      overalWeeklyTransactionsMiddleware(),
+      createAllTransactionsRangeMiddleware(),
+      popupMiddleware(),
+      overalMonthlyTransactionsMiddleware(),
+      detailDailyTotalMiddleware(),
+      detailOveralDailyTotalMiddleware(),
+      detailOveralMonthlyMiddleware(),
+      detailOveralWeeklyMiddleware(),
+      productListMiddleware()
+    ]
+  );
+}

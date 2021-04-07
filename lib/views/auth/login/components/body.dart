@@ -37,12 +37,16 @@ class Body extends StatelessWidget {
             RoundedInputField(
               hintText: "Your Email",
               iconColor: darkColor,
+              backgroundColor: lightGreyColor,
               onChanged: (value) {},
             ),
             RoundedPasswordField(
               iconColor: darkColor,
+              hintText: 'Password',
+              backgroundColor: lightGreyColor,
               onChanged: (value) {},
             ),
+            SizedBox(height: size.height * 0.03),
             RoundedButton(
               text: "LOGIN",
               press: () {},
@@ -60,7 +64,7 @@ class Body extends StatelessWidget {
                 );
               },
             ),
-            SizedBox(height: size.height * 0.03),
+            SizedBox(height: size.height * 0.1),
           ],
         ),
       ),

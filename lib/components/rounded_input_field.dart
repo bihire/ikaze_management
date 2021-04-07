@@ -5,12 +5,14 @@ import 'package:inventory_controller/components/text_field_container.dart';
 class RoundedInputField extends StatelessWidget {
   final String hintText;
   final Color iconColor;
+  final Color backgroundColor;
   final IconData icon;
   final ValueChanged<String> onChanged;
   const RoundedInputField({
     Key key,
     this.hintText,
     this.iconColor,
+    this.backgroundColor,
     this.icon = Icons.person,
     this.onChanged,
   }) : super(key: key);
@@ -18,6 +20,7 @@ class RoundedInputField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFieldContainer(
+      backgroundColor: backgroundColor,
       child: TextField(
         onChanged: onChanged,
         cursorColor: darkColor,

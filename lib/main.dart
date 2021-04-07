@@ -1,26 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:inventory_controller/pages/home.dart';
-import 'package:inventory_controller/redux/appState/app_state.dart';
-import 'package:inventory_controller/redux/middlewares/dashboard_daily_total.dart';
-import 'package:inventory_controller/redux/middlewares/homePage/overal_daily_middleware.dart';
-import 'package:inventory_controller/redux/middlewares/homePage/overal_monthly_middleware.dart';
-import 'package:inventory_controller/redux/middlewares/homePage/overal_weekly_middleware.dart';
-import 'package:inventory_controller/redux/middlewares/homePage/transactions/home_transactions_middleware.dart';
-import 'package:inventory_controller/redux/middlewares/itemDetail/detail_daily_total.dart';
-import 'package:inventory_controller/redux/middlewares/itemDetail/detail_overal_daily_middleware.dart';
-import 'package:inventory_controller/redux/middlewares/itemDetail/detail_overal_monthly_middleware.dart';
-import 'package:inventory_controller/redux/middlewares/itemDetail/detail_overal_weekly_middleware.dart';
-import 'package:inventory_controller/redux/middlewares/itemDetail/transactions/new_transactions_middlware.dart';
-import 'package:inventory_controller/redux/middlewares/itemDetail/transactions/supply_transactions_middleware.dart';
-import 'package:inventory_controller/redux/middlewares/popup_middleware.dart';
-import 'package:inventory_controller/redux/middlewares/productList/product_list.dart';
-import 'package:inventory_controller/redux/middlewares/range_middleware.dart';
-import 'package:inventory_controller/redux/reducers/app_reducer.dart';
-import 'package:inventory_controller/redux/middlewares/all_transactins_middlewares.dart';
+import 'package:inventory_controller/redux/store.dart';
+
 import 'package:inventory_controller/servives/TransactionService.dart';
-import 'package:redux/redux.dart';
 import 'package:get_it/get_it.dart';
+import 'package:inventory_controller/views/onboarding/onboarding.dart';
 
 
 void setupLocator() {
@@ -33,35 +18,14 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  final store = Store<AppState>(
-    appReducer,
-    initialState: AppState.initial(),
-    middleware: [
-      createAllTransactionsMiddleware(),
-      homeTransactionsMiddleware(),
-      newTransactionsMiddleware(),
-      supplyTransactionsMiddleware(),
-      dashboardDailyTotalMiddleware(),
-      overalDailyTransactionsMiddleware(),
-      overalWeeklyTransactionsMiddleware(),
-      createAllTransactionsRangeMiddleware(),
-      popupMiddleware(),
-      overalMonthlyTransactionsMiddleware(),
-      detailDailyTotalMiddleware(),
-      detailOveralDailyTotalMiddleware(),
-      detailOveralMonthlyMiddleware(),
-      detailOveralWeeklyMiddleware(),
-      productListMiddleware()
-    ]
-  );
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return StoreProvider(
-      store: store,
+      store: createStore(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: MyHomePage(),
+        home: OnboardingScreen(),
         theme: ThemeData(
           primarySwatch: Colors.blue,
           visualDensity: VisualDensity.adaptivePlatformDensity,
