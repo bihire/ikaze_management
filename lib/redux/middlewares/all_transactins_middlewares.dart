@@ -4,7 +4,6 @@ import 'package:inventory_controller/redux/actions/all_transactions_actions.dart
 import 'package:http/http.dart' as http;
 import 'package:inventory_controller/redux/appState/app_state.dart';
 import 'package:redux/redux.dart';
-import 'package:redux_logging/redux_logging.dart';
 
 Middleware<AppState> createAllTransactionsMiddleware() {
   return TypedMiddleware<AppState, LoadTransactionsPageAction>(
@@ -30,7 +29,7 @@ _loadItemsPage() {
 Future<List<MoneyTransactionModel>> _loadFlutterGithubIssues(
     int page, int perPage) async {
   var response = await http.get(
-      'http://172.17.2.40:5000/api/transactions?page=$page&numberOfRows=$perPage');
+      'http://192.168.137.97:5000/api/transactions?page=$page&numberOfRows=$perPage');
   if (response.statusCode == 200) {
     final jsonData = (json.decode(response.body))['data'] as List;
     return jsonData

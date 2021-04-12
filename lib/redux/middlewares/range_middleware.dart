@@ -44,7 +44,7 @@ _loadItemsPage() {
 Future<List<MoneyTransactionModel>> _loadRangeTransactions(
     int page, int perPage) async {
   var response = await http.get(
-      'http://172.17.2.40:5000/api/transactions?page=$page&numberOfRows=$perPage');
+      'http://192.168.137.97:5000/api/transactions?page=$page&numberOfRows=$perPage');
   if (response.statusCode == 200) {
     final jsonData = (json.decode(response.body))['data'] as List;
     return jsonData
@@ -58,7 +58,7 @@ Future<List<MoneyTransactionModel>> _loadRangeTransactions(
 Future<RangeCountModel> _loadRangeCount(
     DateTime fromDate, DateTime toDate) async {
   var response = await http.get(
-      'http://172.17.2.40:5000/api/transactions/range/count?fromdate=${Utils.formatToDate(fromDate)}&todate=${Utils.formatToDate(toDate)}');
+      'http://192.168.137.97:5000/api/transactions/range/count?fromdate=${Utils.formatToDate(fromDate)}&todate=${Utils.formatToDate(toDate)}');
   if (response.statusCode == 200) {
     final jsonData = (json.decode(response.body))['data'] as List;
     return RangeCountModel.fromJson(jsonData[0]);

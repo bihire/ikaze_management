@@ -48,6 +48,8 @@ class Body extends StatelessWidget {
             ),
             SizedBox(height: size.height * 0.03),
             RoundedButton(
+              loading: false,
+              isBtnClickable: false,
               text: "LOGIN",
               press: () {},
             ),
