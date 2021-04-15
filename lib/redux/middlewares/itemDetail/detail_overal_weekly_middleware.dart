@@ -29,7 +29,7 @@ _loadOveralWeekly() {
 Future<List<OveralWeeklyTransactionModel>> _loadOveralWeeklyTotalAmount(
     String productId) async {
   var response = await http
-      .get('http://192.168.137.97:5000/api/alltransactions/$productId/weekly');
+      .get('http://10.1.10.185:5000/api/alltransactions/$productId/weekly');
   if (response.statusCode == 200) {
     // List<MoneyTransactionModel> listFromJson(List<dynamic> json) {
     //   return json == null ? List<MoneyTransactionModel>() : json.map((value) => MoneyTransactionModel.fromJson(value)).toList();

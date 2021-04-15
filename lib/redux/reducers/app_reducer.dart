@@ -1,5 +1,6 @@
 import 'package:inventory_controller/redux/appState/app_state.dart';
 import 'package:inventory_controller/redux/reducers/all_transactions_reducer.dart';
+import 'package:inventory_controller/redux/reducers/auth/auth_reducer.dart';
 import 'package:inventory_controller/redux/reducers/dashboard_daily_total.dart';
 import 'package:inventory_controller/redux/reducers/homePage/overal_daily_reducer.dart';
 import 'package:inventory_controller/redux/reducers/homePage/overal_weekly_reducer.dart';
@@ -35,4 +36,6 @@ AppState appReducer(AppState state, dynamic action) =>
         supplyTransactionListState: supplyTransactionReducer(state.supplyTransactionListState, action),
     //====================================================================================================
         productListState: productListReducer(state.productListState, action),
+    //====================================================================================================
+        authState: authenticationReducer(state.authState, action),
     );

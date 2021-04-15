@@ -14,6 +14,7 @@ import 'package:inventory_controller/views/homePopup/popupAppbar_screen.dart';
 import 'package:inventory_controller/views/PopupMenuButtonPage/PopupMenuButtonPage.dart';
 import 'package:inventory_controller/views/ProductDetail/ProductDetail.dart';
 import 'package:inventory_controller/views/all_products/all_products.dart';
+import 'package:inventory_controller/views/newTransaction/new_transaction.dart';
 import 'package:inventory_controller/views/notificationDrawer/notification_drawer.dart';
 import '../views/dashboard/dashboard.dart';
 import 'package:flutter_svg/svg.dart';
@@ -134,11 +135,45 @@ class MyHomePageState extends State<MyHomePage>
       body: Stack(children: [
         HomePageContainer(),
         Positioned(
+          bottom: 100,
+          right: 40,
+          child: InkWell(
+            onTap: () {
+              Navigator.push(
+                      context,
+                      PageTransition(
+                          curve: Curves.easeIn,
+                          reverseDuration: Duration(milliseconds: 300),
+                          duration: Duration(milliseconds: 200),
+                          child: NewTransactionPage(),
+                          type: PageTransitionType.rightToLeft));
+            },
+            customBorder: CircleBorder(),
+            child: Container(
+              decoration: BoxDecoration(
+                color: primaryColor,
+                shape: BoxShape.circle,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.3),
+                    spreadRadius: 1,
+                    blurRadius: 3,
+                    offset: Offset(0, 3), // changes position of shadow
+                  ),
+                ],
+              ),
+              padding: EdgeInsets.all(10),
+              child: const Icon(Icons.add, color: primaryLightColor,),
+            )
+            
+          ),
+        ),
+        Positioned(
           bottom: 30,
           right: 30,
           child: FloatingActionButton(
-            child: const Icon(Icons.view_headline_sharp),
-            backgroundColor: primaryColor,
+            child: const Icon(Icons.view_headline_sharp, color: darkColor,),
+            backgroundColor: primaryLightColor,
             onPressed: () {
               // if (_isAnimationRunningForwardsOrComplete) {
               //   _controller.reverse();

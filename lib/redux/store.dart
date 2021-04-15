@@ -1,3 +1,4 @@
+import 'package:inventory_controller/redux/middlewares/auth/login.dart';
 import 'package:redux/redux.dart';
 
 import 'package:inventory_controller/redux/appState/app_state.dart';
@@ -23,6 +24,7 @@ Store<AppState> createStore() {
     appReducer,
     initialState: AppState.initial(),
     middleware: [
+      loginMiddleware(),
       createAllTransactionsMiddleware(),
       homeTransactionsMiddleware(),
       newTransactionsMiddleware(),

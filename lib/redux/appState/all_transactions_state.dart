@@ -1,43 +1,6 @@
 import 'package:inventory_controller/models/money_transactions.dart';
 import 'package:meta/meta.dart';
 
-// @immutable
-// class TransactionState {
-//   final bool isError;
-//   final bool isLoading;
-//   final bool paginate;
-//   final List<MoneyTransactionModel> transactions;
-
-//   TransactionState({
-//     this.isError,
-//     this.isLoading,
-//     this.paginate,
-//     this.transactions,
-//   });
-
-//   factory TransactionState.initial() => TransactionState(
-//         isLoading: false,
-//         paginate: false,
-//         isError: false,
-//         transactions: const [],
-//       );
-
-//   TransactionState copyWith({
-//     @required bool isError,
-//     @required bool isLoading,
-//     bool paginate,
-//     @required List<MoneyTransactionModel> transactions,
-//   }) {
-//     return TransactionState(
-//       isError: isError ?? this.isError,
-//       isLoading: isLoading ?? this.isLoading,
-//       paginate: paginate ?? this.paginate,
-//       transactions: transactions ?? this.transactions,
-//     );
-//   }
-// }
-
-// import 'package:flutter_redux_infinite_list/models/github_issue.dart';
 @immutable
 class TransactionState {
   TransactionState({

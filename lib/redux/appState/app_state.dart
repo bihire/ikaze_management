@@ -1,4 +1,5 @@
 import 'package:inventory_controller/redux/appState/all_transactions_state.dart';
+import 'package:inventory_controller/redux/appState/auth/auth_state.dart';
 import 'package:inventory_controller/redux/appState/homePage/dashboard_daily_total_state.dart';
 import 'package:inventory_controller/redux/appState/homePage/overal_daily_state.dart';
 import 'package:inventory_controller/redux/appState/homePage/overal_monthly_state.dart';
@@ -27,6 +28,9 @@ class AppState {
   final TransactionRangeState transactionRangeState;
   final PopupState popupState;
 
+  //===========This is the state for Authentication=============
+  final AuthState authState;
+
   //===========This is the state for detail page=============
 
   final DetailDailySalesTotalState detailDailySalesTotalState;
@@ -39,6 +43,8 @@ class AppState {
   final ProductListState productListState;
 
   AppState({
+    @required this.authState,
+    //========================================================
     @required this.homeTransactionListState,
     @required this.allTransactionsState,
     @required this.dashboardDailyTotalState,
@@ -60,6 +66,10 @@ class AppState {
 
   factory AppState.initial() {
     return AppState(
+//======================Auth state=====================================
+       authState: AuthState.initial(),
+
+//=================================================================================
         allTransactionsState: TransactionState.initial(),
         homeTransactionListState: HomeTransactionListState.initial(),
         dashboardDailyTotalState: DashoardDailyTotalState.initial(),
@@ -81,6 +91,8 @@ class AppState {
 
   AppState copyWith({TransactionState allTransactionsState}) {
     return AppState(
+      authState: authState ?? this.authState,
+  //=======================================================================================
       allTransactionsState: allTransactionsState ?? this.allTransactionsState,
       homeTransactionListState: homeTransactionListState ?? this.homeTransactionListState,
       dashboardDailyTotalState:

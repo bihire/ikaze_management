@@ -4,7 +4,7 @@ import 'dart:core';
 import 'package:http/http.dart' as http;
 
 class WebClient {
-  static String baseUrl = 'https://example.com';
+  static String baseUrl = 'http://192.168.43.56:5000/api';
 
   const WebClient();
 

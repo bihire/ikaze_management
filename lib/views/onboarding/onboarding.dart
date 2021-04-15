@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:inventory_controller/containers/auth/login_container.dart';
 import 'package:inventory_controller/views/auth/login/login.dart';
 import 'package:inventory_controller/views/onboarding/styles.dart';
 
@@ -252,7 +253,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           context,
                           MaterialPageRoute(
                             builder: (context) {
-                              return LoginScreen();
+                              return LoginContainer();
                             },
                           ),
                         );

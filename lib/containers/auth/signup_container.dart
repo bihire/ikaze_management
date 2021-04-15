@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:inventory_controller/models/money_transactions.dart';
 import 'package:inventory_controller/redux/appState/app_state.dart';
 import 'package:inventory_controller/views/auth/signup/signup.dart';
 import 'package:redux/redux.dart';

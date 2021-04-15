@@ -5,6 +5,7 @@ import 'package:inventory_controller/components/already_have_an_account_acheck.d
 import 'package:inventory_controller/components/rounded_button.dart';
 import 'package:inventory_controller/components/rounded_input_field.dart';
 import 'package:inventory_controller/components/rounded_password_field.dart';
+import 'package:inventory_controller/utils/auth/auth.dart';
 import 'package:inventory_controller/views/auth/login/components/background.dart';
 import 'package:inventory_controller/views/auth/login/login.dart';
 import 'package:inventory_controller/views/auth/signup/components/or_divider.dart';
@@ -103,25 +104,6 @@ class _BodyState extends State<Body> with TickerProviderStateMixin {
       mainAxisSize: MainAxisSize.min,
       children: _errors,
     );
-  }
-
-  String _getBackError(String value, String name, String regex, String error) {
-    if (value == null || value == '') {
-      return '* $name is required';
-    } else if (RegExp(regex).hasMatch(value) == false) {
-      return error;
-    } else
-      return null;
-  }
-
-  String _getConfirmPass(
-      String value, String name, String password, String error) {
-    if (value == null || value == '') {
-      return '* $name is required';
-    } else if (value != password) {
-      return error;
-    } else
-      return null;
   }
 
   bool _getBtnState() {
@@ -246,22 +228,22 @@ class _BodyState extends State<Body> with TickerProviderStateMixin {
               press: () {
                 if (isButtonClickable) {
                   setState(() {
-                    emailError = _getBackError(
+                    emailError = getBackError(
                         email,
                         'email',
                         r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
                         '* provide a valide email');
-                    user_nameError = _getBackError(
+                    user_nameError = getBackError(
                         user_name,
                         'username',
                         r"^(.*[a-zA-Z0-9]){3,30}",
                         '* username must have at least 3 characters');
-                    passwordError = _getBackError(
+                    passwordError = getBackError(
                         password,
                         'password',
                         r"^(?=.*[a-z])(?=.*\d)[a-zA-Z\d]{8,64}",
                         '* password must have 8 - 64 characters, a number');
-                    confirm_passwordError = _getConfirmPass(
+                    confirm_passwordError = getConfirmPass(
                         confirm_password,
                         'confirm_password',
                         password,

@@ -4,11 +4,11 @@ import 'package:inventory_controller/models/auth.dart/user.dart';
 
 class AppStarted {}
 
-class UserLoginRequest {
+class LoadingLoginAction {
   final String email;
   final String password;
 
-  UserLoginRequest({this.email, this.password});
+  LoadingLoginAction({this.email, this.password});
 }
 
 class UserLoginSuccess {
@@ -23,10 +23,12 @@ class UserLoaded {
   UserLoaded({this.user});
 }
 
-class UserLoginFailure {
-  final String error;
+class ErrorOccurredAction {
+  ErrorOccurredAction(this.exception);
 
-  UserLoginFailure({this.error});
+  final Exception exception;
 }
+
+class ErrorHandledAction {}
 
 class UserLogout {}
