@@ -12,9 +12,9 @@ class LoadingLoginAction {
 }
 
 class UserLoginSuccess {
-  final String token;
+  final User user;
 
-  UserLoginSuccess({this.token});
+  UserLoginSuccess({this.user});
 }
 
 class UserLoaded {

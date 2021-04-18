@@ -1,33 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:inventory_controller/models/auth.dart/user.dart';
 import 'package:meta/meta.dart';
 
 @immutable
 class AuthState {
   AuthState({
     this.loading,
-    this.token,
+    this.user,
     this.error,
   });
 
   final bool loading;
-  final String token;
+  final User user;
   final Exception error;
 
   static const int transactionsPerPage = 10;
 
   factory AuthState.initial() => AuthState(
-        loading: false,
-        token: null
-      );
+      loading: false,
+      user: User(country: null, email: null, userName: null, phoneNumber: null));
 
   AuthState copyWith({
     loading,
-    token,
+    user,
     error,
   }) {
     return AuthState(
       loading: loading ?? this.loading,
-      token: token ?? this.token,
+      user: user ?? this.user,
       error: error != this.error ? error : this.error,
     );
   }
@@ -35,7 +35,7 @@ class AuthState {
   @override
   String toString() {
     return "AuthState: loading = $loading, "
-        "token = $token, "
+        "email = $user"
         "error = $error.";
   }
 }

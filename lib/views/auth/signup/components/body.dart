@@ -125,11 +125,11 @@ class _BodyState extends State<Body> with TickerProviderStateMixin {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            SizedBox(height: size.height * 0.20),
+            SizedBox(height: size.height * 0.15),
             SvgPicture.asset(
               "assets/svg/Final-AGASEKE.svg",
               color: Color(0xFF0bd50b),
-              height: size.height * 0.20,
+              height: size.height * 0.15,
             ),
             SizedBox(height: size.height * 0.03),
             Text(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:inventory_controller/common/constants.dart';
+import 'package:inventory_controller/components/slideMenuRoute/slide_route.dart';
 import 'package:inventory_controller/redux/actions/auth/login.dart';
 import 'package:inventory_controller/redux/appState/app_state.dart';
 import 'package:redux/redux.dart';
@@ -54,11 +55,11 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
-              SizedBox(height: size.height * 0.20),
+              SizedBox(height: size.height * 0.15),
               SvgPicture.asset(
                 "assets/svg/Final-AGASEKE.svg",
                 color: Color(0xFF0bd50b),
-                height: size.height * 0.20,
+                height: size.height * 0.15,
               ),
               SizedBox(height: size.height * 0.03),
               Text(
@@ -92,7 +93,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               SizedBox(height: size.height * 0.03),
               RoundedButton(
-                loading: false,
+                loading: widget.loading,
                 isBtnClickable: isButtonClickable,
                 text: "LOGIN",
                 press: () {
@@ -120,14 +121,17 @@ class _LoginScreenState extends State<LoginScreen> {
               SizedBox(height: size.height * 0.03),
               AlreadyHaveAnAccountCheck(
                 press: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return SignUpScreen();
-                      },
-                    ),
-                  );
+                  Navigator.of(context).push(
+                FromMenuRoute(prevPage: widget, nextPage: SignUpScreen())
+              );
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(
+                  //     builder: (context) {
+                  //       return SignUpScreen();
+                  //     },
+                  //   ),
+                  // );
                 },
               ),
               SizedBox(height: size.height * 0.1),

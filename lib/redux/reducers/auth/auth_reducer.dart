@@ -1,4 +1,5 @@
 
+import 'package:inventory_controller/models/auth.dart/user.dart';
 import 'package:inventory_controller/redux/actions/auth/login.dart';
 import 'package:inventory_controller/redux/appState/auth/auth_state.dart';
 import 'package:redux/redux.dart';
@@ -6,7 +7,7 @@ import 'package:redux/redux.dart';
 AuthState authenticationReducer(AuthState state, action) {
   return state.copyWith(
     loading: _loadingReducer(state.loading, action),
-    token: _tokenReducer(state.token, action),
+    user: _userReducer(state.user, action),
     error: _errorReducer(state.error, action),
   );
 }
@@ -25,11 +26,11 @@ bool _loadingFinishedReducer(bool _, dynamic action) {
   return false;
 }
 
-String _tokenReducer(token, dynamic action) {
+User _userReducer(user, dynamic action) {
   if (action is UserLoginSuccess) {
-    return action.token ;
+    return action.user;
   } else {
-    return token;
+    return user;
   }
 }
 
