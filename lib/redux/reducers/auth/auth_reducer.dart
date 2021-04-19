@@ -34,15 +34,15 @@ User _userReducer(user, dynamic action) {
   }
 }
 
-final Reducer<Exception> _errorReducer = combineReducers<Exception>([
-  TypedReducer<Exception, ErrorOccurredAction>(_errorOccurredReducer),
-  TypedReducer<Exception, ErrorHandledAction>(_errorHandledReducer),
+final Reducer<String> _errorReducer = combineReducers<String>([
+  TypedReducer<String, ErrorOccurredAction>(_errorOccurredReducer),
+  TypedReducer<String, ErrorHandledAction>(_errorHandledReducer),
 ]);
 
-Exception _errorOccurredReducer(Exception _, ErrorOccurredAction action) {
+String _errorOccurredReducer(String _, ErrorOccurredAction action) {
   return action.exception;
 }
 
-Exception _errorHandledReducer(Exception _, ErrorHandledAction action) {
+String _errorHandledReducer(String _, ErrorHandledAction action) {
   return null;
 }

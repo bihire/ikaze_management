@@ -25,6 +25,8 @@ Store<AppState> createStore() {
     initialState: AppState.initial(),
     middleware: [
       loginMiddleware(),
+      // loginMiddlewareErrorHandled(),
+      
       createAllTransactionsMiddleware(),
       homeTransactionsMiddleware(),
       newTransactionsMiddleware(),

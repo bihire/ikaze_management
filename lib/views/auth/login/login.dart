@@ -22,13 +22,14 @@ class LoginScreen extends StatefulWidget {
   });
   final Store<AppState> store;
   final bool loading;
-  final bool error;
+  final String error;
 
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LoginScreenState extends State<LoginScreen>
+    with TickerProviderStateMixin {
   String email = '';
 
   String emailError;
@@ -43,8 +44,43 @@ class _LoginScreenState extends State<LoginScreen> {
     return email != '' && password != '' ? true : false;
   }
 
+  AnimationController _controller;
+  Animation<double> _animation;
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: const Duration(milliseconds: 700),
+      vsync: this,
+    );
+    _animation = CurvedAnimation(
+      parent: _controller,
+      curve: Curves.fastOutSlowIn,
+    );
+  }
+
+  @override
+  void didUpdateWidget(covariant LoginScreen oldWidget) {
+    if (widget.error != null) {
+      _controller.forward();
+    }
+    if (widget.error == null) {
+      _controller.reverse();
+    }
+    super.didUpdateWidget(oldWidget);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _controller.dispose();
+  }
+
+  AnimationController _animationController;
+
   @override
   Widget build(BuildContext context) {
+    print(widget.error);
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: primaryLightColor,
@@ -65,6 +101,51 @@ class _LoginScreenState extends State<LoginScreen> {
               Text(
                 "LOGIN",
                 style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              SizeTransition(
+                sizeFactor: _animation,
+                axis: Axis.vertical,
+                axisAlignment: -1,
+                child: Container(
+                  // width: 200,
+                  margin: EdgeInsets.only(left: 20, right: 20, top: 20),
+                  padding: EdgeInsets.only(left: 10, right: 10, bottom: 20),
+                  decoration: BoxDecoration(
+                      color: Colors.red[700],
+                      borderRadius: BorderRadius.circular(7)),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              ErrorHandledAction();
+                            },
+                            child: Container(
+                                padding:
+                                    EdgeInsets.only(top: 7, bottom: 7, left: 7),
+                                child: Icon(
+                                  Icons.close,
+                                  size: 18,
+                                  color: primaryLightColor,
+                                )),
+                          ),
+                        ],
+                      ),
+                      Container(
+                        child: Text(
+                          widget.error == null ? '' : widget.error,
+                          style: TextStyle(color: primaryLightColor),
+                          textAlign: TextAlign.left,
+                        ),
+                      )
+                    ],
+                  ),
+                  // height: 200,
+                ),
               ),
               SizedBox(height: size.height * 0.03),
               RoundedInputField(
@@ -119,11 +200,18 @@ class _LoginScreenState extends State<LoginScreen> {
                 },
               ),
               SizedBox(height: size.height * 0.03),
+              RaisedButton(
+                onPressed: () {
+                  ErrorHandledAction();
+                  _controller.forward();
+                },
+                child: Text('animate'),
+              ),
+              SizedBox(height: size.height * 0.03),
               AlreadyHaveAnAccountCheck(
                 press: () {
-                  Navigator.of(context).push(
-                FromMenuRoute(prevPage: widget, nextPage: SignUpScreen())
-              );
+                  Navigator.of(context).push(FromMenuRoute(
+                      prevPage: widget, nextPage: SignUpScreen()));
                   // Navigator.push(
                   //   context,
                   //   MaterialPageRoute(

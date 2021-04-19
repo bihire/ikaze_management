@@ -31,8 +31,8 @@ _loadDailyTotal() {
 }
 
 Future<String> _loadDailyTotalAmount(String productId) async {
-  var response = await http
-      .get('http://192.168.43.56:5000/api/transactions/$productId/daily_total');
+  var response = await http.get(
+      'http://192.168.137.97:5000/api/transactions/$productId/daily_total');
   if (response.statusCode == 200) {
     final jsonData = (json.decode(response.body))['data'] as List;
     return jsonData[0]['total_amount'];

@@ -26,7 +26,7 @@ class UserLoaded {
 class ErrorOccurredAction {
   ErrorOccurredAction(this.exception);
 
-  final Exception exception;
+  final String exception;
 }
 
 class ErrorHandledAction {}

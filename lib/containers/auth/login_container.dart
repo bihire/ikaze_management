@@ -33,13 +33,13 @@ class _ViewModel {
 
   final bool loading;
   final Store<AppState> store;
-  final bool error;
+  final String error;
 
   static _ViewModel fromStore(Store<AppState> store) {
     return _ViewModel(
       loading: store.state.authState.loading,
       store: store,
-      error: store.state.authState.error == null,
+      error: store.state.authState.error ,
     );
   }
 }

@@ -1,3 +1,5 @@
+// import 'dart:html';
+
 import 'package:inventory_controller/models/auth.dart/user.dart';
 import 'package:inventory_controller/redux/actions/auth/login.dart';
 import 'package:inventory_controller/redux/appState/app_state.dart';
@@ -9,6 +11,15 @@ import 'package:redux/redux.dart';
 Middleware<AppState> loginMiddleware() {
   return TypedMiddleware<AppState, LoadingLoginAction>(_loadUser());
 }
+
+// Middleware<AppState> loginMiddlewareErrorHandled() {
+//   return TypedMiddleware<AppState, ErrorHandledAction>(_loadErrorHandled());
+// }
+
+// _loadErrorHandled() {
+//   // Store<AppState> store;
+//   return ErrorHandledAction();
+// }
 
 _loadUser() {
   return (Store<AppState> store, LoadingLoginAction action,
@@ -24,16 +35,17 @@ _loadUser() {
       var newUser =
           User(email: payload['email'], userName: payload['user_name']);
       await store.dispatch(UserLoginSuccess(user: newUser));
+      await store.dispatch(ErrorHandledAction());
     } catch (exception) {
-      print(exception);
-      store.dispatch(ErrorOccurredAction(exception));
+      print(exception["message"]);
+      store.dispatch(ErrorOccurredAction(exception["message"]));
     }
   };
 }
 
 // Future<String> _loadUserToken() async {
 //   var response =
-//       await http.post('http://192.168.43.56:5000/api/auth/login');
+//       await http.post('http://192.168.137.97:5000/api/auth/login');
 //   if (response.statusCode == 200) {
 //     final jsonData = (json.decode(response.body))['data']['token'] as String;
 //     return jsonData;

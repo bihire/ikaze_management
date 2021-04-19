@@ -15,12 +15,12 @@ class WebClient {
     if (response.statusCode == 200) {
       return json.decode(response.body);
     } else {
-      throw Exception('An error occured: ' + response.body);
+      return json.decode(response.body);
     }
   }
 
-    Future<dynamic> post(String path, Map<String, dynamic> data) async {
-      await new Future.delayed(const Duration(seconds: 5));
+  Future<dynamic> post(String path, Map<String, dynamic> data) async {
+    // await new Future.delayed(const Duration(seconds: 5));
     final http.Response response = await http.Client().post(
       '$baseUrl$path',
       body: data,
@@ -29,8 +29,7 @@ class WebClient {
     if (response.statusCode == 200) {
       return json.decode(response.body);
     } else {
-      throw Exception('An error occured: ' + response.body);
+      throw json.decode(response.body);
     }
   }
-
 }
