@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:inventory_controller/common/constants.dart';
 import 'package:inventory_controller/components/slideMenuRoute/slide_route.dart';
@@ -80,7 +81,6 @@ class _LoginScreenState extends State<LoginScreen>
 
   @override
   Widget build(BuildContext context) {
-    print(widget.error);
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: primaryLightColor,
@@ -122,7 +122,8 @@ class _LoginScreenState extends State<LoginScreen>
                         children: [
                           GestureDetector(
                             onTap: () {
-                              ErrorHandledAction();
+                              widget.store.dispatch(ErrorLoginHandledAction());
+                              // print(widget.error);
                             },
                             child: Container(
                                 padding:
@@ -202,14 +203,15 @@ class _LoginScreenState extends State<LoginScreen>
               SizedBox(height: size.height * 0.03),
               RaisedButton(
                 onPressed: () {
-                  ErrorHandledAction();
-                  _controller.forward();
+                  widget.store.dispatch(ErrorLoginHandledAction());
                 },
                 child: Text('animate'),
               ),
               SizedBox(height: size.height * 0.03),
               AlreadyHaveAnAccountCheck(
                 press: () {
+                  // Navigator.push(context,
+                  //     CupertinoPageRoute(builder: (context) => SignUpScreen()));
                   Navigator.of(context).push(FromMenuRoute(
                       prevPage: widget, nextPage: SignUpScreen()));
                   // Navigator.push(

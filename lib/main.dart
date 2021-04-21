@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:inventory_controller/containers/main/main_view_container.dart';
 import 'package:inventory_controller/pages/home.dart';
 import 'package:inventory_controller/redux/store.dart';
 
@@ -25,7 +26,7 @@ class MyApp extends StatelessWidget {
       store: createStore(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: OnboardingScreen(),
+        home: MainViewFlipperContainer(child: OnboardingScreen()),
         theme: ThemeData(
           primarySwatch: Colors.blue,
           visualDensity: VisualDensity.adaptivePlatformDensity,

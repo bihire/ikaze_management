@@ -2,6 +2,8 @@ import 'package:inventory_controller/redux/appState/app_state.dart';
 import 'package:inventory_controller/redux/reducers/all_transactions_reducer.dart';
 import 'package:inventory_controller/redux/reducers/auth/auth_reducer.dart';
 import 'package:inventory_controller/redux/reducers/dashboard_daily_total.dart';
+import 'package:inventory_controller/redux/reducers/epics/reels_epic.dart';
+import 'package:inventory_controller/redux/reducers/epics/slide_position_reducer.dart';
 import 'package:inventory_controller/redux/reducers/homePage/overal_daily_reducer.dart';
 import 'package:inventory_controller/redux/reducers/homePage/overal_weekly_reducer.dart';
 import 'package:inventory_controller/redux/reducers/itemDetail/detail_daily_total.dart';
@@ -36,6 +38,9 @@ AppState appReducer(AppState state, dynamic action) =>
         supplyTransactionListState: supplyTransactionReducer(state.supplyTransactionListState, action),
     //====================================================================================================
         productListState: productListReducer(state.productListState, action),
+    //====================================================================================================
+        reelsEpicOpacityState: reelsEpicOpacityReducer(state.reelsEpicOpacityState, action),
+        mainSlideEpicPositionState: mainSlideEpicPositionReducer(state.mainSlideEpicPositionState, action),
     //====================================================================================================
         authState: authenticationReducer(state.authState, action),
     );

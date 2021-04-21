@@ -52,6 +52,7 @@ dependencies:
   flutter_secure_storage: ^4.1.0
   flutter_svg: ^0.19.3
   jwt_decode: ^0.3.1
+  redux_epics: ^0.14.0
 
 dev_dependencies:
   flutter_test:

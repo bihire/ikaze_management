@@ -29,6 +29,6 @@ class ErrorOccurredAction {
   final String exception;
 }
 
-class ErrorHandledAction {}
+class ErrorLoginHandledAction {}
 
 class UserLogout {}

@@ -1,4 +1,5 @@
 import 'package:inventory_controller/redux/middlewares/auth/login.dart';
+import 'package:inventory_controller/redux/middlewares/epics/app_middleware.dart';
 import 'package:redux/redux.dart';
 
 import 'package:inventory_controller/redux/appState/app_state.dart';
@@ -18,6 +19,7 @@ import 'package:inventory_controller/redux/middlewares/productList/product_list.
 import 'package:inventory_controller/redux/middlewares/range_middleware.dart';
 import 'package:inventory_controller/redux/reducers/app_reducer.dart';
 import 'package:inventory_controller/redux/middlewares/all_transactins_middlewares.dart';
+import 'package:redux_epics/redux_epics.dart';
 
 Store<AppState> createStore() {
   return Store<AppState>(
@@ -25,8 +27,6 @@ Store<AppState> createStore() {
     initialState: AppState.initial(),
     middleware: [
       loginMiddleware(),
-      // loginMiddlewareErrorHandled(),
-      
       createAllTransactionsMiddleware(),
       homeTransactionsMiddleware(),
       newTransactionsMiddleware(),
@@ -41,7 +41,8 @@ Store<AppState> createStore() {
       detailOveralDailyTotalMiddleware(),
       detailOveralMonthlyMiddleware(),
       detailOveralWeeklyMiddleware(),
-      productListMiddleware()
+      productListMiddleware(),
+      EpicMiddleware<AppState>(epicMiddleWares)
     ]
   );
 }

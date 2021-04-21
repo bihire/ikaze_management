@@ -4,6 +4,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:animations/animations.dart';
 import 'package:inventory_controller/common/constants.dart';
+import 'package:inventory_controller/components/customDropDown/custom_drop_down.dart';
 import 'package:inventory_controller/components/leadingButton/leading_button.dart';
 import 'package:inventory_controller/components/page_transition/enum.dart';
 import 'package:inventory_controller/components/page_transition/page_transtion.dart';
@@ -122,11 +123,15 @@ class MyHomePageState extends State<MyHomePage>
               ),
             ),
             Container(
-              child: LeadingButton(
-                color: lightShadeColor,
-                icon: Icons.more_horiz_outlined,
-                iconColor: darkColor,
-                size: 37, // btnShadow: false
+              child: CustomDropdown(
+                              child: LeadingButton(
+                  color: lightShadeColor,
+                  icon: Icons.more_horiz_outlined,
+                  iconColor: darkColor,
+                  size: 37,
+                  // btnShadow: false
+                ),
+                text: 'home',
               ),
             ),
           ],

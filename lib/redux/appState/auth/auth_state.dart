@@ -30,7 +30,7 @@ class AuthState {
     return AuthState(
       loading: loading ?? this.loading,
       user: user ?? this.user,
-      error: error ?? this.error,
+      error: error,
     );
   }
 

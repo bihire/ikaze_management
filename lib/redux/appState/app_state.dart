@@ -1,5 +1,7 @@
 import 'package:inventory_controller/redux/appState/all_transactions_state.dart';
 import 'package:inventory_controller/redux/appState/auth/auth_state.dart';
+import 'package:inventory_controller/redux/appState/epics/reels_epic_opacity.dart';
+import 'package:inventory_controller/redux/appState/epics/slide_position.dart';
 import 'package:inventory_controller/redux/appState/homePage/dashboard_daily_total_state.dart';
 import 'package:inventory_controller/redux/appState/homePage/overal_daily_state.dart';
 import 'package:inventory_controller/redux/appState/homePage/overal_monthly_state.dart';
@@ -39,12 +41,16 @@ class AppState {
   final DetailOveralMonthlyState detailOveralMonthlyState;
   final NewTransactionListState newTransactionListState;
   final SupplyTransactionListState supplyTransactionListState;
+  //===========This Epics state================
+  final MainSlideEpicPositionState mainSlideEpicPositionState;
+  final ReelsEpicOpacityState reelsEpicOpacityState;
   //===========This the state for product page================
   final ProductListState productListState;
+  
 
   AppState({
     @required this.authState,
-    //========================================================
+//========================================================
     @required this.homeTransactionListState,
     @required this.allTransactionsState,
     @required this.dashboardDailyTotalState,
@@ -60,6 +66,9 @@ class AppState {
     @required this.detailOveralMonthlyState,
     @required this.newTransactionListState,
     @required this.supplyTransactionListState,
+//============================================================
+    @required this.mainSlideEpicPositionState,
+    @required this.reelsEpicOpacityState,
 //============================================================
     @required this.productListState
   });
@@ -85,6 +94,9 @@ class AppState {
         detailOveralMonthlyState: DetailOveralMonthlyState.initial(),
         newTransactionListState: NewTransactionListState.initial(),
         supplyTransactionListState: SupplyTransactionListState.initial(),
+//=========================== Epics ===============================================
+        mainSlideEpicPositionState: MainSlideEpicPositionState.initial(),
+        reelsEpicOpacityState: ReelsEpicOpacityState.initial(),
 //===========================Product List===============================================
         productListState: ProductListState.initial());
   }
@@ -115,6 +127,9 @@ class AppState {
       newTransactionListState: newTransactionListState ?? this.newTransactionListState,
       supplyTransactionListState: supplyTransactionListState ?? this.supplyTransactionListState,
       
+//==========================================================================================
+      mainSlideEpicPositionState: mainSlideEpicPositionState ?? this.mainSlideEpicPositionState,
+      reelsEpicOpacityState: reelsEpicOpacityState ?? this.reelsEpicOpacityState,
 //==========================================================================================
       productListState: productListState ?? this.productListState,
     );
