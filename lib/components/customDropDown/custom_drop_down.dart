@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:inventory_controller/common/constants.dart';
+import 'package:inventory_controller/components/customDropDown/show_dropdown.dart';
+import 'package:inventory_controller/components/leadingButton/leading_button.dart';
+import 'package:inventory_controller/components/page_transition/enum.dart';
+import 'package:inventory_controller/components/page_transition/page_transtion.dart';
+import 'package:inventory_controller/views/newProduct/new_product.dart';
 
 class CustomDropdown extends StatefulWidget {
   final Widget child;
   final String text;
 
-  const CustomDropdown({Key key, @required this.child, @required this.text}) : super(key: key);
+  const CustomDropdown({Key key, @required this.child, @required this.text})
+      : super(key: key);
 
   @override
   _CustomDropdownState createState() => _CustomDropdownState();
@@ -12,81 +19,63 @@ class CustomDropdown extends StatefulWidget {
 
 class _CustomDropdownState extends State<CustomDropdown> {
   GlobalKey actionKey;
-  double height, width, xPosition, yPosition;
+  // double height, width, xPosition, yPosition;
   bool isDropdownOpened = false;
   OverlayEntry floatingDropdown;
 
   @override
   void initState() {
-    actionKey = LabeledGlobalKey(widget.text);
+    actionKey = GlobalKey();
     super.initState();
   }
 
-  void findDropdownData() {
-    RenderBox renderBox = actionKey.currentContext.findRenderObject();
-    height = renderBox.size.height;
-    width = MediaQuery.of(context).size.width;
-    Offset offset = renderBox.localToGlobal(Offset.zero);
-    xPosition = offset.dx;
-    yPosition = offset.dy;
-    print(height);
-    print(width);
-    print(xPosition);
-    print(yPosition);
+  Future<void> _showMyDialog(
+      double height, double width, double xPosition, double yPosition) async {
+    return showCustomDropDown<void>(
+      context: context,
+      barrierDismissible: true,
+      barrierColor: Colors.transparent,
+      height: height,
+      width: width,
+      xPosition: xPosition,
+      yPosition: yPosition,
+      builder: (BuildContext context) {
+        return DropDown(
+          itemHeight: height,
+        );
+      },
+    );
   }
 
-  OverlayEntry _createFloatingDropdown() {
-    return OverlayEntry(builder: (context) {
-      return Positioned(
-        right: xPosition,
+  PopUpLocationdata findDropdownData() {
+    RenderBox renderBox = actionKey.currentContext.findRenderObject();
+    double height = renderBox.size.height;
+    double width = MediaQuery.of(context).size.width;
+    Offset offset = renderBox.localToGlobal(Offset.zero);
+    double xPosition = offset.dx;
+    double yPosition = offset.dy;
+
+    return PopUpLocationdata(
+        height: height,
         width: width,
-        top: yPosition + height,
-        height: 4 * height + 40,
-        child: DropDown(
-          itemHeight: height,
-        ),
-      );
-    });
+        xPosition: xPosition,
+        yPosition: yPosition);
   }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       key: actionKey,
-      onTap: () {
-        setState(() {
-          if (isDropdownOpened) {
-            floatingDropdown.remove();
-          } else {
-            findDropdownData();
-            floatingDropdown = _createFloatingDropdown();
-            Overlay.of(context).insert(floatingDropdown);
-          }
-
-          isDropdownOpened = !isDropdownOpened;
-        });
+      onTap: () async {
+        RenderBox renderBox = actionKey.currentContext.findRenderObject();
+        double height = renderBox.size.height;
+        double width = MediaQuery.of(context).size.width;
+        Offset offset = renderBox.localToGlobal(Offset.zero);
+        double xPosition = offset.dx;
+        double yPosition = offset.dy;
+        _showMyDialog(height, width, xPosition, yPosition);
       },
       child: widget.child,
-      // Container(
-      //   decoration: BoxDecoration(
-      //     borderRadius: BorderRadius.circular(8),
-      //     color: Colors.red.shade600,
-      //   ),
-      //   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      //   child: Row(
-      //     children: <Widget>[
-      //       Text(
-      //         widget.text.toUpperCase(),
-      //         style: TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.w600),
-      //       ),
-      //       Spacer(),
-      //       Icon(
-      //         Icons.arrow_drop_down,
-      //         color: Colors.white,
-      //       ),
-      //     ],
-      //   ),
-      // ),
     );
   }
 }
@@ -104,49 +93,66 @@ class DropDown extends StatelessWidget {
           height: 5,
         ),
         Align(
-          alignment: Alignment(-0.85, 0),
+          alignment: Alignment(.96, 0),
           child: ClipPath(
             clipper: ArrowClipper(),
             child: Container(
-              height: 20,
-              width: 30,
-              decoration: BoxDecoration(
-                color: Colors.red.shade600,
-              ),
+              height: 10,
+              width: 15,
+              decoration: BoxDecoration(color: primaryColor
+                  // Colors.red.shade600,
+                  ),
             ),
           ),
         ),
-        Material(
-          elevation: 20,
-          shape: ArrowShape(),
-          child: Container(
-            height: 4 * itemHeight,
-            decoration: BoxDecoration(
+        Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5),
+                spreadRadius: 1,
+                blurRadius: 7,
+                offset: Offset(2, 3), // changes position of shadow
+              ),
+            ],
+          ),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(8),
+            child: Material(
+              // shape: Sha.circle(8),
               borderRadius: BorderRadius.circular(8),
-            ),
-            child: Column(
-              children: <Widget>[
-                DropDownItem.first(
-                  text: "Add new",
-                  iconData: Icons.add_circle_outline,
-                  isSelected: false,
+              child: Container(
+                child: Column(
+                  children: <Widget>[
+                    DropDownItem.first(
+                        text: "Add new product",
+                        iconData: Icons.add,
+                        isSelected: false,
+                        onPressed: () {
+                          Navigator.pop(context);
+                          Navigator.push(
+                              context,
+                              PageTransition(
+                                  curve: Curves.easeIn,
+                                  reverseDuration: Duration(milliseconds: 300),
+                                  duration: Duration(milliseconds: 200),
+                                  child: NewProductPage(),
+                                  type: PageTransitionType.rightToLeft));
+                        }),
+                    DropDownItem(
+                      text: "Search by range",
+                      iconData: Icons.search,
+                      isSelected: false,
+                    ),
+                    DropDownItem.last(
+                      text: "Logout",
+                      iconData: Icons.exit_to_app,
+                      isSelected: true,
+                    ),
+                  ],
                 ),
-                DropDownItem(
-                  text: "View Profile",
-                  iconData: Icons.person_outline,
-                  isSelected: false,
-                ),
-                DropDownItem(
-                  text: "Settings",
-                  iconData: Icons.settings,
-                  isSelected: false,
-                ),
-                DropDownItem.last(
-                  text: "Logout",
-                  iconData: Icons.exit_to_app,
-                  isSelected: true,
-                ),
-              ],
+              ),
             ),
           ),
         ),
@@ -161,51 +167,69 @@ class DropDownItem extends StatelessWidget {
   final bool isSelected;
   final bool isFirstItem;
   final bool isLastItem;
+  final Function onPressed;
 
-  const DropDownItem({Key key, this.text, this.iconData, this.isSelected = false, this.isFirstItem = false, this.isLastItem = false})
+  const DropDownItem(
+      {Key key,
+      this.text,
+      this.iconData,
+      this.onPressed,
+      this.isSelected = false,
+      this.isFirstItem = false,
+      this.isLastItem = false})
       : super(key: key);
 
-  factory DropDownItem.first({String text, IconData iconData, bool isSelected}) {
+  factory DropDownItem.first(
+      {String text, IconData iconData, bool isSelected, Function onPressed}) {
     return DropDownItem(
       text: text,
       iconData: iconData,
       isSelected: isSelected,
       isFirstItem: true,
+      onPressed: onPressed,
     );
   }
 
-  factory DropDownItem.last({String text, IconData iconData, bool isSelected}) {
+  factory DropDownItem.last(
+      {String text, IconData iconData, bool isSelected, Function onPressed}) {
     return DropDownItem(
       text: text,
       iconData: iconData,
       isSelected: isSelected,
       isLastItem: true,
+      onPressed: onPressed,
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.vertical(
-          top: isFirstItem ? Radius.circular(8) : Radius.zero,
-          bottom: isLastItem ? Radius.circular(8) : Radius.zero,
+    return InkWell(
+      onTap: onPressed,
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.vertical(
+            top: isFirstItem ? Radius.circular(8) : Radius.zero,
+            bottom: isLastItem ? Radius.circular(8) : Radius.zero,
+          ),
+          color: isSelected ? Colors.transparent : Colors.transparent,
         ),
-        color: isSelected ? Colors.red.shade900 : Colors.red.shade600,
-      ),
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      child: Row(
-        children: <Widget>[
-          Text(
-            text.toUpperCase(),
-            style: TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.w600),
-          ),
-          Spacer(),
-          Icon(
-            iconData,
-            color: Colors.white,
-          ),
-        ],
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 11),
+        child: Row(
+          children: <Widget>[
+            Text(
+              text,
+              style: TextStyle(
+                  color: hardGreyColor,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w400),
+            ),
+            Spacer(),
+            Icon(
+              iconData,
+              color: hardGreyColor,
+            ),
+          ],
+        ),
       ),
     );
   }

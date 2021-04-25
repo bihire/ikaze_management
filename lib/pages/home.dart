@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:animations/animations.dart';
 import 'package:inventory_controller/common/constants.dart';
 import 'package:inventory_controller/components/customDropDown/custom_drop_down.dart';
+import 'package:inventory_controller/components/customDropDown/show_dropdown.dart';
 import 'package:inventory_controller/components/leadingButton/leading_button.dart';
 import 'package:inventory_controller/components/page_transition/enum.dart';
 import 'package:inventory_controller/components/page_transition/page_transtion.dart';
@@ -27,8 +28,10 @@ class MyHomePage extends StatefulWidget {
   }
 }
 
-class MyHomePageState extends State<MyHomePage> 
-    with SingleTickerProviderStateMixin, AutomaticKeepAliveClientMixin<MyHomePage> {
+class MyHomePageState extends State<MyHomePage>
+    with
+        SingleTickerProviderStateMixin,
+        AutomaticKeepAliveClientMixin<MyHomePage> {
   AnimationController _controller;
   bool _isDialogShowing = false;
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
@@ -55,7 +58,7 @@ class MyHomePageState extends State<MyHomePage>
     _controller.dispose();
     super.dispose();
   }
-
+  
   bool get _isAnimationRunningForwardsOrComplete {
     switch (_controller.status) {
       case AnimationStatus.forward:
@@ -84,7 +87,7 @@ class MyHomePageState extends State<MyHomePage>
           children: [
             // InkWell(
             //   onTap: () {
-                
+
             //   },
             //   // customBorder: BorderRadius.circular(50),
             //   child: Container(
@@ -107,29 +110,31 @@ class MyHomePageState extends State<MyHomePage>
             ),
             Container(
               child: LeadingButton(
-                color: lightShadeColor,
+                color: lightGreyColor,
                 icon: Icons.send,
                 margin:
                     EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 0),
                 rotate: -20 * math.pi / 180,
                 iconColor: darkColor,
-                onPressed: () => {Navigator.push(
-                    context,
-                    PageTransition(
-                        child: NotificationDrawer(),
-                        childCurrent: MyHomePage(),
-                        type: PageTransitionType.leftToRightJoined))},
+                onPressed: () => {
+                  Navigator.push(
+                      context,
+                      PageTransition(
+                          child: NotificationDrawer(),
+                          childCurrent: MyHomePage(),
+                          type: PageTransitionType.leftToRightJoined))
+                },
                 size: 37, // btnShadow: false
               ),
             ),
             Container(
-              child: CustomDropdown(
+              child: 
+              CustomDropdown(
                               child: LeadingButton(
-                  color: lightShadeColor,
+                  color: lightGreyColor,
                   icon: Icons.more_horiz_outlined,
                   iconColor: darkColor,
                   size: 37,
-                  // btnShadow: false
                 ),
                 text: 'home',
               ),
@@ -143,41 +148,45 @@ class MyHomePageState extends State<MyHomePage>
           bottom: 100,
           right: 40,
           child: InkWell(
-            onTap: () {
-              Navigator.push(
-                      context,
-                      PageTransition(
-                          curve: Curves.easeIn,
-                          reverseDuration: Duration(milliseconds: 300),
-                          duration: Duration(milliseconds: 200),
-                          child: NewTransactionPage(),
-                          type: PageTransitionType.rightToLeft));
-            },
-            customBorder: CircleBorder(),
-            child: Container(
-              decoration: BoxDecoration(
-                color: primaryColor,
-                shape: BoxShape.circle,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.3),
-                    spreadRadius: 1,
-                    blurRadius: 3,
-                    offset: Offset(0, 3), // changes position of shadow
-                  ),
-                ],
-              ),
-              padding: EdgeInsets.all(10),
-              child: const Icon(Icons.add, color: primaryLightColor,),
-            )
-            
-          ),
+              onTap: () {
+                Navigator.push(
+                    context,
+                    PageTransition(
+                        curve: Curves.easeIn,
+                        reverseDuration: Duration(milliseconds: 300),
+                        duration: Duration(milliseconds: 200),
+                        child: NewTransactionPage(),
+                        type: PageTransitionType.rightToLeft));
+              },
+              customBorder: CircleBorder(),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: primaryColor,
+                  shape: BoxShape.circle,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.3),
+                      spreadRadius: 1,
+                      blurRadius: 3,
+                      offset: Offset(0, 3), // changes position of shadow
+                    ),
+                  ],
+                ),
+                padding: EdgeInsets.all(10),
+                child: const Icon(
+                  Icons.add,
+                  color: primaryLightColor,
+                ),
+              )),
         ),
         Positioned(
           bottom: 30,
           right: 30,
           child: FloatingActionButton(
-            child: const Icon(Icons.view_headline_sharp, color: darkColor,),
+            child: const Icon(
+              Icons.view_headline_sharp,
+              color: darkColor,
+            ),
             backgroundColor: primaryLightColor,
             onPressed: () {
               // if (_isAnimationRunningForwardsOrComplete) {
@@ -204,8 +213,7 @@ class MyHomePageState extends State<MyHomePage>
       ]),
     );
   }
+
   @override
   bool get wantKeepAlive => true;
 }
-
-
