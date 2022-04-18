@@ -3,19 +3,19 @@ import 'package:inventory_controller/common/constants.dart';
 import 'package:inventory_controller/components/custom_tab_button.dart';
 
 class CustomTabs extends StatefulWidget {
-  final TabController controller;
+  final TabController? controller;
   final List<Tab> tabs;
-  CustomTabs({Key key, this.controller, @required this.tabs}) : super(key: key);
+  CustomTabs({Key? key,this.controller, required this.tabs}) : super(key: key);
   @override
   CustomTabsState createState() => CustomTabsState();
 }
 
 class CustomTabsState extends State<CustomTabs> with TickerProviderStateMixin {
-  TabController _controller;
-  List<GlobalKey> _tabKeys;
+  TabController? _controller;
+  late List<GlobalKey> _tabKeys;
   GlobalKey _tabsContainerKey = GlobalKey();
   int _selectedPage = 0;
-  int pageNum;
+  late int pageNum;
 
   double _prevAniValue = 0;
   int _aniIndex = 0;
@@ -29,22 +29,22 @@ class CustomTabsState extends State<CustomTabs> with TickerProviderStateMixin {
     if (index != _selectedPage) {
       print(index);
       _setCurrentIndex(index);
-      _controller.animateTo(index);
+      _controller!.animateTo(index);
     }
   }
 
   _handleTabAnimation() {
-    _aniIndex = ((_controller.animation.value > _prevAniValue)
-            ? _controller.animation.value
+    _aniIndex = ((_controller!.animation!.value > _prevAniValue)
+            ? _controller!.animation!.value
             : _prevAniValue)
         .round();
-    if (!_controller.indexIsChanging && _aniIndex != _selectedPage) {
+    if (!_controller!.indexIsChanging && _aniIndex != _selectedPage) {
       print(_aniIndex);
       setState(() {
         _setCurrentIndex(_aniIndex);
       });
     }
-    _prevAniValue = _controller.animation.value;
+    _prevAniValue = _controller!.animation!.value;
   }
 
   _setCurrentIndex(int index) {
@@ -62,7 +62,7 @@ class CustomTabsState extends State<CustomTabs> with TickerProviderStateMixin {
             key: _tabKeys[i],
             name: tabs[i].text,
             color: primaryLightColor,
-            icon: tabs[i].icon,
+            icon: tabs[i].icon! as Icon,
             pageNum: i,
             width: width / tabs.length,
             onPressed: _onPressed,
@@ -75,9 +75,9 @@ class CustomTabsState extends State<CustomTabs> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     if (_controller == null) {
-      _controller = widget.controller ?? DefaultTabController.of(context);
+      _controller = widget.controller ?? DefaultTabController.of(context)!;
       // this will execute the function every time there's a swipe animation
-      _controller.animation.addListener(_handleTabAnimation);
+      _controller!.animation!.addListener(_handleTabAnimation);
     }
     return Row(
         mainAxisAlignment: MainAxisAlignment.center,

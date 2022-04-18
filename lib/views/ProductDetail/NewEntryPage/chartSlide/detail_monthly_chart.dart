@@ -16,11 +16,11 @@ String getDate(DateTime date, int number) {
 class DetailMonthlyChartScreen extends StatelessWidget {
   final bool loading;
   final List<OveralMonthlyTransactionModel> overalMonthlyData;
-  final error;
+  final String? error;
   DetailMonthlyChartScreen({
-    this.loading,
-    this.overalMonthlyData,
-    this.error,
+    required this.loading,
+    required this.overalMonthlyData,
+    required this.error,
   });
   @override
   Widget build(BuildContext context) {

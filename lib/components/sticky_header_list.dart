@@ -3,7 +3,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_sticky_header/flutter_sticky_header.dart';
 import 'package:inventory_controller/common/date_formater.dart';
 import 'package:inventory_controller/components/custom_progress_indicator.dart';
-import 'package:inventory_controller/components/github_issue_list_item.dart';
+import 'package:inventory_controller/components/transaction_item.dart';
 import 'package:inventory_controller/components/sticky_list_try.dart';
 import 'package:inventory_controller/models/moneyTransaction.dart';
 import 'package:inventory_controller/views/ProductDetail/SoldEntryPage/components/SoldEntryPage.dart';
@@ -50,7 +50,6 @@ class SoldEntryScreen extends StatelessWidget {
         SliverToBoxAdapter(
           child: SoldEntryPage(),
         ),
-
         _StickyHeaderDateSort(history: history),
         SliverToBoxAdapter(
           child: CustomProgressIndicator(isActive: noError),
@@ -75,21 +74,20 @@ class _StickyHeaderList extends StatelessWidget {
     return SliverStickyHeader(
       header: Header(title: keyTitle),
       sliver: SliverToBoxAdapter(
-        child: Container(
-          color: Colors.white,
-          child: ListView.builder(
-            shrinkWrap: true,
-            physics: ClampingScrollPhysics(),
-            itemCount: keyData.length,
-            itemBuilder: (context, index) {
-              return MoneyTransactionModelListItem(
-                      itemIndex: index, transaction: keyData[index]);
-            },
-            // separatorBuilder: (BuildContext context, int index) =>
-            //     Divider(color: COlors.white),
-          ),
-        )
-      ),
+          child: Container(
+        color: Colors.white,
+        child: ListView.builder(
+          shrinkWrap: true,
+          physics: ClampingScrollPhysics(),
+          itemCount: keyData.length,
+          itemBuilder: (context, index) {
+            return TransactionItem(
+                itemIndex: index, transaction: keyData[index]);
+          },
+          // separatorBuilder: (BuildContext context, int index) =>
+          //     Divider(color: COlors.white),
+        ),
+      )),
     );
   }
 }
@@ -111,7 +109,7 @@ class _StickyHeaderDateSort extends StatelessWidget {
           offset: ViewportOffset.zero(),
           slivers: [
             for (var key in history.keys)
-              _StickyHeaderList(keyTitle: key, keyData: history[key] )
+              _StickyHeaderList(keyTitle: key, keyData: history[key])
           ],
         ),
       ),

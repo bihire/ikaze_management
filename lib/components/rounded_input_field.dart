@@ -3,20 +3,18 @@ import 'package:inventory_controller/common/constants.dart';
 import 'package:inventory_controller/components/text_field_container.dart';
 
 class RoundedInputField extends StatelessWidget {
-  final String hintText;
-  final String error;
-  final Color iconColor;
-  final Color backgroundColor;
+  final String? hintText, error;
+  final Color? iconColor, backgroundColor;
   final IconData icon;
   final ValueChanged<String> onChanged;
   const RoundedInputField({
-    Key key,
+    Key? key,
     this.hintText,
     this.iconColor,
     this.error,
     this.backgroundColor,
     this.icon = Icons.person,
-    this.onChanged,
+    required this.onChanged,
   }) : super(key: key);
 
   @override
@@ -25,9 +23,9 @@ class RoundedInputField extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
-        error != null? Text(error, textAlign: TextAlign.left, style: TextStyle(color: Colors.red, fontSize: 11),): SizedBox(),
+        error != null? Text(error!, textAlign: TextAlign.left, style: TextStyle(color: Colors.red, fontSize: 11),): SizedBox(),
         TextFieldContainer(
-          backgroundColor: backgroundColor,
+          backgroundColor: backgroundColor!,
           child: TextField(
             onChanged: onChanged,
             cursorColor: darkColor,

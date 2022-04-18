@@ -5,7 +5,7 @@ class Chart extends StatelessWidget {
 
   final List<double> data;
 
-  const Chart({Key key, this.data}) : super(key: key);
+  const Chart({Key? key,required this.data}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +42,7 @@ class ChartClipper extends CustomClipper<Path> {
   final double maxValue;
   final List<double> data;
 
-  ChartClipper({this.maxValue, this.data});
+  ChartClipper({required this.maxValue,required this.data});
 
   @override
   Path getClip(Size size) {

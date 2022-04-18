@@ -1,20 +1,16 @@
 import 'package:flutter/material.dart';
 
 class LeadingButton extends StatelessWidget {
-  final IconData icon;
-  final Color color;
-  final Color iconColor;
-  final double iconSize;
-  final double size;
-  final VoidCallback onPressed;
-  final double padding;
+  final IconData? icon;
+  final Color? color, iconColor;
+  final double? iconSize, size, padding, rotate;
+  final VoidCallback? onPressed;
   final EdgeInsets margin;
-  final double rotate;
 
   LeadingButton(
       {this.icon,
       this.color,
-      this.onPressed,
+      required this.onPressed,
       this.size,
       this.iconSize,
       this.iconColor,
@@ -33,12 +29,12 @@ class LeadingButton extends StatelessWidget {
             shape: BoxShape.circle,
             color: color,
           ),
-          padding: EdgeInsets.all(padding),
+          padding: EdgeInsets.all(padding != null ? padding! : 0),
           child: InkWell(
             customBorder: CircleBorder(),
             onTap: onPressed,
             child: Transform.rotate(
-              angle: rotate,
+              angle: rotate!,
               child: Center(
                 child: Icon(
                   icon,

@@ -1,10 +1,10 @@
 
 class User {
-  final String email;
-  final String userName;
-  final String imgUrl;
-  final String country;
-  final String phoneNumber;
+  final String? email;
+  final String? userName;
+  final String? imgUrl;
+  final String? country;
+  final String? phoneNumber;
 
   User({this.email, this.userName, this.country, this.phoneNumber, this.imgUrl});
 

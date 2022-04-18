@@ -1,5 +1,4 @@
-
-import 'package:inventory_controller/models/productList/product_list.dart';
+import 'package:inventory_controller/models/product/product.dart';
 import 'package:inventory_controller/redux/actions/productList/product_list.dart';
 import 'package:inventory_controller/redux/appState/productList/product_list.dart';
 
@@ -15,8 +14,7 @@ ProductListState productListReducer(ProductListState state, action) {
 
 final Reducer<bool> _isDataLoadingReducer = combineReducers<bool>([
   TypedReducer<bool, LoadProductListAction>(_isDataLoadingStartedReducer),
-  TypedReducer<bool, ProductListLoadedAction>(
-      _isDataLoadingFinishedReducer),
+  TypedReducer<bool, ProductListLoadedAction>(_isDataLoadingFinishedReducer),
   TypedReducer<bool, ErrorOccurredAction>(_isDataLoadingFinishedReducer),
 ]);
 
@@ -27,6 +25,7 @@ bool _isDataLoadingStartedReducer(bool _, dynamic action) {
 bool _isDataLoadingFinishedReducer(bool _, dynamic action) {
   return false;
 }
+
 List<ProductModel> _productsReducer(
     List<ProductModel> products, dynamic action) {
   if (action is ProductListLoadedAction) {

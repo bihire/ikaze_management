@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:inventory_controller/models/productList/product_list.dart';
+import 'package:inventory_controller/models/product/product.dart';
 import 'package:inventory_controller/redux/actions/productList/product_list.dart';
 import 'package:inventory_controller/redux/appState/app_state.dart';
 import 'package:redux/redux.dart';
@@ -25,7 +25,7 @@ _loadItemsPage() {
 
 Future<List<ProductModel>> _loadFlutterGithubIssues() async {
   await new Future.delayed(const Duration(seconds: 5));
-  var response = await http.get('http://192.168.43.56:5000/api/products');
+  var response = await http.get(Uri.parse('http://192.168.43.56:5000/api/products'));
   if (response.statusCode == 200) {
     final jsonData = (json.decode(response.body))['data'] as List;
     return jsonData.map((item) => ProductModel.fromJson(item)).toList();

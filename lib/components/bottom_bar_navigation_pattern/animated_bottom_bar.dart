@@ -121,7 +121,7 @@ import 'package:flutter/widgets.dart';
 class BottomNavyBar extends StatelessWidget {
   final int selectedIndex;
   final double iconSize;
-  final Color backgroundColor;
+  final Color? backgroundColor;
   final bool showElevation;
   final Duration animationDuration;
   final List<BottomNavyBarItem> items;
@@ -130,10 +130,10 @@ class BottomNavyBar extends StatelessWidget {
   final double itemCornerRadius;
   final double containerHeight;
   final Curve curve;
-  final BarStyle barStyle;
+  final BarStyle? barStyle;
 
   BottomNavyBar({
-    Key key,
+    Key? key,
     this.selectedIndex = 0,
     this.showElevation = true,
     this.iconSize = 22,
@@ -143,8 +143,8 @@ class BottomNavyBar extends StatelessWidget {
     this.barStyle,
     this.animationDuration = const Duration(milliseconds: 270),
     this.mainAxisAlignment = MainAxisAlignment.spaceBetween,
-    @required this.items,
-    @required this.onItemSelected,
+    required this.items,
+    required this.onItemSelected,
     this.curve = Curves.linear,
   }) {
     assert(items != null);
@@ -185,7 +185,7 @@ class BottomNavyBar extends StatelessWidget {
                   item: item,
                   iconSize: iconSize,
                   isSelected: index == selectedIndex,
-                  backgroundColor: bgColor,
+                  backgroundColor: bgColor != null ? bgColor : Colors.transparent,
                   itemCornerRadius: itemCornerRadius,
                   animationDuration: animationDuration,
                   curve: curve,
@@ -209,13 +209,13 @@ class _ItemWidget extends StatelessWidget {
   final Curve curve;
 
   const _ItemWidget({
-    Key key,
-    @required this.item,
-    @required this.isSelected,
-    @required this.backgroundColor,
-    @required this.animationDuration,
-    @required this.itemCornerRadius,
-    @required this.iconSize,
+    Key? key,
+    required this.item,
+    required this.isSelected,
+    required this.backgroundColor,
+    required this.animationDuration,
+    required this.itemCornerRadius,
+    required this.iconSize,
     this.curve = Curves.linear,
   })  : assert(isSelected != null),
         assert(item != null),
@@ -291,12 +291,12 @@ class BottomNavyBarItem {
   final Widget icon;
   final Widget title;
   final Color activeColor;
-  final Color inactiveColor;
-  final TextAlign textAlign;
+  final Color? inactiveColor;
+  final TextAlign? textAlign;
 
   BottomNavyBarItem({
-    @required this.icon,
-    @required this.title,
+    required this.icon,
+    required this.title,
     this.activeColor = const Color(0xFFBEB501),
     this.textAlign,
     this.inactiveColor,

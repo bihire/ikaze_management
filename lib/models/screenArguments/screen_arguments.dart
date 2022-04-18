@@ -1,0 +1,4 @@
+enum ScreenArguments {
+  onboarding,
+  redirect,
+}

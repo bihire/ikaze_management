@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sticky_header/flutter_sticky_header.dart';
 import 'package:inventory_controller/common/debouncer.dart';
-import 'package:inventory_controller/components/container_transition.dart';
+// import 'package:inventory_controller/components/container_transition.dart';
 import 'package:animations/animations.dart';
 import 'package:inventory_controller/components/custom_appbar.dart';
 import 'package:inventory_controller/containers/homePage/rangeTransactions/product_range.dart';
 
 class AppScaffold extends StatelessWidget {
   const AppScaffold({
-    Key key,
-    @required this.title,
-    @required this.slivers,
-    @required this.isDataLoading,
-    @required this.isNextPageAvailable,
+    Key? key,
+    required this.title,
+    required this.slivers,
+    required this.isDataLoading,
+    required this.isNextPageAvailable,
     this.loadNextPage,
     this.reverse = false,
   }) : super(key: key);
@@ -22,7 +22,7 @@ class AppScaffold extends StatelessWidget {
   final bool reverse;
   final bool isDataLoading;
   final bool isNextPageAvailable;
-  final Function loadNextPage;
+  final Function? loadNextPage;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +34,7 @@ class AppScaffold extends StatelessWidget {
                   scrollNotification.metrics.maxScrollExtent &&
               !isDataLoading &&
               isNextPageAvailable) {
-            _debouncer.run(() => loadNextPage());
+            _debouncer.run(() => loadNextPage!());
           }
           return true;
         },
@@ -49,7 +49,7 @@ class AppScaffold extends StatelessWidget {
 
 class _FloatingActionButton extends StatelessWidget {
   const _FloatingActionButton({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -59,8 +59,8 @@ class _FloatingActionButton extends StatelessWidget {
       backgroundColor: Colors.green,
       onPressed: () {
         final double offset =
-            DefaultStickyHeaderController.of(context).stickyHeaderScrollOffset;
-        PrimaryScrollController.of(context).animateTo(
+            DefaultStickyHeaderController.of(context)!.stickyHeaderScrollOffset;
+        PrimaryScrollController.of(context)!.animateTo(
           offset,
           duration: Duration(milliseconds: 300),
           curve: Curves.easeIn,
@@ -72,13 +72,13 @@ class _FloatingActionButton extends StatelessWidget {
 
 class Header extends StatelessWidget {
   const Header({
-    Key key,
-    this.index,
-    this.title,
+    Key? key,
+    required this.index,
+    required this.title,
     this.color = Colors.white,
   }) : super(key: key);
 
-  final String title;
+  final String? title;
   final int index;
   final Color color;
 

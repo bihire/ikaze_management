@@ -4,14 +4,14 @@ import 'package:meta/meta.dart';
 @immutable
 class DashoardDailyTotalState {
   DashoardDailyTotalState({
-    this.isDataLoading,
-    this.dailTotal,
+    required this.isDataLoading,
+    required this.dailTotal,
     this.error,
   });
 
   final bool isDataLoading;
   final String dailTotal;
-  final Exception error;
+  final Exception? error;
 
   static const int transactionsPerPage = 10;
 

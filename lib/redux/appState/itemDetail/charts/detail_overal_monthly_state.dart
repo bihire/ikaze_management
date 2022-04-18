@@ -5,14 +5,14 @@ import 'package:meta/meta.dart';
 @immutable
 class DetailOveralMonthlyState {
   DetailOveralMonthlyState({
-    this.loading,
-    this.overalMonthlyData,
+    required this.loading,
+    required this.overalMonthlyData,
     this.error,
   });
 
   final bool loading;
   final List<OveralMonthlyTransactionModel> overalMonthlyData;
-  final Exception error;
+  final Exception? error;
 
   static const int transactionsPerPage = 10;
 

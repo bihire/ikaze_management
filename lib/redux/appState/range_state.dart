@@ -5,11 +5,11 @@ import 'package:meta/meta.dart';
 @immutable
 class TransactionRangeState {
   TransactionRangeState({
-    this.isRangeDataLoading,
-    this.isNextRangePageAvailable,
-    this.rangeTransactions,
-    this.rangeCount,
-    this.rangeDate,
+    required this.isRangeDataLoading,
+    required this.isNextRangePageAvailable,
+    required this.rangeTransactions,
+    required this.rangeCount,
+    required this.rangeDate,
     this.rangeError,
   });
 
@@ -18,7 +18,7 @@ class TransactionRangeState {
   final List<MoneyTransactionModel> rangeTransactions;
   final RangeCountModel rangeCount;
   final Map rangeDate;
-  final Exception rangeError;
+  final Exception? rangeError;
 
   static const int transactionsPerPage = 10;
 

@@ -5,15 +5,15 @@ import './TransactioListTile.dart';
 class Expansionpanel extends StatefulWidget {
       final List<MoneyTransactionModel> transactions;
       Expansionpanel({
-        Key key,
-        @required this.transactions,
+        Key? key,
+        required this.transactions,
       }) : super(key: key);
 
       ExpansionListExampleState createState() => ExpansionListExampleState();
     }
 
     class ExpansionListExampleState extends State<Expansionpanel> {
-      List<bool> openList;
+      late List<bool> openList;
 
       @override
       void initState() {

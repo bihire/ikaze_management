@@ -29,13 +29,13 @@ class DashBoardState extends State {
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
-                  Container(
-                      margin: const EdgeInsets.only(top: 40.0),
-                      padding:EdgeInsets.symmetric(vertical: 0.0, horizontal: 10.0),
+                  // Container(
+                  //     margin: const EdgeInsets.only(top: 40.0),
+                  //     padding:EdgeInsets.symmetric(vertical: 0.0, horizontal: 10.0),
                       
-                      width: MediaQuery.of(context).size.width * 1,
-                      child: DailyTotal()
-                      ),
+                  //     width: MediaQuery.of(context).size.width * 1,
+                  //     child: DailyTotal()
+                  //     ),
                   Container(
                     margin: const EdgeInsets.only(top: 30.0),
                     child: SingleChildScrollView(

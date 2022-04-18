@@ -1,30 +1,33 @@
 import 'package:flutter/material.dart';
+import 'dart:core';
 import 'package:flutter_holo_date_picker/flutter_holo_date_picker.dart';
+import 'package:inventory_controller/common/constants.dart';
 import 'package:inventory_controller/common/date_formater.dart';
-import 'package:flushbar/flushbar.dart';
+import 'package:another_flushbar/flushbar.dart';
+import 'package:inventory_controller/components/leadingButton/leading_button.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 
 class CustomAppBar extends StatefulWidget with PreferredSizeWidget {
   @override
   final Size preferredSize;
+  double? elevation;
 
   final Function() notifySearch;
-  final Function(DateTime) setFormDate;
-  final Function(DateTime) setToDate;
-  final Function onSearch;
-  final bool rangeSearchLoading;
-  final DateTime fromDate;
-  final DateTime toDate;
+  final Function(DateTime) setFormDate, setToDate;
+  final Function(DateTime fromDate, DateTime toDate) onSearch;
+  final bool? rangeSearchLoading;
+  final DateTime? fromDate, toDate;
 
   CustomAppBar(
-      {Key key,
-      @required this.notifySearch,
-      @required this.setToDate,
-      @required this.setFormDate,
+      {Key? key,
+      required this.notifySearch,
+      required this.setToDate,
+      required this.setFormDate,
       this.rangeSearchLoading,
       this.fromDate,
+      this.elevation = 0, 
       this.toDate,
-      @required this.onSearch})
+      required this.onSearch})
       : preferredSize = Size.fromHeight(50.0),
         super(key: key);
 
@@ -36,26 +39,29 @@ class _CustomAppBarState extends State<CustomAppBar> {
   var now = DateTime.now();
   @override
   Widget build(BuildContext context) {
-    flushErrorMsg(String msg) => Flushbar(
+    void flushErrorMsg(String msg) => Flushbar(
+          barBlur: 10,
+          isDismissible: true,
           margin: EdgeInsets.all(8),
-          borderRadius: 8,
+          borderRadius: BorderRadius.circular(8),
           backgroundColor: Colors.red,
           flushbarPosition: FlushbarPosition.TOP,
           message: msg,
-          duration: Duration(seconds: 3),
+          // duration: Duration(seconds: 3),
         )..show(context);
     return AppBar(
+      elevation: widget.elevation,
       titleSpacing: 0.0,
+      shadowColor: lightGreyColor,
       title: Row(
         children: [
-          InkWell(
-            onTap: () => Navigator.pop(context),
-            child: Container(
-              child: Icon(
-                Icons.chevron_left,
-                size: 30.0,
-                color: Colors.black,
-              ),
+          Container(
+            child: LeadingButton(
+              color: Colors.transparent,
+              icon: Icons.arrow_back_rounded,
+              iconColor: darkColor,
+              size: 37,
+              onPressed: () {},
             ),
           ),
           Flexible(
@@ -63,7 +69,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 InkWell(
-                  onTap: widget.rangeSearchLoading
+                  onTap: widget.rangeSearchLoading!
                       ? null
                       : () async {
                           var datePicked =
@@ -112,7 +118,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
                           Text(
                             widget.fromDate == null
                                 ? 'not defined'
-                                : Utils.dateToString(widget.fromDate),
+                                : Utils.dateToString(widget.fromDate!),
                             style: TextStyle(
                                 fontSize: 14.0,
                                 fontWeight: FontWeight.w400,
@@ -133,7 +139,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
                       )),
                 ),
                 InkWell(
-                  onTap: widget.rangeSearchLoading
+                  onTap: widget.rangeSearchLoading!
                       ? null
                       : () async {
                           var datePicked =
@@ -174,7 +180,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
                           Text(
                             widget.toDate == null
                                 ? 'not defined'
-                                : Utils.dateToString(widget.toDate),
+                                : Utils.dateToString(widget.toDate!),
                             style: TextStyle(
                                 fontSize: 14.0,
                                 fontWeight: FontWeight.w400,
@@ -191,36 +197,35 @@ class _CustomAppBarState extends State<CustomAppBar> {
           ),
           RawMaterialButton(
             onPressed: () {
-              if (widget.rangeSearchLoading)
+              if (widget.rangeSearchLoading!)
                 return null;
               else if (widget.fromDate == null)
                 return flushErrorMsg('Please provide "from" date');
-              else if (widget.fromDate.isAfter(widget.toDate)) {
+              else if (widget.fromDate!.isAfter(widget.toDate!)) {
                 print(widget.fromDate);
                 return flushErrorMsg(
                     '"From" date can not be earlier than "To"date');
-              } else if (widget.toDate.isBefore(widget.fromDate))
+              } else if (widget.toDate!.isBefore(widget.fromDate!))
                 return flushErrorMsg(
                     '"To" date can not be older than "from" date');
               else
-                return widget.onSearch(
-                    fromDate: widget.fromDate, toDate: widget.toDate);
+                return widget.onSearch(widget.fromDate!, widget.toDate!);
             },
-            elevation: 2.0,
-            fillColor: Color(0xFFBEB501),
-            child: widget.rangeSearchLoading
+            elevation: 0.0,
+            fillColor: primaryColor,
+            child: widget.rangeSearchLoading!
                 ? SizedBox(
                     child: CircularProgressIndicator(
                         strokeWidth: 2,
-                        valueColor:
-                            new AlwaysStoppedAnimation<Color>(Colors.white)),
+                        valueColor: new AlwaysStoppedAnimation<Color>(
+                            primaryLightColor)),
                     height: 20.0,
                     width: 20.0,
                   )
                 : Icon(
                     Icons.arrow_forward,
                     size: 20.0,
-                    color: Colors.white,
+                    color: primaryLightColor,
                   ),
             padding: EdgeInsets.all(10.0),
             shape: CircleBorder(),

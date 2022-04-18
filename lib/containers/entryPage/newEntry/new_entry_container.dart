@@ -1,94 +1,60 @@
 import 'package:flutter/material.dart';
-import 'package:inventory_controller/models/money_transactions.dart';
-import 'package:inventory_controller/models/productList/product_list.dart';
-import 'package:inventory_controller/redux/actions/itemDetail/dashboard_daily_total.dart';
-import 'package:inventory_controller/redux/actions/itemDetail/transactions/new_transaction_list.dart';
-import 'package:inventory_controller/redux/appState/itemDetail/transactions/new_transactions_list.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:inventory_controller/blocs/productDetail/sales/chartSlides/detailDailyChart/detaildailychart_bloc.dart';
+import 'package:inventory_controller/blocs/productDetail/sales/chartSlides/detailMonthlyChart/detailmonthlychart_bloc.dart';
+import 'package:inventory_controller/blocs/productDetail/sales/chartSlides/detailWeeklyChart/detailweeklychart_bloc.dart';
+import 'package:inventory_controller/blocs/productDetail/sales/dailySales/dailysales_bloc.dart';
+import 'package:inventory_controller/models/chartBlocModel.dart';
+import 'package:inventory_controller/models/product/product.dart';
 import 'package:inventory_controller/views/ProductDetail/NewEntryPage/NewEntryPage.dart';
-import 'package:inventory_controller/views/ProductDetail/NewEntryPage/components/top_summary_card.dart';
-import 'package:redux/redux.dart';
-import 'package:flutter_redux/flutter_redux.dart';
-import 'package:inventory_controller/redux/appState/app_state.dart';
 
-class NewDetailContainer extends StatefulWidget {
+class DetailSalesContainer extends StatefulWidget {
   final ProductInfoModel productInfo;
-  NewDetailContainer({
-    this.productInfo,
-  });
+  DetailSalesContainer({required this.productInfo});
+
   @override
-  _NewDetailContainerState createState() => _NewDetailContainerState();
+  _DetailSalesContainerState createState() => _DetailSalesContainerState();
 }
 
-class _NewDetailContainerState extends State<NewDetailContainer> {
+class _DetailSalesContainerState extends State<DetailSalesContainer> {
+  late DetaildailysalesBloc dailysalesBloc;
+  late DetaildailychartBloc dailysaleschartBloc;
+  late DetailweeklychartBloc weeklysaleschartBloc;
+  late DetailmonthlychartBloc monthlysaleschartBloc;
+  @override
+  void initState() {
+    dailysaleschartBloc = DetaildailychartBloc();
+    weeklysaleschartBloc = DetailweeklychartBloc();
+    monthlysaleschartBloc = DetailmonthlychartBloc();
+    super.initState();
+    dailysalesBloc = DetaildailysalesBloc();
+    dailysalesBloc.add(LoaddetaildailySales(widget.productInfo.productId));
+  }
+
+  @override
+  void dispose() {
+    dailysalesBloc.close();
+    dailysaleschartBloc.close();
+    weeklysaleschartBloc.close();
+    monthlysaleschartBloc.close();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<AppState, _ViewModel>(
-      builder: (context, vm) {
-        return NewEntryScreen(
-          productInfo: widget.productInfo,
-          loading: vm.loading,
-          isNextPageAvailable: vm.isNextPageAvailabe,
-          transactions: vm.transactions,
-          loadNextPage: vm.onLoadNextPage,
-          refresh: vm.onRefresh,
-          error: vm.error,
-          dailyTotal: vm.dailyTotal,
-          // productInfo: widget.productInfo
-          );
+    return BlocBuilder<DetaildailysalesBloc, DetaildailysalesState>(
+      bloc: dailysalesBloc,
+      builder: (context, state) {
+        return state is DetaildailysalesInitial ? Material(child: Container()) : Material(child: NewEntryScreen(
+            productInfo: widget.productInfo,
+            loading: state is DetaildailysalesLoading ? true : false,
+            dailySales: state.dailySales,
+            error: state.error,
+            chartBlocs: ChartBlocModel.detail(
+                dailysaleschartBloc: dailysaleschartBloc,
+                weeklysaleschartBloc: weeklysaleschartBloc,
+                monthlysaleschartBloc: monthlysaleschartBloc)));
       },
-      converter: _ViewModel.fromStore,
-      distinct: true,
-      onInit: (store) {
-        store.dispatch(
-          DetailDailySumAction('${widget.productInfo.productId}'),
-        );
-      },
-    );
-  }
-}
-
-class _ViewModel {
-  _ViewModel({
-    this.loading,
-    this.dailyTotal,
-    this.store,
-    this.error,
-    this.isNextPageAvailabe,
-    this.transactions
-  });
-
-  final bool loading;
-  final bool isNextPageAvailabe;
-  final String dailyTotal;
-  final List<MoneyTransactionModel> transactions;
-  final Store<AppState> store;
-  final bool error;
-
-    void onLoadNextPage(String productId) {
-      store.dispatch(LoadNewTransactionsPageAction(
-        pageNumber:
-            (transactions.length ~/ NewTransactionListState.transactionsPerPage) + 1,
-        transactionsPerPage: NewTransactionListState.transactionsPerPage,
-        productId: productId
-      ));
-  }
-
-  void onRefresh() {
-    // store.dispatch(
-    //   LoadTransactionsPageAction(
-    //       pageNumber: 1,
-    //       transactionsPerPage: NewTransactionListState.transactionsPerPage),
-    // );
-  }
-
-  static _ViewModel fromStore(Store<AppState> store) {
-    return _ViewModel(
-      loading: store.state.detailDailySalesTotalState.loading,
-      dailyTotal: store.state.detailDailySalesTotalState.dailyTotal,
-      store: store,
-      transactions: store.state.newTransactionListState.transactions,
-      isNextPageAvailabe: store.state.newTransactionListState.isNextPageAvailable,
-      error: store.state.detailDailySalesTotalState.error == null,
     );
   }
 }

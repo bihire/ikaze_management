@@ -1,85 +1,90 @@
+import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
-
-import 'package:flutter_redux/flutter_redux.dart';
-// import 'package:flutter/material.dart';
-import 'package:inventory_controller/models/money_transactions.dart';
-import 'package:inventory_controller/redux/appState/all_transactions_state.dart';
-import 'package:inventory_controller/redux/actions/all_transactions_actions.dart';
-import 'package:inventory_controller/redux/appState/app_state.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:inventory_controller/blocs/productDetail/supplies/lastSupply/lastsupply_bloc.dart';
+import 'package:inventory_controller/blocs/productDetail/supplies/suppliesTransactionList/suppliestransactionlist_bloc.dart';
+import 'package:inventory_controller/common/constants.dart';
+import 'package:inventory_controller/components/leadingButton/leading_button.dart';
+import 'package:inventory_controller/utils/auth/auth.dart';
+import 'package:inventory_controller/models/product/product.dart';
+import 'package:inventory_controller/views/ProductDetail/NewEntryPage/NewEntryPage.dart';
 import 'package:inventory_controller/views/ProductDetail/SoldEntryPage/sold_entry_screen.dart';
-import 'package:redux/redux.dart';
 
-class SoldEntryContainer extends StatelessWidget {
-  const SoldEntryContainer({
-    Key key,
-  }) : super(key: key);
+class SoldEntryContainer extends StatefulWidget {
+  final ProductInfoModel productInfo;
+  SoldEntryContainer({required this.productInfo});
+
+  @override
+  _SoldEntryContainerState createState() => _SoldEntryContainerState();
+}
+
+class _SoldEntryContainerState extends State<SoldEntryContainer> {
+  late LastsupplyBloc lastSupplyBloc;
+  SuppliestransactionlistBloc supplyTransactionList =
+      SuppliestransactionlistBloc();
+  @override
+  void initState() {
+    super.initState();
+    lastSupplyBloc = LastsupplyBloc();
+    lastSupplyBloc.add(Loaddetaillastsupply(widget.productInfo.productId));
+  }
+
+  @override
+  void dispose() {
+    lastSupplyBloc.close();
+    supplyTransactionList.close();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<AppState, _ViewModel>(
-      builder: (context, vm) {
-        return SoldEntryScreen(
-          loading: vm.isDataLoading,
-          isNextPageAvailable: vm.isNextPageAvailable,
-          transactions: vm.transactions,
-          refresh: vm.onRefresh,
-          loadNextPage: vm.onLoadNextPage,
-          noError: vm.noError,
-        );
+    return BlocBuilder<LastsupplyBloc, LastsupplyState>(
+      bloc: lastSupplyBloc,
+      builder: (context, state) {
+        return state.lastSupply != null ? Column(
+              children: [
+                Expanded(
+                  child: state is LastsupplyInitial ? Material(child:Container()) : Material(child:SoldEntryScreen(
+                          productInfo: widget.productInfo,
+                          loading: state is LastsupplyLoading ? true : false,
+                          lastSupply: state.lastSupply,
+                          error: state.error,
+                          supplyTransactionList: supplyTransactionList),
+                ))
+              ],
+        ): Container();
       },
-      converter: _ViewModel.fromStore,
-      // onInit: (store) {
-      //   store.dispatch(
-      //     LoadTransactionsPageAction(
-      //         pageNumber: 1,
-      //         transactionsPerPage: TransactionState.transactionsPerPage),
-      //   );
-      // },
     );
   }
 }
 
-
-class _ViewModel {
-  _ViewModel({
-    this.isDataLoading,
-    this.isNextPageAvailable,
-    this.transactions,
-    this.store,
-    this.noError,
-  });
-
-  final bool isDataLoading;
-  final bool isNextPageAvailable;
-  final List<MoneyTransactionModel> transactions;
-  final Store<AppState> store;
-  final bool noError;
-
-  void onLoadNextPage() {
-    if (!isDataLoading && isNextPageAvailable) {
-      store.dispatch(LoadTransactionsPageAction(
-        pageNumber:
-            (transactions.length ~/ TransactionState.transactionsPerPage) + 1,
-        transactionsPerPage: TransactionState.transactionsPerPage,
-      ));
-    }
-  }
-
-  void onRefresh() {
-    store.dispatch(
-      LoadTransactionsPageAction(
-          pageNumber: 1,
-          transactionsPerPage: TransactionState.transactionsPerPage),
-    );
-  }
-
-  static _ViewModel fromStore(Store<AppState> store) {
-    return _ViewModel(
-      isDataLoading: store.state.allTransactionsState.isDataLoading,
-      isNextPageAvailable: store.state.allTransactionsState.isNextPageAvailable,
-      transactions: store.state.allTransactionsState.transactions,
-      store: store,
-      noError: store.state.allTransactionsState.error == null,
+class _CustomAppBar extends StatelessWidget {
+  final ProductInfoModel productInfo;
+  _CustomAppBar({required this.productInfo});
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Row(
+        children: [
+          Container(
+            child: LeadingButton(
+              color: Colors.transparent,
+              icon: Icons.arrow_back_rounded,
+              iconColor: darkColor,
+              size: 37,
+              onPressed: () {},
+            ),
+          ),
+          Expanded(
+            child: Container(
+                padding: EdgeInsets.only(top: 10, bottom: 10, left: 10),
+                child: Text(
+                  '${productInfo.productName} supplies'.capitalizeFirstofEach,
+                  style: TextStyle(color: Colors.black),
+                )),
+          )
+        ],
+      ),
     );
   }
 }

@@ -8,8 +8,8 @@ const double _kTextAndIconTabHeight = 72.0;
 
 class ButtonsTabBar extends StatefulWidget implements PreferredSizeWidget {
   ButtonsTabBar({
-    Key key,
-    @required this.tabs,
+    Key? key,
+    required this.tabs,
     this.controller,
     this.duration = 250,
     this.backgroundColor = Colors.blueAccent,
@@ -30,13 +30,13 @@ class ButtonsTabBar extends StatefulWidget implements PreferredSizeWidget {
   ///
   /// The length of this list must match the [controller]'s [TabController.length]
   /// and the length of the [TabBarView.children] list.
-  final List<Widget> tabs;
+  final List<Tab> tabs;
 
   /// This widget's selection and animation state.
   ///
   /// If [TabController] is not provided, then the value of [DefaultTabController.of]
   /// will be used.
-  final TabController controller;
+  final TabController? controller;
 
   /// The duration in milliseconds of the transition animation.
   final int duration;
@@ -51,46 +51,46 @@ class ButtonsTabBar extends StatefulWidget implements PreferredSizeWidget {
   /// on the TextStyle will be used for the [Icon]'s color.
   ///
   /// The default value is: [TextStyle(color: Colors.white)].
-  final TextStyle labelStyle;
+  final TextStyle? labelStyle;
 
   /// The [TextStyle] of the button's [Text] on its unselected state. The color provided
   /// on the TextStyle will be used for the [Icon]'s color.
   ///
   /// The default value is: [TextStyle(color: Colors.black)].
-  final TextStyle unselectedLabelStyle;
+  final TextStyle? unselectedLabelStyle;
 
   /// The with of solid [Border] for each button. If no value is provided, the border
   /// is not drawn.
   ///
   /// The default value is: null.
-  final double borderWidth;
+  final double? borderWidth;
 
   /// The [Color] of solid [Border] for each button. To hide the [Border], provide
   /// [Colors.transparent].
   ///
   /// The default value is: [Colors.black].
-  final Color borderColor;
+  final Color? borderColor;
 
   /// The [Color] of solid [Border] for each button. If no value is provided, the value of
   /// [this.borderColor] is used. To hide the [Border], provide [Colors.transparent].
   ///
   /// The default value is: null.
-  final Color unselectedBorderColor;
+  final Color? unselectedBorderColor;
 
   /// The physics used for the [ScrollController] of the tabs list.
   ///
   /// The default value is [BouncingScrollPhysics].
-  final ScrollPhysics physics;
+  final ScrollPhysics? physics;
 
   /// The [EdgeInsets] used for the [Padding] of the buttons' content.
   ///
   /// The default value is [EdgeInsets.all(4)].
-  final EdgeInsets contentPadding;
+  final EdgeInsets? contentPadding;
 
   /// The [EdgeInsets] used for the [Margin] of the buttons.
   ///
   /// The default value is [EdgeInsets.all(4)].
-  final EdgeInsets buttonMargin;
+  final EdgeInsets? buttonMargin;
 
   /// The spacing between the [Icon] and the [Text]. If only one of those is provided,
   /// no spacing is applied.
@@ -117,35 +117,35 @@ class ButtonsTabBar extends StatefulWidget implements PreferredSizeWidget {
 
 class _ButtonsTabBarState extends State<ButtonsTabBar>
     with TickerProviderStateMixin {
-  TabController _controller;
+  TabController? _controller = null;
 
   ScrollController _scrollController = new ScrollController();
-  ScrollPhysics _scrollPhysics;
+  late ScrollPhysics _scrollPhysics;
 
-  AnimationController _animationController;
+  late AnimationController _animationController;
 
-  List<GlobalKey> _tabKeys;
+  late List<GlobalKey> _tabKeys;
   GlobalKey _tabsContainerKey = GlobalKey();
 
-  Animation<Color> _colorTweenForegroundActivate;
-  Animation<Color> _colorTweenForegroundDeactivate;
-  Animation<Color> _colorTweenBackgroundActivate;
-  Animation<Color> _colorTweenBackgroundDeactivate;
-  Animation<Color> _colorTweenBorderActivate;
-  Animation<Color> _colorTweenBorderDeactivate;
+  late Animation<Color?> _colorTweenForegroundActivate;
+  late Animation<Color?> _colorTweenForegroundDeactivate;
+  late Animation<Color?> _colorTweenBackgroundActivate;
+  late Animation<Color?> _colorTweenBackgroundDeactivate;
+  late Animation<Color?> _colorTweenBorderActivate;
+  late Animation<Color?> _colorTweenBorderDeactivate;
 
-  Color _unselectedForegroundColor;
-  Color _foregroundColor;
+  late Color _unselectedForegroundColor;
+  late Color _foregroundColor;
 
-  Color _unselectedBorderColor;
-  Color _borderColor;
-  bool _borderAnimation;
+  late Color _unselectedBorderColor;
+  late Color _borderColor;
+  late bool? _borderAnimation;
 
-  TextStyle _unselectedLabelStyle;
-  TextStyle _labelStyle;
+  late TextStyle _unselectedLabelStyle;
+  late TextStyle _labelStyle;
 
-  EdgeInsets _contentPadding;
-  EdgeInsets _buttonMargin;
+  late EdgeInsets _contentPadding;
+  late EdgeInsets _buttonMargin;
 
   int _currentIndex = 0;
   int _prevIndex = -1;
@@ -167,8 +167,8 @@ class _ButtonsTabBarState extends State<ButtonsTabBar>
     _foregroundColor = _labelStyle.color ?? Colors.white;
     _unselectedForegroundColor = _unselectedLabelStyle.color ?? Colors.black;
 
-    _borderColor = widget.borderColor;
-    _unselectedBorderColor = widget.unselectedBorderColor ?? widget.borderColor;
+    _borderColor = widget.borderColor!;
+    _unselectedBorderColor = widget.unselectedBorderColor ?? widget.borderColor!;
     _borderAnimation = _borderColor != _unselectedBorderColor;
 
     _contentPadding = widget.contentPadding ?? EdgeInsets.all(4);
@@ -191,7 +191,7 @@ class _ButtonsTabBarState extends State<ButtonsTabBar>
         ColorTween(begin: _foregroundColor, end: _unselectedForegroundColor)
             .animate(_animationController);
 
-    if (_borderAnimation) {
+    if (_borderAnimation!) {
       _colorTweenBorderActivate =
           ColorTween(begin: _unselectedBorderColor, end: _borderColor)
               .animate(_animationController);
@@ -206,12 +206,12 @@ class _ButtonsTabBarState extends State<ButtonsTabBar>
 
   @override
   void dispose() {
-    _scrollController?.dispose();
+    _scrollController.dispose();
     super.dispose();
   }
 
   Widget _buildButton(int index, Tab tab) {
-    final TextStyle textStyle = (index == _currentIndex
+    final TextStyle? textStyle = (index == _currentIndex
         ? TextStyle.lerp(
             _unselectedLabelStyle, _labelStyle, _animationController.value)
         : (index == _prevIndex
@@ -236,14 +236,14 @@ class _ButtonsTabBarState extends State<ButtonsTabBar>
           side: widget.borderWidth == null
               ? BorderSide.none
               : BorderSide(
-                  color: _borderAnimation
+                  color: _borderAnimation!
                       ? (index == _currentIndex
                           ? _colorTweenBorderActivate.value
                           : (index == _prevIndex
                               ? _colorTweenBorderDeactivate.value
-                              : _unselectedBorderColor))
+                              : _unselectedBorderColor))!
                       : _borderColor,
-                  width: widget.borderWidth,
+                  width: widget.borderWidth!,
                   style: BorderStyle.solid),
           borderRadius: BorderRadius.circular(widget.radius),
         ),
@@ -261,7 +261,7 @@ class _ButtonsTabBarState extends State<ButtonsTabBar>
                             : (index == _prevIndex
                                 ? _colorTweenForegroundDeactivate.value
                                 : _unselectedForegroundColor)),
-                    child: tab.icon)
+                    child: tab.icon!)
                 : Container(),
             SizedBox(
               width: tab.icon == null || tab.text == null
@@ -270,7 +270,7 @@ class _ButtonsTabBarState extends State<ButtonsTabBar>
             ),
             tab.text != null
                 ? Text(
-                    tab.text,
+                    tab.text!,
                     style: textStyle,
                   )
                 : Container()
@@ -283,9 +283,9 @@ class _ButtonsTabBarState extends State<ButtonsTabBar>
   @override
   Widget build(BuildContext context) {
     if (_controller == null) {
-      _controller = widget.controller ?? DefaultTabController.of(context);
+      _controller = widget.controller ?? DefaultTabController.of(context)!;
       // this will execute the function every time there's a swipe animation
-      _controller.animation.addListener(_handleTabAnimation);
+      _controller!.animation!.addListener(_handleTabAnimation);
     }
     return AnimatedBuilder(
       animation: _colorTweenBackgroundActivate,
@@ -305,24 +305,24 @@ class _ButtonsTabBarState extends State<ButtonsTabBar>
 
   // runs during the switching tabs animation
   _handleTabAnimation() {
-    _aniIndex = ((_controller.animation.value > _prevAniValue)
-            ? _controller.animation.value
+    _aniIndex = ((_controller!.animation!.value > _prevAniValue)
+            ? _controller!.animation!.value
             : _prevAniValue)
         .round();
-    if (!_controller.indexIsChanging && _aniIndex != _currentIndex) {
+    if (!_controller!.indexIsChanging && _aniIndex != _currentIndex) {
       print(_aniIndex);
       setState(() {
         _setCurrentIndex(_aniIndex);
       });
     }
-    _prevAniValue = _controller.animation.value;
+    _prevAniValue = _controller!.animation!.value;
   }
 
   _goToIndex(int index) {
     if (index != _currentIndex) {
       print(index);
       _setCurrentIndex(index);
-      _controller.animateTo(index);
+      _controller!.animateTo(index);
     }
   }
 
@@ -347,11 +347,11 @@ class _ButtonsTabBarState extends State<ButtonsTabBar>
   _scrollTo(int index) {
     // get the screen width. This is used to check if we have an element off screen
     RenderBox tabsContainer =
-        _tabsContainerKey.currentContext.findRenderObject();
+        _tabsContainerKey.currentContext!.findRenderObject() as RenderBox;
     double screenWidth = tabsContainer.size.width;
 
     // get the button we want to scroll to
-    RenderBox renderBox = _tabKeys[index].currentContext.findRenderObject();
+    RenderBox renderBox = _tabKeys[index].currentContext!.findRenderObject() as RenderBox;
     // get its size
     double size = renderBox.size.width;
     // and position
@@ -363,7 +363,7 @@ class _ButtonsTabBarState extends State<ButtonsTabBar>
     // if the button is to the left of the middle
     if (offset < 0) {
       // get the first button
-      renderBox = _tabKeys[0].currentContext.findRenderObject();
+      renderBox = _tabKeys[0].currentContext!.findRenderObject() as RenderBox;
       // get the position of the first button of the TabBar
       position = renderBox.localToGlobal(Offset(-20.0, 0.0)).dx;
 
@@ -373,7 +373,7 @@ class _ButtonsTabBarState extends State<ButtonsTabBar>
       // if the button is to the right of the middle
 
       // get the last button
-      renderBox = _tabKeys.last.currentContext.findRenderObject();
+      renderBox = _tabKeys.last.currentContext!.findRenderObject() as RenderBox;
       // get its position
       position = renderBox.localToGlobal(Offset.zero).dx;
       // and size

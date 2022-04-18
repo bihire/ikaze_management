@@ -25,7 +25,8 @@ class NotificationDetail extends StatelessWidget {
                             color: lightShadeColor,
                             icon: Icons.arrow_back_ios_outlined,
                             iconColor: darkColor,
-                            size: 37, // btnShadow: false
+                            size: 37,
+                            onPressed: () {},
                           ),
                         ),
                         Container(
@@ -59,7 +60,8 @@ class NotificationDetail extends StatelessWidget {
                             color: lightShadeColor,
                             icon: Icons.more_horiz_outlined,
                             iconColor: darkColor,
-                            size: 37, // btnShadow: false
+                            size: 37,
+                            onPressed: () {},
                           ),
                         ),
                       ],

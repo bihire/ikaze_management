@@ -2,7 +2,7 @@ import 'package:meta/meta.dart';
 
 class ChangeSlidePosition {
   ChangeSlidePosition({
-    @required this.position,
+    required this.position,
   });
 
   final double position;
@@ -10,7 +10,7 @@ class ChangeSlidePosition {
 
 class ChangeSlideOpacity {
   ChangeSlideOpacity({
-    @required this.opacity,
+    required this.opacity,
   });
 
   final double opacity;

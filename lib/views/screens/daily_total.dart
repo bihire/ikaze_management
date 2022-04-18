@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 class DailyTotal extends StatefulWidget {
   DailyTotal({
-    this.isDataLoading,
-    this.noError,
+    required this.isDataLoading,
+    required this.noError,
   });
 
   final bool isDataLoading;

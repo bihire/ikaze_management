@@ -1,11 +1,12 @@
 import 'package:intl/intl.dart';
+import 'package:inventory_controller/models/product/product.dart';
 
 class MoneyTransactionModel {
   int id;
-  String productId;
+  ProductModel product;
   String entryType;
   String quantity;
-  String unitPrice;
+  int unitPrice;
   String transactionTotal;
   String paidBy;
   DateTime createdAt;
@@ -16,12 +17,12 @@ class MoneyTransactionModel {
 
   MoneyTransactionModel.fromJson(Map<String, dynamic> json) 
     : id = json['id'],
-      productId = json['product']['product_name'],
-      entryType = json['entryType'],
+      product = ProductModel.fromJson(json['product']),
+      entryType = json['type'],
       quantity = json['quantity'],
-      unitPrice = json['unitPrice'],
-      paidBy = json['paidBy'],
-      transactionTotal = json['transactionTotal'],
+      unitPrice = int.parse(json['unit_price']),
+      paidBy = json['paid_with'],
+      transactionTotal = json['transaction_total'],
       createdAt = DateTime.parse(json['createdAt']),
       updatedAt = DateTime.parse(json['updatedAt']);
 }

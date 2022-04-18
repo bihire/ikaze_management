@@ -2,22 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:inventory_controller/common/constants.dart';
 
 class CustomTabButton extends StatelessWidget {
-  final String name;
-  final double padding;
-  final double margin;
-  final double width;
+  final String? name;
+  final double? padding, margin, width;
   final Color color;
   final Color backGroundColor;
-  final Icon icon;
-  final int selectedPage;
-  final int pageNum;
+  final Icon? icon;
+  final int? selectedPage, pageNum;
   final Function onPressed;
   CustomTabButton(
       {
-        Key key,
+        Key? key,
       this.name,
       this.pageNum,
-      this.onPressed,
+      required this.onPressed,
       this.selectedPage,
       this.margin = 7,
       this.padding = 7.0,
@@ -35,16 +32,14 @@ class CustomTabButton extends StatelessWidget {
               borderRadius: BorderRadius.circular(20.0),
               color:
                   selectedPage == pageNum ? backGroundColor.withOpacity(0.5) : lightGreyColor),
-          width: width - (margin * 2),
+          width: width! - (margin! * 2),
           padding:
-              EdgeInsets.symmetric(vertical: padding , horizontal: padding/ 2),
-          margin: EdgeInsets.symmetric(horizontal: margin, vertical: margin),
+              EdgeInsets.symmetric(vertical: padding! , horizontal: padding!/ 2),
+          margin: EdgeInsets.symmetric(horizontal: margin!, vertical: margin!),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              icon != null
-                  ? icon
-                  : Container(
+              icon ?? Container(
                       height: 0,
                     ),
               icon != null
@@ -55,7 +50,7 @@ class CustomTabButton extends StatelessWidget {
                       height: 0,
                     ),
               Text(
-                name,
+                name!,
                 style: TextStyle(
                     color: selectedPage == pageNum ? color : darkColor),
               ),

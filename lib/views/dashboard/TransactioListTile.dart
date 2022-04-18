@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 class MyListTile extends StatelessWidget {
   final String header;
   final String date;
-  final String paidBy;
-  final String totalPay;
+  final String? paidBy;
+  final String? totalPay;
   const MyListTile({
-    Key key,
-    this.header,
-    this.date,
-    this.paidBy,
-    this.totalPay,
+    Key? key,
+    required this.header,
+    required this.date,
+     this.paidBy,
+     this.totalPay,
   }) : super(key: key);
 
   @override

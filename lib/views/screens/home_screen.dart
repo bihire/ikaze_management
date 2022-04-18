@@ -8,17 +8,17 @@ import 'package:flutter/material.dart';
 import 'package:inventory_controller/common/debouncer.dart';
 import 'package:inventory_controller/components/custom_progress_indicator.dart';
 import 'package:inventory_controller/components/error_notifier.dart';
-import 'package:inventory_controller/components/github_issue_list_item.dart';
+import 'package:inventory_controller/components/transaction_item.dart';
 import 'package:inventory_controller/models/money_transactions.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({
-    this.isDataLoading,
-    this.isNextPageAvailable,
-    this.transactions,
-    this.refresh,
-    this.loadNextPage,
-    this.noError,
+    required this.isDataLoading,
+    required this.isNextPageAvailable,
+    required this.transactions,
+    required this.refresh,
+    required this.loadNextPage,
+    required this.noError,
   });
 
   final bool isDataLoading;
@@ -52,33 +52,34 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return ErrorNotifier(
-        child: widget.isDataLoading && widget.transactions.length == 0
-            ? CustomProgressIndicator(isActive: widget.isDataLoading)
-            : RefreshIndicator(
-                child: ListView.separated(
-                  physics: AlwaysScrollableScrollPhysics(),
-                  itemCount: widget.isNextPageAvailable
-                      ? widget.transactions.length + 1
-                      : widget.transactions.length,
-                  itemBuilder: (context, index) {
-                    return (index < widget.transactions.length)
-                        ? MoneyTransactionModelListItem(
-                            itemIndex: index, transaction: widget.transactions[index])
-                        : CustomProgressIndicator(isActive: widget.noError);
-                  },
-                  controller: _scrollController,
-                  separatorBuilder: (BuildContext context, int index) =>
-                      Divider(color: Theme.of(context).dividerColor),
-                ),
-                onRefresh: _onRefresh,
+      child: widget.isDataLoading && widget.transactions.length == 0
+          ? CustomProgressIndicator(isActive: widget.isDataLoading)
+          : RefreshIndicator(
+              child: ListView.separated(
+                physics: AlwaysScrollableScrollPhysics(),
+                itemCount: widget.isNextPageAvailable
+                    ? widget.transactions.length + 1
+                    : widget.transactions.length,
+                itemBuilder: (context, index) {
+                  return (index < widget.transactions.length)
+                      ? TransactionItem(
+                          itemIndex: index,
+                          transaction: widget.transactions[index])
+                      : CustomProgressIndicator(isActive: widget.noError);
+                },
+                controller: _scrollController,
+                separatorBuilder: (BuildContext context, int index) =>
+                    Divider(color: Theme.of(context).dividerColor),
               ),
-      );
-  //   Scaffold(
-  //     appBar: AppBar(
-  //       title: Text('Infinite ListView with Redux'),
-  //     ),
-  //     body: ,
-  //   );
+              onRefresh: _onRefresh,
+            ),
+    );
+    //   Scaffold(
+    //     appBar: AppBar(
+    //       title: Text('Infinite ListView with Redux'),
+    //     ),
+    //     body: ,
+    //   );
   }
 
   void _onScroll() {

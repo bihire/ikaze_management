@@ -4,7 +4,7 @@ import 'package:meta/meta.dart';
 @immutable
 class MainSlideEpicPositionState {
   MainSlideEpicPositionState({
-    @required this.position,
+    required this.position,
   });
   final double position;
 

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+// import 'package:flutter_svg/svg.dart';
 import 'package:inventory_controller/common/constants.dart';
+import 'package:inventory_controller/components/RoundedPhoneNumberField/rounded_phone_number_field.dart';
 import 'package:inventory_controller/components/already_have_an_account_acheck.dart';
 import 'package:inventory_controller/components/rounded_button.dart';
 import 'package:inventory_controller/components/rounded_input_field.dart';
 import 'package:inventory_controller/components/rounded_password_field.dart';
 import 'package:inventory_controller/utils/auth/auth.dart';
-import 'package:inventory_controller/views/auth/login/components/background.dart';
 import 'package:inventory_controller/views/auth/login/login.dart';
 import 'package:inventory_controller/views/auth/signup/components/or_divider.dart';
 import 'package:inventory_controller/views/auth/signup/components/social_icon.dart';
@@ -34,19 +34,33 @@ class _BodyState extends State<Body> with TickerProviderStateMixin {
   // }
   //
   // AnimationController _animationController;
-  String email = '';
-  String emailError;
+  String phone = '';
+  String? phoneError;
+  bool passwordVisible = false;
+  bool confirmPasswordVisible = false;
 
   bool isButtonClickable = false;
 
   String user_name = '';
-  String user_nameError;
+  String? user_nameError;
 
   String password = '';
-  String passwordError;
+  String? passwordError;
 
   String confirm_password = '';
-  String confirm_passwordError;
+  String? confirm_passwordError;
+  
+  setPasswordVisible() {
+    setState(() {
+      passwordVisible = !passwordVisible;
+    });
+  }
+
+  setConfimPasswordVisible() {
+    setState(() {
+      confirmPasswordVisible = !confirmPasswordVisible;
+    });
+  }
 
   // Animation<Color> animation;
   // AnimationController controller;
@@ -85,9 +99,9 @@ class _BodyState extends State<Body> with TickerProviderStateMixin {
   // }
 
   Widget _buildErrors() {
-    List<String> _fields = [email, user_name, password, confirm_password];
+    List<String> _fields = [phone, user_name, password, confirm_password];
     var customErrors = {
-      'email': 'provide a valid email',
+      'phone': 'provide a valid phone',
       'user_name': 'username is at least 3 letters and only letters',
       'password': 'password is between 8 - 64 characters with atleast a number',
       'confirm_password': 'confirm_password must be same as password'
@@ -97,7 +111,7 @@ class _BodyState extends State<Body> with TickerProviderStateMixin {
       if (_fields[i] == null) {
         _errors.add(Text('* ${_fields[i]} is required'));
       } else if ('${_fields[i]}Error' == true) {
-        _errors.add(Text(customErrors[_fields[i]]));
+        _errors.add(Text(customErrors[_fields[i]]!));
       }
     }
     return Column(
@@ -107,7 +121,7 @@ class _BodyState extends State<Body> with TickerProviderStateMixin {
   }
 
   bool _getBtnState() {
-    return email != '' &&
+    return phone != '' &&
             user_name != '' &&
             password != '' &&
             confirm_password != ''
@@ -118,171 +132,177 @@ class _BodyState extends State<Body> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return Background(
-      child: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(
-            parent: AlwaysScrollableScrollPhysics()),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            SizedBox(height: size.height * 0.15),
-            SvgPicture.asset(
-              "assets/svg/Final-AGASEKE.svg",
-              color: Color(0xFF0bd50b),
-              height: size.height * 0.15,
-            ),
-            SizedBox(height: size.height * 0.03),
-            Text(
-              "SIGN-UP",
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            // SizeTransition(
-            //   sizeFactor: _animation,
-            //   axis: Axis.vertical,
-            //   axisAlignment: -1,
-            //   child: Container(
-            //     // width: 200,
-            //     margin: EdgeInsets.symmetric(horizontal: 10),
-            //     color: Colors.red[300],
-            //     height: 200,
-            //   ),
-            // ),
-            // AnimatedBuilder(
-            //   animation: animation,
-            //   builder: (BuildContext context, Widget child) {
-            //     return new Container(
-            //       child: new Container(
-            //         color: animation.value,
-            //         // onPressed: () {
-            //         //   controller.forward();
-            //         // },
-            //         child: _buildErrors(),
-            //       ),
-            //     );
-            //   },
-            // ),
-            // FadeTransition(
-            //   opacity: _animationController,
-            //   child: Container(
-            //     // width: 200,
-            //     margin: EdgeInsets.symmetric(horizontal: 10),
-            //     color: Colors.red[300],
-            //     // height: 200,
-            //     child: _buildErrors(),
-            //   ),
-            // ),
-            SizedBox(height: size.height * 0.03),
-            RoundedInputField(
-              error: emailError,
-              hintText: "Your Email",
-              backgroundColor: lightGreyColor,
-              iconColor: darkColor,
-              onChanged: (value) {
+    return SingleChildScrollView(
+      physics:
+          const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[
+          SizedBox(height: size.height * 0.15),
+          Image.asset('assets/images/Untitled-1-01.png',
+              height: size.height * 0.15),
+          // SvgPicture.asset(
+          //   "assets/svg/Final-AGASEKE.svg",
+          //   color: Color(0xFF0bd50b),
+          //   height: size.height * 0.15,
+          // ),
+          SizedBox(height: size.height * 0.03),
+          Text(
+            "SIGN-UP",
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          // SizeTransition(
+          //   sizeFactor: _animation,
+          //   axis: Axis.vertical,
+          //   axisAlignment: -1,
+          //   child: Container(
+          //     // width: 200,
+          //     margin: EdgeInsets.symmetric(horizontal: 10),
+          //     color: Colors.red[300],
+          //     height: 200,
+          //   ),
+          // ),
+          // AnimatedBuilder(
+          //   animation: animation,
+          //   builder: (BuildContext context, Widget child) {
+          //     return new Container(
+          //       child: new Container(
+          //         color: animation.value,
+          //         // onPressed: () {
+          //         //   controller.forward();
+          //         // },
+          //         child: _buildErrors(),
+          //       ),
+          //     );
+          //   },
+          // ),
+          // FadeTransition(
+          //   opacity: _animationController,
+          //   child: Container(
+          //     // width: 200,
+          //     margin: EdgeInsets.symmetric(horizontal: 10),
+          //     color: Colors.red[300],
+          //     // height: 200,
+          //     child: _buildErrors(),
+          //   ),
+          // ),
+          SizedBox(height: size.height * 0.03),
+          RoundedInputField(
+            error: user_nameError,
+            hintText: "User-name",
+            iconColor: hardGreyColor,
+            backgroundColor: lightGreyColor,
+            onChanged: (value) {
+              setState(() {
+                user_name = value;
+                isButtonClickable = _getBtnState();
+              });
+            },
+          ),
+          RoundedPhoneNumberField(
+            error: phoneError,
+            // iconColor: darkColor,
+            hintText: '78  XXX  XXX',
+            backgroundColor: lightGreyColor,
+            onChanged: (value) {
+              setState(() {
+                phone = value;
+
+                isButtonClickable = _getBtnState();
+              });
+            },
+          ),
+
+          RoundedPasswordField(
+            error: passwordError,
+            hintText: "Password",
+            iconColor: hardGreyColor,
+            backgroundColor: lightGreyColor,
+            visibility: passwordVisible,
+            changeVisibility: setPasswordVisible,
+            onChanged: (value) {
+              setState(() {
+                password = value;
+                isButtonClickable = _getBtnState();
+              });
+            },
+          ),
+          RoundedPasswordField(
+            error: confirm_passwordError,
+            visibility: confirmPasswordVisible,
+            changeVisibility: setConfimPasswordVisible,
+            hintText: "Confirm Password",
+            iconColor: hardGreyColor,
+            backgroundColor: lightGreyColor,
+            onChanged: (value) {
+              setState(() {
+                confirm_password = value;
+                isButtonClickable = _getBtnState();
+              });
+            },
+          ),
+          SizedBox(height: size.height * 0.03),
+          RoundedButton(
+            loading: false,
+            isBtnClickable: isButtonClickable,
+            text: "SIGNUP",
+            press: () {
+              if (isButtonClickable) {
                 setState(() {
-                  email = value;
-                  isButtonClickable = _getBtnState();
+                  phoneError = getBackError(
+                      phone,
+                      'phone',
+                      r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
+                      '* provide a valide phone');
+                  user_nameError = getBackError(
+                      user_name,
+                      'username',
+                      r"^(.*[a-zA-Z0-9]){3,30}",
+                      '* username must have at least 3 characters');
+                  passwordError = getBackError(
+                      password,
+                      'password',
+                      r"^(?=.*[a-z])(?=.*\d)[a-zA-Z\d]{8,64}",
+                      '* password must have 8 - 64 characters, a number');
+                  confirm_passwordError = getConfirmPass(
+                      confirm_password,
+                      'confirm_password',
+                      password,
+                      '* confirm_password must equal to password');
                 });
-              },
-            ),
-            RoundedInputField(
-              error: user_nameError,
-              hintText: "Your username",
-              iconColor: darkColor,
-              backgroundColor: lightGreyColor,
-              onChanged: (value) {
-                setState(() {
-                  user_name = value;
-                  isButtonClickable = _getBtnState();
-                });
-              },
-            ),
-            RoundedPasswordField(
-              error: passwordError,
-              hintText: "Password",
-              iconColor: darkColor,
-              backgroundColor: lightGreyColor,
-              onChanged: (value) {
-                setState(() {
-                  password = value;
-                  isButtonClickable = _getBtnState();
-                });
-              },
-            ),
-            RoundedPasswordField(
-              error: confirm_passwordError,
-              hintText: "Confirm Password",
-              iconColor: darkColor,
-              backgroundColor: lightGreyColor,
-              onChanged: (value) {
-                setState(() {
-                  confirm_password = value;
-                  isButtonClickable = _getBtnState();
-                });
-              },
-            ),
-            SizedBox(height: size.height * 0.03),
-            RoundedButton(
-              loading: false,
-              isBtnClickable: isButtonClickable,
-              text: "SIGNUP",
-              press: () {
-                if (isButtonClickable) {
-                  setState(() {
-                    emailError = getBackError(
-                        email,
-                        'email',
-                        r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
-                        '* provide a valide email');
-                    user_nameError = getBackError(
-                        user_name,
-                        'username',
-                        r"^(.*[a-zA-Z0-9]){3,30}",
-                        '* username must have at least 3 characters');
-                    passwordError = getBackError(
-                        password,
-                        'password',
-                        r"^(?=.*[a-z])(?=.*\d)[a-zA-Z\d]{8,64}",
-                        '* password must have 8 - 64 characters, a number');
-                    confirm_passwordError = getConfirmPass(
-                        confirm_password,
-                        'confirm_password',
-                        password,
-                        '* confirm_password must equal to password');
-                  });
-                  if (emailError == null &&
-                      user_nameError == null &&
-                      passwordError == null &&
-                      confirm_passwordError == null) {
-                    print('bro this works to some extent');
-                  }
-                  print('emailError');
+                if (phoneError == null &&
+                    user_nameError == null &&
+                    passwordError == null &&
+                    confirm_passwordError == null) {
+                  print('bro this works to some extent');
                 }
-              },
-            ),
-            SizedBox(height: size.height * 0.03),
-            AlreadyHaveAnAccountCheck(
-              login: false,
-              press: () {
-                Navigator.pop(context);
-              },
-            ),
-            OrDivider(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                SocalIcon(
-                  iconSrc: "assets/svg/facebook.svg",
-                  press: () {},
-                ),
-                SocalIcon(
-                  iconSrc: "assets/svg/google-plus.svg",
-                  press: () {},
-                ),
-              ],
-            ),
-            SizedBox(height: size.height * 0.1),
-          ],
-        ),
+                print('phoneError');
+              }
+            },
+          ),
+          SizedBox(height: size.height * 0.03),
+          AlreadyHaveAnAccountCheck(
+            login: false,
+            press: () {
+              Navigator.pop(context);
+            },
+          ),
+          // OrDivider(),
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.center,
+          //   children: <Widget>[
+          //     SocalIcon(
+          //       iconSrc: "assets/svg/facebook.svg",
+          //       press: () {},
+          //     ),
+          //     SocalIcon(
+          //       iconSrc: "assets/svg/google-plus.svg",
+          //       press: () {},
+          //     ),
+          //   ],
+          // ),
+          SizedBox(height: size.height * 0.1),
+        ],
       ),
     );
   }

@@ -1,5 +1,4 @@
-
-import 'package:inventory_controller/models/productList/product_list.dart';
+import 'package:inventory_controller/models/product/product.dart';
 
 class LoadProductListAction {}
 

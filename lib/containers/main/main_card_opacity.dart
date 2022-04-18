@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class MainCardOpacity extends StatelessWidget {
   final double opacity;
-  MainCardOpacity({this.opacity});
+  MainCardOpacity({required this.opacity});
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;

@@ -1,9 +1,16 @@
-import 'package:flutter/cupertino.dart';
+// import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:inventory_controller/blocs/login/login_bloc.dart';
 import 'package:inventory_controller/common/constants.dart';
-import 'package:inventory_controller/components/slideMenuRoute/slide_route.dart';
-import 'package:inventory_controller/redux/actions/auth/login.dart';
-import 'package:inventory_controller/redux/appState/app_state.dart';
+import 'package:inventory_controller/components/RoundedPhoneNumberField/rounded_phone_number_field.dart';
+import 'package:inventory_controller/components/errorContainer/error_container.dart';
+import 'package:inventory_controller/components/slideMenuRoute/enum.dart';
+import 'package:inventory_controller/components/slideMenuRoute/page_routing.dart';
+import 'package:inventory_controller/containers/auth/signup_container.dart';
+import 'package:inventory_controller/pages/home.dart';
+import 'package:inventory_controller/utils/debounce.dart';
+// import 'package:inventory_controller/redux/actions/auth/login.dart';
+// import 'package:inventory_controller/redux/appState/app_state.dart';
 import 'package:redux/redux.dart';
 
 import 'package:inventory_controller/components/already_have_an_account_acheck.dart';
@@ -11,19 +18,19 @@ import 'package:inventory_controller/components/rounded_button.dart';
 import 'package:inventory_controller/components/rounded_input_field.dart';
 import 'package:inventory_controller/components/rounded_password_field.dart';
 import 'package:inventory_controller/utils/auth/auth.dart';
-import 'package:inventory_controller/views/auth/login/components/background.dart';
-import 'package:flutter_svg/svg.dart';
+// import 'package:inventory_controller/views/auth/login/components/background.dart';
+// import 'package:flutter_svg/svg.dart';
 import 'package:inventory_controller/views/auth/signup/signup.dart';
 
 class LoginScreen extends StatefulWidget {
   LoginScreen({
-    @required this.loading,
-    @required this.store,
-    @required this.error,
+    required this.loading,
+    required this.bloc,
+    this.error,
   });
-  final Store<AppState> store;
+  final LoginBloc bloc;
   final bool loading;
-  final String error;
+  final String? error;
 
   @override
   _LoginScreenState createState() => _LoginScreenState();
@@ -31,22 +38,27 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen>
     with TickerProviderStateMixin {
-  String email = '';
-
-  String emailError;
-
+  // final LoginBloc loginBloc = LoginBloc();
+  final Debouncer debouncer = Debouncer(milliseconds: 300);
+  String phone = '';
+  String phoneError = '';
   bool isButtonClickable = false;
-
   String password = '';
-
-  String passwordError;
+  String passwordError = '';
 
   bool _getBtnState() {
-    return email != '' && password != '' ? true : false;
+    return phone != '' && password != '' ? true : false;
   }
 
-  AnimationController _controller;
-  Animation<double> _animation;
+  bool passwordVisible = false;
+  setPasswordVisible() {
+    setState(() {
+      passwordVisible = !passwordVisible;
+    });
+  }
+
+  late AnimationController _controller;
+  // late Animation<double> _animation;
   @override
   void initState() {
     super.initState();
@@ -54,37 +66,25 @@ class _LoginScreenState extends State<LoginScreen>
       duration: const Duration(milliseconds: 700),
       vsync: this,
     );
-    _animation = CurvedAnimation(
-      parent: _controller,
-      curve: Curves.fastOutSlowIn,
-    );
-  }
-
-  @override
-  void didUpdateWidget(covariant LoginScreen oldWidget) {
-    if (widget.error != null) {
-      _controller.forward();
-    }
-    if (widget.error == null) {
-      _controller.reverse();
-    }
-    super.didUpdateWidget(oldWidget);
   }
 
   @override
   void dispose() {
-    super.dispose();
     _controller.dispose();
+    super.dispose();
   }
 
-  AnimationController _animationController;
+  late AnimationController _animationController;
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: primaryLightColor,
-      body: Background(
+      body: GestureDetector(
+        onTap: () {
+          FocusScope.of(context).unfocus();
+        },
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(
               parent: AlwaysScrollableScrollPhysics()),
@@ -92,79 +92,48 @@ class _LoginScreenState extends State<LoginScreen>
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               SizedBox(height: size.height * 0.15),
-              SvgPicture.asset(
-                "assets/svg/Final-AGASEKE.svg",
-                color: Color(0xFF0bd50b),
-                height: size.height * 0.15,
-              ),
+              Image.asset('assets/images/Untitled-1-01.png',
+                  height: size.height * 0.15),
               SizedBox(height: size.height * 0.03),
               Text(
                 "LOGIN",
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
-              SizeTransition(
-                sizeFactor: _animation,
-                axis: Axis.vertical,
-                axisAlignment: -1,
-                child: Container(
-                  // width: 200,
-                  margin: EdgeInsets.only(left: 20, right: 20, top: 20),
-                  padding: EdgeInsets.only(left: 10, right: 10, bottom: 20),
-                  decoration: BoxDecoration(
-                      color: Colors.red[700],
-                      borderRadius: BorderRadius.circular(7)),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              widget.store.dispatch(ErrorLoginHandledAction());
-                              // print(widget.error);
-                            },
-                            child: Container(
-                                padding:
-                                    EdgeInsets.only(top: 7, bottom: 7, left: 7),
-                                child: Icon(
-                                  Icons.close,
-                                  size: 18,
-                                  color: primaryLightColor,
-                                )),
-                          ),
-                        ],
-                      ),
-                      Container(
-                        child: Text(
-                          widget.error == null ? '' : widget.error,
-                          style: TextStyle(color: primaryLightColor),
-                          textAlign: TextAlign.left,
-                        ),
-                      )
-                    ],
-                  ),
-                  // height: 200,
-                ),
+              Errorcontainer(error: widget.error, close: () {}, scrollTop: () {},
               ),
               SizedBox(height: size.height * 0.03),
-              RoundedInputField(
-                error: emailError,
-                hintText: "Your Email",
-                iconColor: darkColor,
+              RoundedPhoneNumberField(
+                error: phoneError,
+                // iconColor: darkColor,
+                hintText: '78  XXX  XXX',
                 backgroundColor: lightGreyColor,
                 onChanged: (value) {
                   setState(() {
-                    email = value;
+                    phone = value;
+
                     isButtonClickable = _getBtnState();
                   });
                 },
               ),
+
+              // RoundedInputField(
+              //   error: phoneError,
+              //   hintText: "Phone Number",
+              //   iconColor: darkColor,
+              //   backgroundColor: lightGreyColor,
+              //   onChanged: (value) {
+              //     setState(() {
+              //       phone = value;
+              //       isButtonClickable = _getBtnState();
+              //     });
+              //   },
+              // ),
               RoundedPasswordField(
                 error: passwordError,
-                iconColor: darkColor,
+                iconColor: hardGreyColor,
                 hintText: 'Password',
+                visibility: passwordVisible,
+                changeVisibility: setPasswordVisible,
                 backgroundColor: lightGreyColor,
                 onChanged: (value) {
                   setState(() {
@@ -180,40 +149,57 @@ class _LoginScreenState extends State<LoginScreen>
                 text: "LOGIN",
                 press: () {
                   if (isButtonClickable) {
+                    FocusScope.of(context).unfocus();
                     setState(() {
-                      emailError = getBackError(
-                          email,
-                          'email',
-                          r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
-                          '* provide a valide email');
+                      phoneError = getBackError(phone, 'phone', r"^[0-9]{9}$",
+                          '* provide a valide phone Number');
                       passwordError = getBackError(
                           password,
                           'password',
                           r"^(?=.*[a-z])(?=.*\d)[a-zA-Z\d]{8,64}",
                           '* password must have 8 - 64 characters, a number');
                     });
-                    if (emailError == null && passwordError == null) {
-                      // print(widget.store);
-                      widget.store.dispatch(
-                          LoadingLoginAction(email: email, password: password));
+                    if (phoneError == '' &&
+                        passwordError == '' &&
+                        widget.loading == false) {
+                      FocusScope.of(context).unfocus();
+                      debouncer.run(() => widget.bloc.add(LoadLogin('250$phone', password, context)));
+                      
                     }
                   }
                 },
               ),
               SizedBox(height: size.height * 0.03),
-              RaisedButton(
-                onPressed: () {
-                  widget.store.dispatch(ErrorLoginHandledAction());
-                },
-                child: Text('animate'),
-              ),
+              // RaisedButton(
+              //   onPressed: () {
+              //     widget.store.dispatch(ErrorLoginHandledAction());
+              //   },
+              //   child: Text('animate'),
+              // ),
               SizedBox(height: size.height * 0.03),
               AlreadyHaveAnAccountCheck(
                 press: () {
+                  FocusScope.of(context).unfocus();
                   // Navigator.push(context,
-                  //     CupertinoPageRoute(builder: (context) => SignUpScreen()));
-                  Navigator.of(context).push(FromMenuRoute(
-                      prevPage: widget, nextPage: SignUpScreen()));
+                  //     CupertinoPageRoute(builder: (context) => SignUpScreen(), maintainState: true));
+                  Navigator.push(
+                      context,
+                      PageRouting(
+                          curve: Curves.easeIn,
+                          reverseDuration: Duration(milliseconds: 500),
+                          duration: Duration(milliseconds: 500),
+                          child: SignupContainer(),
+                          type: PageRoutingType.rightToLeft));
+
+                  // Navigator.push(
+                  //   context,
+                  //   PageRouting(
+                  //       curve: Curves.easeIn,
+                  //       reverseDuration: Duration(seconds: 2),
+                  //       duration: Duration(seconds: 2),
+                  //       child: MyHomePage(),
+                  //       type: PageRoutingType.rightToLeftWithOpacity));
+
                   // Navigator.push(
                   //   context,
                   //   MaterialPageRoute(

@@ -1,91 +1,114 @@
-import 'package:flutter/material.dart';
-import 'package:inventory_controller/common/constants.dart';
-import 'package:inventory_controller/components/dropDownSelect/drop_down_select.dart';
-import 'package:inventory_controller/components/selectField/select_field.dart';
-import 'package:inventory_controller/views/newProduct/components/textInput/text_input.dart';
-import 'package:inventory_controller/views/newTransaction/components/quantityInput/quantity_input.dart';
+import 'dart:ui';
 
-class NewProductPage extends StatelessWidget {
-  Widget _buildTitle(String title) {
-    return Container(
-            margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-            child: Text(title, style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: hardGreyColor),),);
+import 'package:animations/animations.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter/material.dart';
+import 'package:inventory_controller/blocs/newProductBloc/new_product_bloc.dart';
+import 'package:inventory_controller/common/constants.dart';
+import 'package:inventory_controller/components/rounded_button.dart';
+// import 'package:inventory_controller/components/dropDownSelect/drop_down_select.dart';
+// import 'package:inventory_controller/components/selectField/select_field.dart';
+import 'package:inventory_controller/views/newProduct/components/body.dart';
+// import 'package:inventory_controller/views/newProduct/components/textInput/text_input.dart';
+import 'package:inventory_controller/views/newTransaction/components/body.dart';
+// import 'package:inventory_controller/views/newTransaction/components/quantityInput/quantity_input.dart';
+
+class NewProductPage extends StatefulWidget {
+  @override
+  _NewProductPageState createState() => _NewProductPageState();
+}
+
+class _NewProductPageState extends State<NewProductPage> {
+  SharedAxisTransitionType _transitionType =
+      SharedAxisTransitionType.horizontal;
+  final productkey = new GlobalKey<NewProductBodyState>();
+  bool _isLoggedIn = false;
+  final newProductBloc = NewProductBloc();
+
+  void _updateTransitionType(SharedAxisTransitionType newType) {
+    setState(() {
+      _transitionType = newType;
+    });
+  }
+
+  // void _createProduct(a, b, c) {
+  //   final createProduct = BlocProvider.of<NewProductBloc>(context);
+
+  //   createProduct.add(CreateProduct(a, b, c));
+  // }
+
+  @override
+  void dispose() {
+    super.dispose();
+    newProductBloc.close();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        iconTheme: IconThemeData(
-          color: Colors.black, //change your color here
-        ),
-        elevation: 0,
-        backgroundColor: primaryLightColor,
-      ),
+      extendBody: true,
+      
       backgroundColor: primaryLightColor,
-      body: ListView(
-        padding: EdgeInsets.only(bottom: 70),
-        children: [
-          Container(
-            margin: EdgeInsets.only(top: 40, bottom: 20),
-            padding: EdgeInsets.only(left: 20, right: 20),
-            child: Text(
-              'Add Product +',
-              style: TextStyle(
-                  fontSize: 27, fontWeight: FontWeight.w700, color: darkColor),
+      body: BlocProvider(
+        create: (BuildContext context) => newProductBloc,
+        child: BlocBuilder<NewProductBloc, NewProductState>(
+          bloc: newProductBloc,
+          builder: (context, state) {
+            return PageTransitionSwitcher(
+              duration: const Duration(milliseconds: 1500),
+              transitionBuilder: (
+                Widget child,
+                Animation<double> animation,
+                Animation<double> secondaryAnimation,
+              ) {
+                return SharedAxisTransition(
+                  child: child,
+                  animation: animation,
+                  secondaryAnimation: secondaryAnimation,
+                  transitionType: _transitionType,
+                );
+              },
+              child: state is NewProductLoaded
+                  ? NewTransactionBody(
+                      state: state,
+                    )
+                  : NewProductBody(
+                      key: productkey,
+                      state: state,
+                      newProductBloc: newProductBloc),
+            );
+          },
+        ),
+      ),
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+            border: Border(top: BorderSide(color: Colors.grey[100]!))
+            ),
+        child: ClipRect(
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+            child: Container(
+              color: Colors.white54,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                    child: RoundedButton(
+                      radius: 4,
+                      loading: false,
+                      isBtnClickable: true,
+                      text: "CREATE PRODUCT",
+                      press: () {
+                        productkey.currentState!.validateProduct();
+                      },
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
-          SizedBox(
-            height: 30,
-          ),
-          _buildTitle('Product Name'),
-          TextInput(),
-          SizedBox(
-            height: 20,
-          ),
-          _buildTitle('Unit Quantity'),
-          Container(
-              margin: EdgeInsets.symmetric(horizontal: 20),
-              child: DropDownSelect(items: ['Kilogram(Kg)', 'Item', 'Package'],)),
-          SizedBox(
-            height: 20,
-          ),
-          _buildTitle('Unit Price'),
-          QuantityInput(leading: 'rwf',),
-          // SelectProduct(),
-          // SizedBox(
-          //   height: 20,
-          // ),
-          // Container(
-          //     margin: EdgeInsets.symmetric(horizontal: 20),
-          //     child: DropDownSelect()),
-          SizedBox(
-            height: 30,
-          ),
-          // QuantityInput(),
-          // SizedBox(
-          //   height: 40,
-          // ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                child: FlatButton(
-                    padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-                    color: primaryColor,
-                    onPressed: () {},
-                    child: Text(
-                      'CREATE PRODUCT',
-                      style: TextStyle(
-                          color: primaryLightColor,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500),
-                    )),
-              ),
-            ],
-          ),
-        ],
+        ),
       ),
     );
   }

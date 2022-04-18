@@ -1,45 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:flutter_redux/flutter_redux.dart';
-import 'package:inventory_controller/redux/appState/app_state.dart';
+import 'package:inventory_controller/blocs/login/login_bloc.dart';
 import 'package:inventory_controller/views/auth/login/login.dart';
-import 'package:redux/redux.dart';
 
-class LoginContainer extends StatelessWidget {
+class LoginContainer extends StatefulWidget {
+  @override
+  State<LoginContainer> createState() => _LoginContainerState();
+}
+
+class _LoginContainerState extends State<LoginContainer> {
+  final LoginBloc loginBloc = LoginBloc();
+  @override
+  void dispose() {
+    loginBloc.close();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     // double width = MediaQuery.of(context).size.width;
-    return StoreConnector<AppState, _ViewModel>(
-      builder: (context, vm) {
+    return BlocBuilder<LoginBloc, LoginState>(
+      bloc: loginBloc,
+      builder: (context, state) {
         return LoginScreen(
-          loading: vm.loading,
-          error: vm.error,
-          store: vm.store,
-        );
+            bloc: loginBloc,
+            loading: state is LoginLoading ? true : false,
+            error: state.error);
       },
-      converter: _ViewModel.fromStore,
-      distinct: true,
-    );
-  }
-}
-
-class _ViewModel {
-  _ViewModel({
-    this.loading,
-    this.store,
-    this.error,
-  });
-
-  final bool loading;
-  final Store<AppState> store;
-  final String error;
-
-  static _ViewModel fromStore(Store<AppState> store) {
-    return _ViewModel(
-      loading: store.state.authState.loading,
-      store: store,
-      error: store.state.authState.error ,
     );
   }
 }

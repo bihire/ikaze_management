@@ -1,41 +1,145 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:inventory_controller/containers/main/main_view_container.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:inventory_controller/blocs/themeNotifier/theme_notifier_cubit.dart';
+import 'package:inventory_controller/components/slideMenuRoute/enum.dart';
+import 'package:inventory_controller/components/slideMenuRoute/page_routing.dart';
+import 'package:inventory_controller/containers/auth/login_container.dart';
+import 'package:inventory_controller/containers/entryPage/SoldEntry/sold_entry_container.dart';
+import 'package:inventory_controller/containers/entryPage/newEntry/new_entry_container.dart';
+import 'package:inventory_controller/containers/homePage/rangeTransactions/product_range.dart';
+import 'package:inventory_controller/containers/userShops/user_shops.dart';
+import 'package:inventory_controller/models/product/product.dart';
 import 'package:inventory_controller/pages/home.dart';
-import 'package:inventory_controller/redux/store.dart';
-
-import 'package:inventory_controller/servives/TransactionService.dart';
-import 'package:get_it/get_it.dart';
+import 'package:inventory_controller/servives/shared_preferences.dart';
+import 'package:inventory_controller/servives/theme_notifier.dart';
+import 'package:inventory_controller/views/shops/my_shops.dart';
+import 'package:provider/provider.dart';
+import 'package:inventory_controller/views/ProductDetail/ProductDetail.dart';
+import 'package:inventory_controller/views/homePage/home_menu_page.dart';
 import 'package:inventory_controller/views/onboarding/onboarding.dart';
 
+final storage = new FlutterSecureStorage();
 
-void setupLocator() {
-  GetIt.I.registerLazySingleton(() => TransactionService());
-}
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+final AwesomeNotifications awesomeNotifications = AwesomeNotifications();
+late ThemeNotifierCubit themeBloc;
 
 void main() async {
-  setupLocator();
-  runApp(MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+  //   systemNavigationBarColor: Colors.white, // navigation bar color
+  //   statusBarColor: Colors.transparent, // status bar color
+  // ));
+  final theme = await getString('theme');
+  // final
+  runApp(MyApp(theme: theme));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   // This widget is the root of your application.
+  final String? theme;
+  MyApp({this.theme});
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
+  void initState() {
+    themeBloc = ThemeNotifierCubit(theme: getTheme(widget.theme));
+    super.initState();
+  }
+
+  ThemeData? getTheme(String? theme) {
+    switch (theme) {
+      case 'dark':
+        return darkTheme;
+      case 'light':
+        return lightTheme;
+      default:
+        return null;
+    }
+  }
+
+  @override
+  void dispose() {
+    themeBloc.close();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return StoreProvider(
-      store: createStore(),
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: MainViewFlipperContainer(child: OnboardingScreen()),
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-          visualDensity: VisualDensity.adaptivePlatformDensity,
-        ),
+    return BlocProvider(
+      create: (context) => themeBloc,
+      child: BlocBuilder<ThemeNotifierCubit, ThemeNotifierState>(
+        builder: (context, state) {
+          return MaterialApp(
+            theme: state.theme,
+            initialRoute: '/onboarding',
+            onGenerateRoute: (RouteSettings settings) {
+              switch (settings.name) {
+                case '/signin':
+                  return PageRouting(
+                      duration: Duration(milliseconds: 500),
+                      reverseDuration: Duration(milliseconds: 500),
+                      curve: Curves.easeInOut,
+                      child: LoginContainer(),
+                      type: PageRoutingType.leftToRightLeave);
+                // case '/range_search':
+                //   return PageRouting(
+                //       duration: Duration(milliseconds: 500),
+                //       reverseDuration: Duration(milliseconds: 500),
+                //       curve: Curves.easeInOut,
+                //       child: ProductRange(),
+                //       type: PageRoutingType.leftToRightLeave);
+                case '/myshops':
+                  return PageRouting(
+                      duration: Duration(milliseconds: 300),
+                      reverseDuration: Duration(milliseconds: 300),
+                      curve: Curves.easeInOut,
+                      child: UserShopsContainer(),
+                      type: PageRoutingType.leftToRightWithOpacity);
+                case '/home':
+                  return PageRouting(
+                      duration: Duration(milliseconds: 1000),
+                      reverseDuration: Duration(milliseconds: 500),
+                      curve: Curves.easeInOut,
+                      child: MyHomePage(),
+                      type: PageRoutingType.leftToRightWithOpacity);
+                case '/onboarding':
+                  return PageRouteBuilder(
+                      pageBuilder: (c, a, s) => OnboardingScreen());
+                case '/range_search':
+                  return PageRouteBuilder(
+                      pageBuilder: (c, a, s) => ProductRange());
+                case '/product_sales':
+                  return PageRouteBuilder(
+                      pageBuilder: (context, animation, secondaryAnimation) =>
+                          DetailSalesContainer(
+                              productInfo:
+                                  settings.arguments as ProductInfoModel));
+                case '/product_supplies':
+                  return PageRouteBuilder(
+                      pageBuilder: (context, animation, secondaryAnimation) =>
+                          SoldEntryContainer(
+                              productInfo:
+                                  settings.arguments as ProductInfoModel));
+                default:
+                  return null;
+              }
+            },
+            debugShowCheckedModeBanner: false,
+          );
+        },
       ),
     );
+    // );
   }
 }
-
 
 // import 'package:flutter/material.dart';
 // import 'package:flutter/scheduler.dart';

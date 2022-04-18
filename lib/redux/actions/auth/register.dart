@@ -5,17 +5,20 @@ class StartRegisterAction {
   final String confirmPassword;
 
   StartRegisterAction(
-      {this.email, this.password, this.confirmPassword, this.username});
+      {required this.email,
+      required  this.password,
+      required  this.confirmPassword,
+      required  this.username});
 }
 
 class SuccessRegisterAction {
   final String token;
 
-  SuccessRegisterAction({this.token});
+  SuccessRegisterAction({required this.token});
 }
 
 class ErrorRegisterAction {
   final String error;
 
-  ErrorRegisterAction({this.error});
+  ErrorRegisterAction({required this.error});
 }

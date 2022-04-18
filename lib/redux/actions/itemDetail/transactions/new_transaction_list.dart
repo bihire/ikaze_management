@@ -4,9 +4,9 @@ import 'package:meta/meta.dart';
 
 class LoadNewTransactionsPageAction {
   LoadNewTransactionsPageAction(
-      {@required this.pageNumber,
-      @required this.transactionsPerPage,
-      @required this.productId});
+      {required this.pageNumber,
+      required this.transactionsPerPage,
+      required this.productId});
 
   final int pageNumber;
   final int transactionsPerPage;

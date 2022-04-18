@@ -4,14 +4,14 @@ import 'package:meta/meta.dart';
 @immutable
 class DetailDailySalesTotalState {
   DetailDailySalesTotalState({
-    this.loading,
-    this.dailyTotal,
+    required this.loading,
+    required this.dailyTotal,
     this.error,
   });
 
   final bool loading;
   final String dailyTotal;
-  final Exception error;
+  final Exception? error;
 
   static const int transactionsPerPage = 10;
 

@@ -8,10 +8,10 @@ class LineChartWeekly extends StatefulWidget {
   final double week_2;
   final double week_3;
   LineChartWeekly({
-    @required this.week_0,
-    @required this.week_1,
-    @required this.week_2,
-    @required this.week_3,
+    required this.week_0,
+    required this.week_1,
+    required this.week_2,
+    required this.week_3,
   });
   @override
   _LineChartWeeklyState createState() => _LineChartWeeklyState();
@@ -51,7 +51,7 @@ class _LineChartWeeklyState extends State<LineChartWeekly> {
         SizedBox(
           width: 60,
           height: 34,
-          child: FlatButton(
+          child: TextButton(
             onPressed: () {
               setState(() {
                 showAvg = !showAvg;
@@ -96,7 +96,7 @@ class _LineChartWeeklyState extends State<LineChartWeekly> {
         bottomTitles: SideTitles(
           showTitles: true,
           // reservedSize: 22,
-          textStyle: const TextStyle(
+          getTextStyles: (value) => const TextStyle(
               color: Color(0xff68737d),
               fontWeight: FontWeight.bold,
               fontSize: 10),
@@ -117,7 +117,7 @@ class _LineChartWeeklyState extends State<LineChartWeekly> {
         ),
         leftTitles: SideTitles(
           showTitles: false,
-          textStyle: const TextStyle(
+          getTextStyles: (value) =>const TextStyle(
             color: lightGreyColor,
             fontWeight: FontWeight.bold,
             fontSize: 15,
@@ -198,7 +198,7 @@ class _LineChartWeeklyState extends State<LineChartWeekly> {
         bottomTitles: SideTitles(
           showTitles: true,
           reservedSize: 22,
-          textStyle: const TextStyle(
+          getTextStyles: (value) => const TextStyle(
               color: Color(0xff68737d),
               fontWeight: FontWeight.bold,
               fontSize: 10),
@@ -220,7 +220,7 @@ class _LineChartWeeklyState extends State<LineChartWeekly> {
         ),
         leftTitles: SideTitles(
           showTitles: false,
-          textStyle: const TextStyle(
+          getTextStyles: (value) => const TextStyle(
             color: Color(0xff67727d),
             fontWeight: FontWeight.bold,
             fontSize: 15,
@@ -273,10 +273,10 @@ class _LineChartWeeklyState extends State<LineChartWeekly> {
           ),
           belowBarData: BarAreaData(show: true, colors: [
             ColorTween(begin: gradientColors[0], end: gradientColors[1])
-                .lerp(0.2)
+                .lerp(0.2)!
                 .withOpacity(0.1),
             ColorTween(begin: gradientColors[0], end: gradientColors[1])
-                .lerp(0.2)
+                .lerp(0.2)!
                 .withOpacity(0.1),
           ]),
         ),

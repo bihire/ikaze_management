@@ -99,7 +99,7 @@ class Utils {
     return '$sentYear-${makeDoubleDigit(sentMonth)}-${makeDoubleDigit(sentDay)}';
   }
 
-  static formatToDate(DateTime date) {
+  static String formatToDate(DateTime date) {
     final sentMonth = date.month;
     final sentYear = date.year;
     final sentDay = date.day;

@@ -6,8 +6,8 @@ import 'package:meta/meta.dart';
 
 class LoadSupplyTransactionsPageAction {
   LoadSupplyTransactionsPageAction({
-    @required this.pageNumber,
-    @required this.transactionsPerPage,
+    required this.pageNumber,
+    required this.transactionsPerPage,
   });
 
   final int pageNumber;

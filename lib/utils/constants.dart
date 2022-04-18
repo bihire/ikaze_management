@@ -1,0 +1,1 @@
+const int transactionsPerPage = 10;

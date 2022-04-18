@@ -4,9 +4,9 @@ class TextFieldContainer extends StatelessWidget {
   final Widget child;
   final Color backgroundColor;
   const TextFieldContainer({
-    Key key,
-    this.child,
-    this.backgroundColor,
+    Key? key,
+    required this.child,
+    required this.backgroundColor,
   }) : super(key: key);
 
   @override

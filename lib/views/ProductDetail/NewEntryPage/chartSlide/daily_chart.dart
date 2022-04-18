@@ -19,9 +19,9 @@ class DetailDailyChartScreen extends StatelessWidget {
   final List<OveralDailyTransactionModel> overalDailyData;
   final error;
   DetailDailyChartScreen({
-    @required this.loading,
-    @required this.overalDailyData,
-    @required this.error,
+    required this.loading,
+    required this.overalDailyData,
+    required this.error,
   });
   @override
   Widget build(BuildContext context) {

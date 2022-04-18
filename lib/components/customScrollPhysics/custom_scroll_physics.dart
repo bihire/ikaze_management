@@ -100,11 +100,11 @@ import 'dart:math';
 class CustomScrollPhysics extends ScrollPhysics {
   final double itemDimension;
 
-  CustomScrollPhysics({this.itemDimension, ScrollPhysics parent})
+  CustomScrollPhysics({required this.itemDimension, ScrollPhysics? parent})
       : super(parent: parent);
 
   @override
-  CustomScrollPhysics applyTo(ScrollPhysics ancestor) {
+  CustomScrollPhysics applyTo(ScrollPhysics? ancestor) {
     return CustomScrollPhysics(
         itemDimension: itemDimension, parent: buildParent(ancestor));
   }
@@ -129,15 +129,15 @@ class CustomScrollPhysics extends ScrollPhysics {
   }
 
   @override
-  Simulation createBallisticSimulation(
+  Simulation? createBallisticSimulation(
       ScrollMetrics position, double velocity) {
     // If we're out of range and not headed back in range, defer to the parent
     // ballistics, which should put us back in range at a page boundary.
     if ((velocity <= 0.0 && position.pixels <= position.minScrollExtent) ||
         (velocity >= 0.0 && position.pixels >= position.maxScrollExtent))
-      return super.createBallisticSimulation(position, velocity);
+      return super.createBallisticSimulation(position, velocity)!;
     final Tolerance tolerance = this.tolerance;
-    final double target = _getTargetPixels(position, tolerance, velocity);
+    final double target = _getTargetPixels(position as ScrollPosition, tolerance, velocity);
     if (target != position.pixels)
       return ScrollSpringSimulation(spring, position.pixels, target, velocity,
           tolerance: tolerance);

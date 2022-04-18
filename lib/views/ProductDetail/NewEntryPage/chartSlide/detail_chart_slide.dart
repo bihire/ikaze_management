@@ -1,13 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:inventory_controller/blocs/home/dailySales/dailysales_bloc.dart';
+import 'package:inventory_controller/blocs/productDetail/sales/chartSlides/detailDailyChart/detaildailychart_bloc.dart';
+import 'package:inventory_controller/blocs/productDetail/sales/chartSlides/detailMonthlyChart/detailmonthlychart_bloc.dart';
+import 'package:inventory_controller/blocs/productDetail/sales/chartSlides/detailWeeklyChart/detailweeklychart_bloc.dart';
 import 'package:inventory_controller/components/slidingTabView/buttons_tabbar.dart';
 import 'package:inventory_controller/containers/entryPage/newEntry/chartSlide/detail_daily_chart.dart';
 import 'package:inventory_controller/containers/entryPage/newEntry/chartSlide/detail_monthly_container.dart';
 import 'package:inventory_controller/containers/entryPage/newEntry/chartSlide/detail_weekly_container.dart';
-import 'package:inventory_controller/models/productList/product_list.dart';
+import 'package:inventory_controller/models/chartBlocModel.dart';
+import 'package:inventory_controller/models/product/product.dart';
 
-class ProductDetailChartScreens extends StatelessWidget {
+class ProductDetailChartScreens extends StatefulWidget {
   final ProductInfoModel productInfo;
-  ProductDetailChartScreens(this.productInfo);
+  final ChartBlocModel chartBlocs;
+  ProductDetailChartScreens({required this.productInfo,required this.chartBlocs});
+
+  @override
+  _ProductDetailChartScreensState createState() =>
+      _ProductDetailChartScreensState();
+}
+
+class _ProductDetailChartScreensState extends State<ProductDetailChartScreens> {
+  @override
+  void initState() {
+    widget.chartBlocs.dailysaleschartBloc!.add(LoadDetailDailyChart());
+    widget.chartBlocs.weeklysaleschartBloc!.add(LoadDetailWeeklyChart());
+    widget.chartBlocs.monthlysaleschartBloc!.add(LoadDetailMonthlyChart());
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -26,7 +47,7 @@ class ProductDetailChartScreens extends StatelessWidget {
             ButtonsTabBar(
               backgroundColor: Color(0xFFBEB501),
               radius: 20,
-              unselectedBackgroundColor: Colors.grey[300],
+              unselectedBackgroundColor: Colors.grey[300]!,
               unselectedLabelStyle:
                   TextStyle(color: Colors.black, fontWeight: FontWeight.normal),
               labelStyle: TextStyle(color: Colors.white),
@@ -48,17 +69,20 @@ class ProductDetailChartScreens extends StatelessWidget {
               child: TabBarView(
                 children: <Widget>[
                   Container(
-                    // color: lightGreyColor,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                      child: Center(child: DetailDailyChartContainer(productInfo: productInfo)),
+                      child: Center(
+                          child: DetailDailyChartContainer(
+                              widget.chartBlocs.dailysaleschartBloc!)),
                     ),
                   ),
                   Center(
-                    child: DetailWeeklyChartContainer(productInfo: productInfo),
+                    child: DetailWeeklyChartContainer(
+                        widget.chartBlocs.weeklysaleschartBloc!),
                   ),
                   Center(
-                    child: DetailMonthlyChartContainer(productInfo: productInfo),
+                    child: DetailMonthlyChartContainer(
+                        widget.chartBlocs.monthlysaleschartBloc!),
                   ),
                 ],
               ),

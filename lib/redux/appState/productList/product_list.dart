@@ -1,18 +1,18 @@
 // import 'package:inventory_controller/models/money_transactions.dart';
-import 'package:inventory_controller/models/productList/product_list.dart';
+import 'package:inventory_controller/models/product/product.dart';
 import 'package:meta/meta.dart';
 
 @immutable
 class ProductListState {
   ProductListState({
-    this.loading,
-    this.products,
+    required this.loading,
+    required this.products,
     this.error,
   });
 
   final bool loading;
   final List<ProductModel> products;
-  final Exception error;
+  final Exception? error;
 
   static const int transactionsPerPage = 10;
 
@@ -31,7 +31,8 @@ class ProductListState {
     );
   }
 
-  @override String toString() {
+  @override
+  String toString() {
     return "ProductListState: loading = $loading, "
         "itemsDailTotal = $products, "
         "error = $error.";

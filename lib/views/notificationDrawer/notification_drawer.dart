@@ -56,7 +56,8 @@ class NotificationDrawer extends StatelessWidget {
                 color: lightShadeColor,
                 icon: Icons.more_horiz_outlined,
                 iconColor: darkColor,
-                size: 37, // btnShadow: false
+                size: 37,
+                onPressed: () {},
               ),
             ),
           ],

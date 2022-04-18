@@ -43,18 +43,18 @@ class LineChartMonthly extends StatefulWidget {
   final double month_10;
   final double month_11;
   LineChartMonthly({
-    @required this.month_0,
-    @required this.month_1,
-    @required this.month_2,
-    @required this.month_3,
-    @required this.month_4,
-    @required this.month_5,
-    @required this.month_6,
-    @required this.month_7,
-    @required this.month_8,
-    @required this.month_9,
-    @required this.month_10,
-    @required this.month_11,
+    required this.month_0,
+    required this.month_1,
+    required this.month_2,
+    required this.month_3,
+    required this.month_4,
+    required this.month_5,
+    required this.month_6,
+    required this.month_7,
+    required this.month_8,
+    required this.month_9,
+    required this.month_10,
+    required this.month_11,
   });
   @override
   _LineChartMonthlyState createState() => _LineChartMonthlyState();
@@ -139,36 +139,36 @@ class _LineChartMonthlyState extends State<LineChartMonthly> {
         bottomTitles: SideTitles(
           showTitles: true,
           // reservedSize: 22,
-          textStyle: const TextStyle(
+          getTextStyles: (value) => const TextStyle(
               color: Color(0xff68737d),
               fontWeight: FontWeight.bold,
               fontSize: 10),
           getTitles: (value) {
             switch (value.toInt()) {
               case 0:
-                return getMonthName[getMonthNum(11)];
+                return getMonthName[getMonthNum(11)]!;
               case 1:
-                return getMonthName[getMonthNum(10)];
+                return getMonthName[getMonthNum(10)]!;
               case 2:
-                return getMonthName[getMonthNum(9)];
+                return getMonthName[getMonthNum(9)]!;
               case 3:
-                return getMonthName[getMonthNum(8)];
+                return getMonthName[getMonthNum(8)]!;
               case 4:
-                return getMonthName[getMonthNum(7)];
+                return getMonthName[getMonthNum(7)]!;
               case 5:
-                return getMonthName[getMonthNum(6)];
+                return getMonthName[getMonthNum(6)]!;
               case 6:
-                return getMonthName[getMonthNum(5)];
+                return getMonthName[getMonthNum(5)]!;
               case 7:
-                return getMonthName[getMonthNum(4)];
+                return getMonthName[getMonthNum(4)]!;
               case 8:
-                return getMonthName[getMonthNum(3)];
+                return getMonthName[getMonthNum(3)]!;
               case 9:
-                return getMonthName[getMonthNum(2)];
+                return getMonthName[getMonthNum(2)]!;
               case 10:
-                return getMonthName[getMonthNum(1)];
+                return getMonthName[getMonthNum(1)]!;
               case 11:
-                return getMonthName[getMonthNum(0)];
+                return getMonthName[getMonthNum(0)]!;
               default:
                 return '';
             }
@@ -177,7 +177,7 @@ class _LineChartMonthlyState extends State<LineChartMonthly> {
         ),
         leftTitles: SideTitles(
           showTitles: false,
-          textStyle: const TextStyle(
+          getTextStyles: (value) => const TextStyle(
             color: Color(0xff67727d),
             fontWeight: FontWeight.bold,
             fontSize: 15,
@@ -263,7 +263,7 @@ class _LineChartMonthlyState extends State<LineChartMonthly> {
         bottomTitles: SideTitles(
           showTitles: true,
           reservedSize: 22,
-          textStyle: const TextStyle(
+          getTextStyles: (value) => const TextStyle(
               color: Color(0xff68737d),
               fontWeight: FontWeight.bold,
               fontSize: 10),
@@ -301,7 +301,7 @@ class _LineChartMonthlyState extends State<LineChartMonthly> {
         ),
         leftTitles: SideTitles(
           showTitles: true,
-          textStyle: const TextStyle(
+          getTextStyles: (value) => const TextStyle(
             color: Color(0xff67727d),
             fontWeight: FontWeight.bold,
             fontSize: 15,
@@ -347,9 +347,9 @@ class _LineChartMonthlyState extends State<LineChartMonthly> {
           isCurved: true,
           colors: [
             ColorTween(begin: gradientColors[0], end: gradientColors[1])
-                .lerp(0.2),
+                .lerp(0.2)!,
             ColorTween(begin: gradientColors[0], end: gradientColors[1])
-                .lerp(0.2),
+                .lerp(0.2)!,
           ],
           barWidth: 5,
           isStrokeCapRound: true,
@@ -358,10 +358,10 @@ class _LineChartMonthlyState extends State<LineChartMonthly> {
           ),
           belowBarData: BarAreaData(show: true, colors: [
             ColorTween(begin: gradientColors[0], end: gradientColors[1])
-                .lerp(0.2)
+                .lerp(0.2)!
                 .withOpacity(0.1),
             ColorTween(begin: gradientColors[0], end: gradientColors[1])
-                .lerp(0.2)
+                .lerp(0.2)!
                 .withOpacity(0.1),
           ]),
         ),

@@ -21,56 +21,56 @@ import 'itemDetail/transactions/supply_transactions_list.dart';
 
 @immutable
 class AppState {
-  final TransactionState allTransactionsState;
-  final HomeTransactionListState homeTransactionListState;
-  final DashoardDailyTotalState dashboardDailyTotalState;
-  final OvaraldailyState ovaraldailyState;
-  final OveralWeeklyState overalWeeklyState;
-  final OveralMonthlyState overalMonthlyState;
-  final TransactionRangeState transactionRangeState;
-  final PopupState popupState;
+  final TransactionState? allTransactionsState;
+  final HomeTransactionListState? homeTransactionListState;
+  final DashoardDailyTotalState? dashboardDailyTotalState;
+  final OvaraldailyState? ovaraldailyState;
+  final OveralWeeklyState? overalWeeklyState;
+  final OveralMonthlyState? overalMonthlyState;
+  final TransactionRangeState? transactionRangeState;
+  final PopupState? popupState;
 
   //===========This is the state for Authentication=============
-  final AuthState authState;
+  final AuthState? authState;
 
   //===========This is the state for detail page=============
 
-  final DetailDailySalesTotalState detailDailySalesTotalState;
-  final DetailOvaraldailyState detailOveraldailyState;
-  final DetailOveralWeeklyState detailOveralWeeklyState;
-  final DetailOveralMonthlyState detailOveralMonthlyState;
-  final NewTransactionListState newTransactionListState;
-  final SupplyTransactionListState supplyTransactionListState;
+  final DetailDailySalesTotalState? detailDailySalesTotalState;
+  final DetailOvaraldailyState? detailOveraldailyState;
+  final DetailOveralWeeklyState? detailOveralWeeklyState;
+  final DetailOveralMonthlyState? detailOveralMonthlyState;
+  final NewTransactionListState? newTransactionListState;
+  final SupplyTransactionListState? supplyTransactionListState;
   //===========This Epics state================
-  final MainSlideEpicPositionState mainSlideEpicPositionState;
-  final ReelsEpicOpacityState reelsEpicOpacityState;
+  final MainSlideEpicPositionState? mainSlideEpicPositionState;
+  final ReelsEpicOpacityState? reelsEpicOpacityState;
   //===========This the state for product page================
-  final ProductListState productListState;
+  final ProductListState? productListState;
   
 
   AppState({
-    @required this.authState,
+    required this.authState,
 //========================================================
-    @required this.homeTransactionListState,
-    @required this.allTransactionsState,
-    @required this.dashboardDailyTotalState,
-    @required this.ovaraldailyState,
-    @required this.overalWeeklyState,
-    @required this.overalMonthlyState,
-    @required this.transactionRangeState,
-    @required this.popupState,
+    required this.homeTransactionListState,
+    required this.allTransactionsState,
+    required this.dashboardDailyTotalState,
+    required this.ovaraldailyState,
+    required this.overalWeeklyState,
+    required this.overalMonthlyState,
+    required this.transactionRangeState,
+    required this.popupState,
 //===========================================================
-    @required this.detailDailySalesTotalState,
-    @required this.detailOveraldailyState,
-    @required this.detailOveralWeeklyState,
-    @required this.detailOveralMonthlyState,
-    @required this.newTransactionListState,
-    @required this.supplyTransactionListState,
+    required this.detailDailySalesTotalState,
+    required this.detailOveraldailyState,
+    required this.detailOveralWeeklyState,
+    required this.detailOveralMonthlyState,
+    required this.newTransactionListState,
+    required this.supplyTransactionListState,
 //============================================================
-    @required this.mainSlideEpicPositionState,
-    @required this.reelsEpicOpacityState,
+    required this.mainSlideEpicPositionState,
+    required this.reelsEpicOpacityState,
 //============================================================
-    @required this.productListState
+    required this.productListState
   });
 
   factory AppState.initial() {
@@ -101,7 +101,7 @@ class AppState {
         productListState: ProductListState.initial());
   }
 
-  AppState copyWith({TransactionState allTransactionsState}) {
+  AppState copyWith({TransactionState? allTransactionsState}) {
     return AppState(
       authState: authState ?? this.authState,
   //=======================================================================================

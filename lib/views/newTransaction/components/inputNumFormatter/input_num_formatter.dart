@@ -6,14 +6,14 @@ class RegExInputFormatter implements TextInputFormatter {
   RegExInputFormatter._(this._regExp);
 
   factory RegExInputFormatter.withRegex(String regexString) {
-    try {
+    // try {
       final regex = RegExp(regexString);
       return RegExInputFormatter._(regex);
-    } catch (e) {
-      // Something not right with regex string.
-      assert(false, e.toString());
-      return null;
-    }
+    // } catch (e) {
+    //   // Something not right with regex string.
+    //   assert(false, e.toString());
+    //   return null;
+    // }
   }
 
   @override

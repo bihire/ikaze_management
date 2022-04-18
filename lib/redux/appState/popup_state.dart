@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 @immutable
 class PopupState {
   PopupState({
-    @required this.underLine,
+    required this.underLine,
   });
 
   final bool underLine;

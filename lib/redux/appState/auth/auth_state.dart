@@ -5,14 +5,14 @@ import 'package:meta/meta.dart';
 @immutable
 class AuthState {
   AuthState({
-    this.loading,
-    this.user,
+    required this.loading,
+    required this.user,
     this.error,
   });
 
   final bool loading;
   final User user;
-  final String error;
+  final String? error;
 
   // static const int transactionsPerPage = 10;
 

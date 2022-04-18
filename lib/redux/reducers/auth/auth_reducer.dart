@@ -42,6 +42,6 @@ String _errorOccurredReducer(String _, ErrorOccurredAction action) {
   return action.exception;
 }
 
-String _errorHandledReducer(String _, ErrorLoginHandledAction action) {
+String? _errorHandledReducer(String _, ErrorLoginHandledAction action) {
   return null;
 }

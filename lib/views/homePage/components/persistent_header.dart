@@ -3,7 +3,7 @@
 
   class PersistentHeader extends SliverPersistentHeaderDelegate {
   final Widget widget;
-  PersistentHeader({this.widget});
+  PersistentHeader({required this.widget});
 
   @override
   Widget build(

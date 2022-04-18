@@ -1,6 +1,9 @@
-// import 'dart:html';
+import 'package:flutter/material.dart';
+import 'package:inventory_controller/components/slideMenuRoute/enum.dart';
+import 'package:inventory_controller/components/slideMenuRoute/page_routing.dart';
 
 import 'package:inventory_controller/models/auth.dart/user.dart';
+import 'package:inventory_controller/pages/home.dart';
 import 'package:inventory_controller/redux/actions/auth/login.dart';
 import 'package:inventory_controller/redux/appState/app_state.dart';
 import 'package:inventory_controller/servives/web_client.dart';
@@ -29,7 +32,7 @@ _loadUser() {
       NextDispatcher next) async {
     next(action);
     try {
-      final response = await const WebClient().post(
+      final response = await const WebClient().npost(
           '/auth/login', {'email': action.email, 'password': action.password});
       final String token = response['data']['token'];
       final storage = new FlutterSecureStorage();
@@ -38,20 +41,9 @@ _loadUser() {
       var newUser =
           User(email: payload['email'], userName: payload['user_name']);
       await store.dispatch(UserLoginSuccess(user: newUser));
-      await store.dispatch(ErrorLoginHandledAction());
+      Navigator.pushNamed(action.context, '/home');
     } catch (exception) {
-      store.dispatch(ErrorOccurredAction(exception["message"]));
+      store.dispatch(ErrorOccurredAction((exception as Map)["message"]));
     }
   };
 }
-
-// Future<String> _loadUserToken() async {
-//   var response =
-//       await http.post('http://192.168.43.56:5000/api/auth/login');
-//   if (response.statusCode == 200) {
-//     final jsonData = (json.decode(response.body))['data']['token'] as String;
-//     return jsonData;
-//   } else {
-//     throw Exception('Error getting data, http code: ${response.statusCode}.');
-//   }
-// }

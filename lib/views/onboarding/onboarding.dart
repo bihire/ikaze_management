@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:inventory_controller/components/slideMenuRoute/enum.dart';
+import 'package:inventory_controller/components/slideMenuRoute/page_routing.dart';
 import 'package:inventory_controller/containers/auth/login_container.dart';
+import 'package:inventory_controller/models/screenArguments/screen_arguments.dart';
 import 'package:inventory_controller/views/auth/login/login.dart';
 import 'package:inventory_controller/views/onboarding/styles.dart';
 
@@ -249,14 +252,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   child: InkWell(
                       customBorder: new CircleBorder(),
                       onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) {
-                              return LoginContainer();
-                            },
-                          ),
-                        );
+                        Navigator.of(context).pushNamed('/signin', arguments: ScreenArguments.onboarding);
+                        
                       },
                       splashColor: Colors.red,
                       child: Container(

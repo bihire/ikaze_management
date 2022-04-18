@@ -4,13 +4,18 @@ import 'package:inventory_controller/components/customDropDown/show_dropdown.dar
 import 'package:inventory_controller/components/leadingButton/leading_button.dart';
 import 'package:inventory_controller/components/page_transition/enum.dart';
 import 'package:inventory_controller/components/page_transition/page_transtion.dart';
+import 'package:inventory_controller/containers/homePage/rangeTransactions/product_range.dart';
+import 'package:inventory_controller/models/screenArguments/screen_arguments.dart';
+import 'package:inventory_controller/views/RangeSearch/range_tramsactions.dart';
 import 'package:inventory_controller/views/newProduct/new_product.dart';
 
 class CustomDropdown extends StatefulWidget {
   final Widget child;
   final String text;
+  final List<DropDownItem> items;
 
-  const CustomDropdown({Key key, @required this.child, @required this.text})
+  const CustomDropdown(
+      {Key? key, required this.child, required this.items, required this.text})
       : super(key: key);
 
   @override
@@ -18,10 +23,11 @@ class CustomDropdown extends StatefulWidget {
 }
 
 class _CustomDropdownState extends State<CustomDropdown> {
-  GlobalKey actionKey;
+  late GlobalKey actionKey;
   // double height, width, xPosition, yPosition;
   bool isDropdownOpened = false;
-  OverlayEntry floatingDropdown;
+  // late OverlayEntry
+  // ;
 
   @override
   void initState() {
@@ -42,13 +48,15 @@ class _CustomDropdownState extends State<CustomDropdown> {
       builder: (BuildContext context) {
         return DropDown(
           itemHeight: height,
+          items: widget.items,
         );
       },
     );
   }
 
   PopUpLocationdata findDropdownData() {
-    RenderBox renderBox = actionKey.currentContext.findRenderObject();
+    RenderBox renderBox =
+        actionKey.currentContext!.findRenderObject() as RenderBox;
     double height = renderBox.size.height;
     double width = MediaQuery.of(context).size.width;
     Offset offset = renderBox.localToGlobal(Offset.zero);
@@ -67,12 +75,14 @@ class _CustomDropdownState extends State<CustomDropdown> {
     return GestureDetector(
       key: actionKey,
       onTap: () async {
-        RenderBox renderBox = actionKey.currentContext.findRenderObject();
+        RenderBox renderBox =
+            actionKey.currentContext!.findRenderObject() as RenderBox;
         double height = renderBox.size.height;
         double width = MediaQuery.of(context).size.width;
         Offset offset = renderBox.localToGlobal(Offset.zero);
         double xPosition = offset.dx;
         double yPosition = offset.dy;
+
         _showMyDialog(height, width, xPosition, yPosition);
       },
       child: widget.child,
@@ -82,8 +92,10 @@ class _CustomDropdownState extends State<CustomDropdown> {
 
 class DropDown extends StatelessWidget {
   final double itemHeight;
+  final List<DropDownItem> items;
 
-  const DropDown({Key key, this.itemHeight}) : super(key: key);
+  const DropDown({Key? key, required this.itemHeight, required this.items})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -124,33 +136,7 @@ class DropDown extends StatelessWidget {
               borderRadius: BorderRadius.circular(8),
               child: Container(
                 child: Column(
-                  children: <Widget>[
-                    DropDownItem.first(
-                        text: "Add new product",
-                        iconData: Icons.add,
-                        isSelected: false,
-                        onPressed: () {
-                          Navigator.pop(context);
-                          Navigator.push(
-                              context,
-                              PageTransition(
-                                  curve: Curves.easeIn,
-                                  reverseDuration: Duration(milliseconds: 300),
-                                  duration: Duration(milliseconds: 200),
-                                  child: NewProductPage(),
-                                  type: PageTransitionType.rightToLeft));
-                        }),
-                    DropDownItem(
-                      text: "Search by range",
-                      iconData: Icons.search,
-                      isSelected: false,
-                    ),
-                    DropDownItem.last(
-                      text: "Logout",
-                      iconData: Icons.exit_to_app,
-                      isSelected: true,
-                    ),
-                  ],
+                  children: items,
                 ),
               ),
             ),
@@ -164,42 +150,43 @@ class DropDown extends StatelessWidget {
 class DropDownItem extends StatelessWidget {
   final String text;
   final IconData iconData;
-  final bool isSelected;
-  final bool isFirstItem;
-  final bool isLastItem;
-  final Function onPressed;
+  final bool isSelected, isFirstItem, isLastItem;
+  final Color? backgroundColor, color;
+  final Function() onPressed;
 
   const DropDownItem(
-      {Key key,
-      this.text,
-      this.iconData,
-      this.onPressed,
+      {Key? key,
+      required this.text,
+      required this.iconData,
+      required this.onPressed,
+      this.backgroundColor,
+      this.color,
       this.isSelected = false,
       this.isFirstItem = false,
       this.isLastItem = false})
       : super(key: key);
 
-  factory DropDownItem.first(
-      {String text, IconData iconData, bool isSelected, Function onPressed}) {
-    return DropDownItem(
-      text: text,
-      iconData: iconData,
-      isSelected: isSelected,
-      isFirstItem: true,
-      onPressed: onPressed,
-    );
-  }
+  const DropDownItem.first(
+      {Key? key,
+      required this.text,
+      required this.iconData,
+      required this.onPressed,
+      this.backgroundColor,
+      this.color,
+      this.isSelected = false,
+      this.isFirstItem = true,
+      this.isLastItem = false});
 
-  factory DropDownItem.last(
-      {String text, IconData iconData, bool isSelected, Function onPressed}) {
-    return DropDownItem(
-      text: text,
-      iconData: iconData,
-      isSelected: isSelected,
-      isLastItem: true,
-      onPressed: onPressed,
-    );
-  }
+  const DropDownItem.last(
+      {Key? key,
+      required this.text,
+      required this.iconData,
+      required this.onPressed,
+      this.backgroundColor,
+      this.color,
+      this.isSelected = false,
+      this.isFirstItem = false,
+      this.isLastItem = true});
 
   @override
   Widget build(BuildContext context) {
@@ -211,7 +198,7 @@ class DropDownItem extends StatelessWidget {
             top: isFirstItem ? Radius.circular(8) : Radius.zero,
             bottom: isLastItem ? Radius.circular(8) : Radius.zero,
           ),
-          color: isSelected ? Colors.transparent : Colors.transparent,
+          color: backgroundColor != null ? backgroundColor : Colors.transparent,
         ),
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 11),
         child: Row(
@@ -219,14 +206,14 @@ class DropDownItem extends StatelessWidget {
             Text(
               text,
               style: TextStyle(
-                  color: hardGreyColor,
+                  color: color != null ? color : hardGreyColor,
                   fontSize: 14,
                   fontWeight: FontWeight.w400),
             ),
             Spacer(),
             Icon(
               iconData,
-              color: hardGreyColor,
+              color: color != null ? color : hardGreyColor,
             ),
           ],
         ),
@@ -257,19 +244,19 @@ class ArrowShape extends ShapeBorder {
   EdgeInsetsGeometry get dimensions => throw UnimplementedError();
 
   @override
-  Path getInnerPath(Rect rect, {TextDirection textDirection}) {
+  Path getInnerPath(Rect rect, {TextDirection? textDirection}) {
     // TODO: implement getInnerPath
     throw UnimplementedError();
   }
 
   @override
-  Path getOuterPath(Rect rect, {TextDirection textDirection}) {
+  Path getOuterPath(Rect rect, {TextDirection? textDirection}) {
     // TODO: implement getOuterPath
     return getClip(rect.size);
   }
 
   @override
-  void paint(Canvas canvas, Rect rect, {TextDirection textDirection}) {
+  void paint(Canvas canvas, Rect rect, {TextDirection? textDirection}) {
     // TODO: implement paint
   }
 

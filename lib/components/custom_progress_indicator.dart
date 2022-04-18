@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CustomProgressIndicator extends StatelessWidget {
-  CustomProgressIndicator({this.isActive});
+  CustomProgressIndicator({required this.isActive});
 
   final bool isActive;
 

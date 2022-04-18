@@ -20,9 +20,9 @@ class HomeDailyChartScreen extends StatelessWidget {
   final List<OveralDailyTransactionModel> overalDailyData;
   final error;
   HomeDailyChartScreen({
-    @required this.loading,
-    @required this.overalDailyData,
-    @required this.error,
+    required this.loading,
+    required this.overalDailyData,
+    required this.error,
   });
   @override
   Widget build(BuildContext context) {

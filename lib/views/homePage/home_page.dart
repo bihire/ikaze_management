@@ -1,103 +1,121 @@
 import 'package:flutter/material.dart';
+import 'package:inventory_controller/blocs/home/homeTransactioList/hometransactionlist_bloc.dart';
 import 'package:inventory_controller/common/constants.dart';
 import 'package:inventory_controller/components/common.dart';
-import 'package:inventory_controller/containers/homePage/daily_total.dart';
+import 'package:inventory_controller/components/loadingIndicator/loading_indicator.dart';
+import 'package:inventory_controller/components/section_tilte.dart';
 import 'package:inventory_controller/containers/homePage/homeList/home_list_container.dart';
-import 'package:inventory_controller/redux/actions/homePage/transactions/transactionList.dart';
-import 'package:inventory_controller/redux/appState/all_transactions_state.dart';
-import 'package:inventory_controller/redux/appState/app_state.dart';
+import 'package:inventory_controller/models/chartBlocModel.dart';
+// import 'package:inventory_controller/redux/appState/all_transactions_state.dart';
+import 'package:inventory_controller/views/homePage/chartSlide/daily_sales_screen.dart';
 import 'package:inventory_controller/views/homePage/chartSlide/home_chart_slide.dart';
-import 'package:redux/redux.dart';
+import 'package:inventory_controller/views/homePage/requests/new_requests.dart';
 
 import 'components/persistent_header.dart';
 
 class HomePageScreen extends StatefulWidget {
-  final bool homeloading;
-  final bool isNextPageAvailable;
-  final Store<AppState> store;
-
-  const HomePageScreen({
-    Key key,
-    this.homeloading,
-    this.isNextPageAvailable,
-    this.transactions,
-    this.store,
-    this.refresh,
-    // this.loadNextPage,
-    // this.noError,
-  });
-
-  // final bool loading;
+  final bool loading;
+  final ChartBlocModel chartBlocs;
+  final ScrollController scrollController;
   // final bool isNextPageAvailable;
-  final transactions;
-  final Function refresh;
+  // final Store<AppState> store;
+
+  const HomePageScreen(
+      {Key? key,
+      required this.loading,
+      required this.dailySales,
+      this.error,
+      required this.scrollController,
+      required this.chartBlocs
+      // this.isNextPageAvailable,
+      // this.transactions,
+      // this.store,
+      // this.refresh,
+      // this.loadNextPage,
+      // this.noError,
+      });
+
+  final int? dailySales;
+  // final bool isNextPageAvailable;
+  // final transactions;
+  // final Function refresh;
   // final Function loadNextPage;
-  // final bool noError;
+  final String? error;
   @override
   State<StatefulWidget> createState() => HomePageScreenState();
 }
 
 class HomePageScreenState extends State<HomePageScreen> {
-  ScrollController controller;
-  // List<String> items = new List.generate(100, (index) => 'Hello $index');
+  late ScrollController controller;
+  late HometransactionlistBloc homeTransactionListBloc;
 
   @override
   void initState() {
     super.initState();
-    controller = new ScrollController()..addListener(_scrollListener);
+    homeTransactionListBloc = HometransactionlistBloc();
+    // controller = new ScrollController()..addListener(_scrollListener);
   }
 
   @override
   void dispose() {
-    controller.removeListener(_scrollListener);
+    // controller.removeListener(_scrollListener);
+    homeTransactionListBloc.close();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return SafeArea(
-      child: RefreshIndicator(
-        color: primaryColor,
-        onRefresh: _onRefresh,
-        child: CustomScrollView(
-          controller: controller,
-          slivers: [
-            SliverToBoxAdapter(
-              child: Container(
-                  margin: const EdgeInsets.only(top: 40.0),
-                  padding:
-                      EdgeInsets.symmetric(vertical: 0.0, horizontal: 10.0),
-                  width: MediaQuery.of(context).size.width * 1,
-                  child: DailyTotal()),
+      child: widget.loading
+          ? Material(
+              child: Center(
+                  child: Container(
+                      width: 80, height: 80, child: LoadingIndicator())),
+            )
+          : RefreshIndicator(
+              color: primaryColor,
+              onRefresh: _onRefresh,
+              child: CustomScrollView(
+                controller: widget.scrollController,
+                slivers: [
+                  // SliverToBoxAdapter(child: NewRequests()),
+                  SliverToBoxAdapter(
+                    child: Container(
+                        margin: const EdgeInsets.only(top: 40.0),
+                        padding: EdgeInsets.symmetric(
+                            vertical: 0.0, horizontal: 10.0),
+                        width: MediaQuery.of(context).size.width * 1,
+                        child: DailySalesScreen(widget.dailySales!)),
+                  ),
+                  SliverToBoxAdapter(
+                    child: HomeChartScreens(chartBlocs: widget.chartBlocs),
+                  ),
+                  SliverToBoxAdapter(
+                    child: SectionTitle(
+                      title: 'History',
+                    ),
+                  ),
+                  HomeTransactionListContainer(
+                      homeTransactionListBloc: homeTransactionListBloc),
+                ],
+              ),
             ),
-            SliverToBoxAdapter(
-              child: HomeChartScreens(),
-            ),
-            SliverPersistentHeader(
-              delegate: PersistentHeader(widget: HeaderDatePicker()),
-              pinned: true,
-            ),
-            HomePageContainer()
-          ],
-        ),
-      ),
     );
   }
 
   void _scrollListener() {
-    if (!widget.homeloading &&
-        widget.isNextPageAvailable &&
+    if (!widget.loading &&
+        // !widget.isNextPageAvailable &&
         controller.position.extentAfter < 20.0) {
-          widget.store.dispatch(
-        LoadHomeTransactionsPageAction(
-            pageNumber: (widget.transactions.length ~/ TransactionState.transactionsPerPage) + 1,
-            transactionsPerPage: TransactionState.transactionsPerPage),
-      );
+      homeTransactionListBloc.add(LoadHomeTransactionAction(
+          pageNumber:
+              (homeTransactionListBloc.state.transactions.length ~/ 10) + 1));
     }
   }
 
   Future _onRefresh() {
-    widget.refresh();
+    // widget.refresh();
     return Future.value();
   }
 }

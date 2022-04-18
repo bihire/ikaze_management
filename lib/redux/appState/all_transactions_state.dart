@@ -4,16 +4,16 @@ import 'package:meta/meta.dart';
 @immutable
 class TransactionState {
   TransactionState({
-    this.isDataLoading,
-    this.isNextPageAvailable,
-    this.transactions,
+    required this.isDataLoading,
+    required this.isNextPageAvailable,
+    required this.transactions,
     this.error,
   });
 
   final bool isDataLoading;
   final bool isNextPageAvailable;
   final List<MoneyTransactionModel> transactions;
-  final Exception error;
+  final Exception? error;
 
   static const int transactionsPerPage = 10;
 

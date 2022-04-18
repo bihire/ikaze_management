@@ -1,4 +1,4 @@
-library page_transition;
+library page_routing;
 
 import 'package:flutter/material.dart';
 import 'enum.dart';
@@ -10,7 +10,7 @@ class PageTransition<T> extends PageRouteBuilder<T> {
   final Widget child;
 
   /// Child for your next page
-  final Widget childCurrent;
+  final Widget? childCurrent;
 
   /// Transition types
   ///  fade,rightToLeft,leftToRight, upToDown,downToUp,scale,rotate,size,rightToLeftWithFade,leftToRightWithFade
@@ -20,7 +20,7 @@ class PageTransition<T> extends PageRouteBuilder<T> {
   final Curve curve;
 
   /// Aligment for transitions
-  final Alignment alignment;
+  final Alignment? alignment;
 
   /// Durationf for your transition default is 300 ms
   final Duration duration;
@@ -29,16 +29,16 @@ class PageTransition<T> extends PageRouteBuilder<T> {
   final Duration reverseDuration;
 
   /// Context for inheret theme
-  final BuildContext ctx;
+  final BuildContext? ctx;
 
   /// Optional inheret teheme
   final bool inheritTheme;
 
   /// Page transition constructor. We can pass the next page as a child,
   PageTransition({
-    Key key,
-    @required this.child,
-    @required this.type,
+    Key? key,
+    required this.child,
+    required this.type,
     this.childCurrent,
     this.ctx,
     this.inheritTheme = false,
@@ -46,7 +46,7 @@ class PageTransition<T> extends PageRouteBuilder<T> {
     this.alignment,
     this.duration = const Duration(milliseconds: 500),
     this.reverseDuration = const Duration(milliseconds: 500),
-    RouteSettings settings,
+    RouteSettings? settings,
   })  : assert(inheritTheme ? ctx != null : true,
             "'ctx' cannot be null when 'inheritTheme' is true, set ctx: context"),
         super(
@@ -54,7 +54,7 @@ class PageTransition<T> extends PageRouteBuilder<T> {
               Animation<double> secondaryAnimation) {
             return inheritTheme
                 ? InheritedTheme.captureAll(
-                    ctx,
+                    ctx!,
                     child,
                   )
                 : child;
@@ -119,7 +119,7 @@ class PageTransition<T> extends PageRouteBuilder<T> {
               /// PageTransitionType.scale which is the scale functionality for transition you can also use curve for this transition
               case PageTransitionType.scale:
                 return ScaleTransition(
-                  alignment: alignment,
+                  alignment: alignment!,
                   scale: CurvedAnimation(
                     parent: animation,
                     curve: Interval(
@@ -135,7 +135,7 @@ class PageTransition<T> extends PageRouteBuilder<T> {
               /// PageTransitionType.rotate which is the rotate functionality for transition you can also use alignment for this transition
               case PageTransitionType.rotate:
                 return RotationTransition(
-                  alignment: alignment,
+                  alignment: alignment!,
                   turns: animation,
                   child: ScaleTransition(
                     alignment: alignment,
@@ -151,7 +151,7 @@ class PageTransition<T> extends PageRouteBuilder<T> {
               /// PageTransitionType.size which is the rotate functionality for transition you can also use curve for this transition
               case PageTransitionType.size:
                 return Align(
-                  alignment: alignment,
+                  alignment: alignment!,
                   child: SizeTransition(
                     sizeFactor: CurvedAnimation(
                       parent: animation,

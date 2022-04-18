@@ -23,7 +23,7 @@ class BottomBarNavigationPatternExample extends StatefulWidget {
 class _BottomBarNavigationPatternExampleState
     extends State<BottomBarNavigationPatternExample> {
   int selectedBarIndex = 0;
-  PageController _pageController;
+  late PageController _pageController;
 
   @override
   void initState() {

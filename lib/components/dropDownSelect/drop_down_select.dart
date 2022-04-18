@@ -1,26 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:inventory_controller/common/constants.dart';
 
-class DropDownSelect extends StatefulWidget {
-  DropDownSelect({Key key, @required this.items}) : super(key: key);
-  List<String> items;
-  @override
-  _DropDownSelectState createState() => _DropDownSelectState();
-}
+// class DropDownSelect extends StatefulWidget {
+
+//   @override
+//   _DropDownSelectState createState() => _DropDownSelectState();
+// }
 
 /// This is the private State class that goes with MyStatefulWidget.
-class _DropDownSelectState extends State<DropDownSelect> {
-  String dropdownValue;
-  @override
-  void initState() {
-    dropdownValue = widget.items[0];
-    super.initState();
-  }
-
+class DropDownSelect extends StatelessWidget {
+  DropDownSelect(
+      {Key? key, required this.items, required this.onChanged, required this.unitQty})
+      : super(key: key);
+  final List<String> items;
+  final void Function(String?)? onChanged;
+  final String unitQty;
   @override
   Widget build(BuildContext context) {
     return DropdownButton<String>(
-      value: dropdownValue,
+      value: unitQty,
       isExpanded: true,
       icon: const Icon(
         Icons.arrow_drop_down,
@@ -30,15 +28,11 @@ class _DropDownSelectState extends State<DropDownSelect> {
       elevation: 16,
       style: const TextStyle(color: hardGreyColor),
       underline: Container(
-        height: 2,
-        color: lightGreyColor,
+        height: 1,
+        color: hardGreyColor,
       ),
-      onChanged: (String newValue) {
-        setState(() {
-          dropdownValue = newValue;
-        });
-      },
-      items: widget.items.map<DropdownMenuItem<String>>((String value) {
+      onChanged: onChanged,
+      items: items.map<DropdownMenuItem<String>>((String value) {
         return DropdownMenuItem<String>(
           value: value,
           child: Text(value),

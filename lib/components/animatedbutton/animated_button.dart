@@ -2,19 +2,19 @@ import 'package:flutter/material.dart';
 
 class AnimatedButton extends StatefulWidget {
   final String initialText, finalText;
-  final ButtonStyle buttonStyle;
-  final IconData iconData;
-  final double iconSize;
-  final Duration animationDuration;
+  final ButtonStyle? buttonStyle;
+  final IconData? iconData;
+  final double? iconSize;
+  final Duration? animationDuration;
   final Function onTap;
 
   AnimatedButton(
-      {this.initialText,
-      this.finalText,
+      {required this.initialText,
+      required this.finalText,
       this.iconData,
       this.iconSize,
       this.animationDuration,
-      this.buttonStyle, this.onTap});
+      this.buttonStyle, required this.onTap});
 
   @override
   _AnimatedButtonState createState() => _AnimatedButtonState();
@@ -22,16 +22,16 @@ class AnimatedButton extends StatefulWidget {
 
 class _AnimatedButtonState extends State<AnimatedButton>
     with TickerProviderStateMixin {
-  AnimationController _controller;
-  ButtonState _currentState;
-  Duration _smallDuration;
-  Animation<double> _scaleFinalTextAnimation;
+  late AnimationController _controller;
+  late ButtonState _currentState;
+  late Duration _smallDuration;
+  late Animation<double> _scaleFinalTextAnimation;
 
   @override
   void initState() {
     super.initState();
     _currentState = ButtonState.SHOW_ONLY_TEXT;
-    _smallDuration = Duration(milliseconds: (widget.animationDuration.inMilliseconds * 0.2).round());
+    _smallDuration = Duration(milliseconds: (widget.animationDuration!.inMilliseconds * 0.2).round());
     _controller =
         AnimationController(vsync: this, duration: widget.animationDuration);
     _controller.addListener(() {
@@ -65,9 +65,9 @@ class _AnimatedButtonState extends State<AnimatedButton>
   @override
   Widget build(BuildContext context) {
     return Material(
-      elevation: widget.buttonStyle.elevation,
+      elevation: widget.buttonStyle!.elevation,
       borderRadius:
-          BorderRadius.all(Radius.circular(widget.buttonStyle.borderRadius)),
+          BorderRadius.all(Radius.circular(widget.buttonStyle!.borderRadius)),
       child: InkWell(
         onTap: () {
           _controller.forward();
@@ -83,7 +83,7 @@ class _AnimatedButtonState extends State<AnimatedButton>
             border: Border.all(
                 color: (_currentState == ButtonState.SHOW_ONLY_ICON ||
                         _currentState == ButtonState.SHOW_TEXT_ICON)
-                    ? widget.buttonStyle.primaryColor
+                    ? widget.buttonStyle!.primaryColor
                     : Colors.transparent),
             borderRadius: BorderRadius.all(
                 Radius.circular(widget.buttonStyle.borderRadius)),
@@ -142,16 +142,16 @@ class _AnimatedButtonState extends State<AnimatedButton>
 
 class ButtonStyle {
   final TextStyle initialTextStyle, finalTextStyle;
-  final Color primaryColor, secondaryColor;
+  final Color? primaryColor, secondaryColor;
   final double elevation, borderRadius;
 
   ButtonStyle(
       {this.primaryColor,
       this.secondaryColor,
-      this.initialTextStyle,
-      this.finalTextStyle,
-      this.elevation,
-      this.borderRadius});
+      required this.initialTextStyle,
+      required this.finalTextStyle,
+      this.elevation = 0,
+      this.borderRadius = 5});
 }
 
 enum ButtonState { SHOW_ONLY_TEXT, SHOW_ONLY_ICON, SHOW_TEXT_ICON }

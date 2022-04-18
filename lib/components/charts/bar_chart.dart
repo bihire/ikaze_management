@@ -1,18 +1,18 @@
 import 'dart:async';
 import 'dart:math';
-
+import 'package:flutter/gestures.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 class BarChartContainer extends StatefulWidget {
   BarChartContainer({
-    this.day_0,
-    this.day_1,
-    this.day_2,
-    this.day_3,
-    this.day_4,
-    this.day_5,
-    this.day_6,
+    required this.day_0,
+    required this.day_1,
+    required this.day_2,
+    required this.day_3,
+    required this.day_4,
+    required this.day_5,
+    required this.day_6,
   });
   final String day_0;
   final String day_1;
@@ -38,7 +38,7 @@ class BarChartContainerState extends State<BarChartContainer> {
   final Color barBackgroundColor = const Color(0xffD9D9D9);
   final Duration animDuration = const Duration(milliseconds: 250);
 
-  int touchedIndex;
+  int? touchedIndex;
 
   bool isPlaying = false;
 
@@ -96,12 +96,12 @@ class BarChartContainerState extends State<BarChartContainer> {
       barRods: [
         BarChartRodData(
           y: isTouched ? y + 1 : y,
-          color: isTouched ? Colors.yellow : barColor,
+          colors: isTouched ? [Colors.yellow] : [barColor],
           width: width,
           backDrawRodData: BackgroundBarChartRodData(
             show: true,
             y: 20,
-            color: barBackgroundColor,
+            colors: [barBackgroundColor],
           ),
         ),
       ],
@@ -109,24 +109,31 @@ class BarChartContainerState extends State<BarChartContainer> {
     );
   }
 
-  List<BarChartGroupData> showingGroups() => List.generate(7, (i) {
+  List<BarChartGroupData>? showingGroups() => List.generate(7, (i) {
         switch (i) {
           case 0:
-            return makeGroupData(0, double.parse(widget.day_0), isTouched: i == touchedIndex);
+            return makeGroupData(0, double.parse(widget.day_0),
+                isTouched: i == touchedIndex);
           case 1:
-            return makeGroupData(1, double.parse(widget.day_1), isTouched: i == touchedIndex);
+            return makeGroupData(1, double.parse(widget.day_1),
+                isTouched: i == touchedIndex);
           case 2:
-            return makeGroupData(2, double.parse(widget.day_2), isTouched: i == touchedIndex);
+            return makeGroupData(2, double.parse(widget.day_2),
+                isTouched: i == touchedIndex);
           case 3:
-            return makeGroupData(3, double.parse(widget.day_3), isTouched: i == touchedIndex);
+            return makeGroupData(3, double.parse(widget.day_3),
+                isTouched: i == touchedIndex);
           case 4:
-            return makeGroupData(4, double.parse(widget.day_4), isTouched: i == touchedIndex);
+            return makeGroupData(4, double.parse(widget.day_4),
+                isTouched: i == touchedIndex);
           case 5:
-            return makeGroupData(5, double.parse(widget.day_5), isTouched: i == touchedIndex);
+            return makeGroupData(5, double.parse(widget.day_5),
+                isTouched: i == touchedIndex);
           case 6:
-            return makeGroupData(6, double.parse(widget.day_6), isTouched: i == touchedIndex);
+            return makeGroupData(6, double.parse(widget.day_6),
+                isTouched: i == touchedIndex);
           default:
-            return null;
+            throw 'error';
         }
       });
 
@@ -146,7 +153,7 @@ class BarChartContainerState extends State<BarChartContainer> {
             fitInsideVertically: true,
             tooltipBgColor: Colors.blueGrey,
             getTooltipItem: (group, groupIndex, rod, rodIndex) {
-              String weekDay;
+              String weekDay = '';
               switch (group.x.toInt()) {
                 case 0:
                   weekDay = 'Monday';
@@ -176,9 +183,9 @@ class BarChartContainerState extends State<BarChartContainer> {
         touchCallback: (barTouchResponse) {
           setState(() {
             if (barTouchResponse.spot != null &&
-                barTouchResponse.touchInput is! FlPanEnd &&
-                barTouchResponse.touchInput is! FlLongPressEnd) {
-              touchedIndex = barTouchResponse.spot.touchedBarGroupIndex;
+                barTouchResponse.touchInput is! PointerUpEvent &&
+                barTouchResponse.touchInput is! PointerExitEvent) {
+              touchedIndex = barTouchResponse.spot!.touchedBarGroupIndex;
             } else {
               touchedIndex = -1;
             }
@@ -189,7 +196,7 @@ class BarChartContainerState extends State<BarChartContainer> {
         show: true,
         bottomTitles: SideTitles(
           showTitles: true,
-          textStyle: TextStyle(
+          getTextStyles: (value) => const TextStyle(
               color: Color(0xff68737d),
               fontWeight: FontWeight.bold,
               fontSize: 10),
@@ -234,7 +241,7 @@ class BarChartContainerState extends State<BarChartContainer> {
         show: true,
         bottomTitles: SideTitles(
           showTitles: true,
-          textStyle: TextStyle(
+          getTextStyles: (value) => TextStyle(
               color: Colors.white, fontWeight: FontWeight.bold, fontSize: 14),
           margin: 16,
           getTitles: (double value) {
@@ -296,7 +303,7 @@ class BarChartContainerState extends State<BarChartContainer> {
                 barColor: widget.availableColors[
                     Random().nextInt(widget.availableColors.length)]);
           default:
-            return null;
+            throw 'error';
         }
       }),
     );

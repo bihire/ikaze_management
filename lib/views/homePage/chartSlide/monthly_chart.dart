@@ -18,9 +18,9 @@ class HomeMonthlyChartScreen extends StatelessWidget {
   final List<OveralMonthlyTransactionModel> overalMonthlyData;
   final error;
   HomeMonthlyChartScreen({
-    this.loading,
-    this.overalMonthlyData,
-    this.error,
+    required this.loading,
+    required this.overalMonthlyData,
+    required this.error,
   });
   @override
   Widget build(BuildContext context) {

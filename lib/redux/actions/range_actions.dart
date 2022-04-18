@@ -6,10 +6,10 @@ import 'package:meta/meta.dart';
 
 class LoadTransactionsRangePageAction {
   LoadTransactionsRangePageAction({
-    @required this.pageNumber,
-    @required this.transactionsPerPage,
-    @required this.fromDate,
-    @required this.toDate,
+    required this.pageNumber,
+    required this.transactionsPerPage,
+    required this.fromDate,
+    required this.toDate,
   });
 
   final int pageNumber;

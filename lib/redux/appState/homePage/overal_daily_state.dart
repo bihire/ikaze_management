@@ -5,14 +5,14 @@ import 'package:meta/meta.dart';
 @immutable
 class OvaraldailyState {
   OvaraldailyState({
-    this.isDataLoading,
-    this.overalDailydata,
+    required this.isDataLoading,
+    required this.overalDailydata,
     this.error,
   });
 
   final bool isDataLoading;
   final List<OveralDailyTransactionModel> overalDailydata;
-  final Exception error;
+  final Exception? error;
 
   static const int transactionsPerPage = 10;
 

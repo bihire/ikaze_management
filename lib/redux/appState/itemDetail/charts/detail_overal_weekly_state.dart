@@ -5,14 +5,14 @@ import 'package:meta/meta.dart';
 @immutable
 class DetailOveralWeeklyState {
   DetailOveralWeeklyState({
-    this.loading,
-    this.overalWeeklyData,
+    required this.loading,
+    required this.overalWeeklyData,
     this.error,
   });
 
   final bool loading;
   final List<OveralWeeklyTransactionModel> overalWeeklyData;
-  final Exception error;
+  final Exception? error;
 
   static const int transactionsPerPage = 10;
 

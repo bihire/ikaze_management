@@ -1,5 +1,4 @@
-
-
+import 'package:flutter/material.dart';
 import 'package:inventory_controller/models/auth.dart/user.dart';
 
 class AppStarted {}
@@ -7,20 +6,21 @@ class AppStarted {}
 class LoadingLoginAction {
   final String email;
   final String password;
+  final BuildContext context;
 
-  LoadingLoginAction({this.email, this.password});
+  LoadingLoginAction({required this.email,required this.password, required this.context});
 }
 
 class UserLoginSuccess {
   final User user;
 
-  UserLoginSuccess({this.user});
+  UserLoginSuccess({required this.user});
 }
 
 class UserLoaded {
   final User user;
 
-  UserLoaded({this.user});
+  UserLoaded({required this.user});
 }
 
 class ErrorOccurredAction {

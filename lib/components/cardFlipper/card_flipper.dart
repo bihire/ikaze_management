@@ -9,9 +9,9 @@ class AnimatedFlipCounter extends StatelessWidget {
   final Color color;
 
   const AnimatedFlipCounter({
-    Key key,
-    @required this.value,
-    @required this.duration,
+    Key? key,
+    required this.value,
+    required this.duration,
     this.size = 72,
     this.color = Colors.black,
     this.fontWeight = FontWeight.w600
@@ -39,8 +39,8 @@ class AnimatedFlipCounter extends StatelessWidget {
           duration: duration,
           height: size,
           comma: (digits.length - 1) != i &&
-                (digits.length - i) % 3 == 1 ??
-            true,
+                (digits.length - i) % 3 == 1 ?
+            true : false,
           width: size / 1.8,
           color: color,
           fontWeight: fontWeight,
@@ -60,14 +60,14 @@ class _SingleDigitFlipCounter extends StatelessWidget {
   final FontWeight fontWeight;
 
   const _SingleDigitFlipCounter({
-    Key key,
-    @required this.value,
-    @required this.duration,
-    @required this.height,
-    @required this.width,
-    @required this.color,
-    @required this.comma,
-    @required this.fontWeight
+    Key? key,
+    required this.value,
+    required this.duration,
+    required this.height,
+    required this.width,
+    required this.color,
+    required this.comma,
+    required this.fontWeight
   }) : super(key: key);
 
   @override
@@ -76,8 +76,8 @@ class _SingleDigitFlipCounter extends StatelessWidget {
       tween: Tween(begin: value, end: value),
       duration: duration,
       builder: (context, value, child) {
-        final whole = value ~/ 1;
-        final decimal = value - whole;
+        final whole = (value! as double) ~/ 1;
+        final decimal = (value as double) - whole;
         return Row(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -109,12 +109,12 @@ class _SingleDigitFlipCounter extends StatelessWidget {
     );
   }
 
-  Widget _buildSingleDigit({int digit, double offset, double opacity}) {
+  Widget _buildSingleDigit({int? digit, double? offset, double? opacity}) {
     return Positioned(
       child: SizedBox(
         width: width,
         child: Opacity(
-          opacity: opacity,
+          opacity: opacity!,
           child: Text(
             "$digit",
             style: TextStyle(fontSize: height, color: color, fontWeight: fontWeight),

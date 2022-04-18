@@ -8,11 +8,11 @@ class MoneyTransactionModel {
   String createdAt;
 
   MoneyTransactionModel(
-      {this.id,
-      this.productId,
-      this.entryType,
-      this.quantity,
-      this.unitPrice,
-      this.paidBy,
-      this.createdAt});
+      {required this.id,
+      required this.productId,
+      required this.entryType,
+      required this.quantity,
+      required this.unitPrice,
+      required this.paidBy,
+      required this.createdAt});
 }

@@ -23,7 +23,7 @@ class _PopupMenuButtonState extends State<PopupMenuButtonPage> {
         );
     Widget _threeItemPopup() => PopupMenuButton(
           itemBuilder: (context) {
-            var list = List<PopupMenuEntry<Object>>();
+            var list = <PopupMenuEntry<Object>>[];
             list.add(
               PopupMenuItem(
                 child: Text("Setting Language"),

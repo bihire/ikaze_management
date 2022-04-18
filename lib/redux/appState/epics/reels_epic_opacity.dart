@@ -4,7 +4,7 @@ import 'package:meta/meta.dart';
 @immutable
 class ReelsEpicOpacityState {
   ReelsEpicOpacityState({
-    @required this.opacity,
+    required this.opacity,
   });
   final double opacity;
 
